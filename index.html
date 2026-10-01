@@ -380,6 +380,9 @@ nav.abajo button.centro span{margin-top:-2px}
 .voz-btn{opacity:0;animation:frase .8s 2.2s forwards;padding:8px 16px;font-size:14px}
 .grabando{color:#FF9C8C!important;border-color:#FF9C8C!important;animation:respira 1.2s infinite}
 
+.etiqueta-campo{font-size:14px;color:var(--crema-suave);margin:0 0 8px}
+.modos{flex-wrap:wrap}
+
 </style>
 </head>
 <body>
@@ -633,7 +636,21 @@ Object.assign(T.it,{editar:"Modifica",luna:"Luna",calendario:"Calendario",espejo
  miVoz:"Il mio decreto con la mia voce",miVozP:"Registrati mentre dici il tuo decreto e ascoltalo nel rituale.",grabar:"Registra",detener:"Ferma",escuchar:"Ascolta",borrarVoz:"Elimina",vozGuardada:"Voce salvata",sinMicro:"Impossibile usare il microfono",escucharMiVoz:"Ascolta la mia voce",
  instalar:"Installa Vibración 33",instalarP:"Installala come app, con il tuo sigillo e senza il logo di Chrome.",abreEnChrome:"Per installarla come app, aprila in Chrome: tocca ⋮ e scegli «Apri in Chrome»."});
 
-const APP = { nombre:"Vibración 33", version:"1.4.0" };
+/* ===== v1.5: cálculo del cielo natal ===== */
+Object.assign(T.es,{sabesHora:"¿Sabes la hora de nacimiento?",siHora:"Sí",yaSeAsc:"Ya sé mi ascendente",noHora:"No",hora:"Hora de nacimiento",ciudad:"Ciudad de nacimiento",ciudadP:"Si no está, elige la más cercana.",
+ calculado:"Con la hora y la ciudad, la app calcula ascendente, descendente y luna natal, considerando el horario de verano de esa fecha.",
+ lunaDudosa:"La luna cambió de signo ese día: con la hora de nacimiento sabrías cuál de las dos es.",ascLimite:s=>`El ascendente está cerca del cambio de signo: si la hora no es exacta, podría ser ${s}.`,
+ sinHoraNota:"Sin la hora solo se conoce el Sol (y la Luna si no cambió de signo ese día). Puedes agregarla después en Editar."});
+Object.assign(T.en,{sabesHora:"Do you know the birth time?",siHora:"Yes",yaSeAsc:"I know my rising",noHora:"No",hora:"Birth time",ciudad:"Birth city",ciudadP:"If it's not listed, choose the closest one.",
+ calculado:"With the time and city, the app calculates rising, descendant and natal moon, taking daylight saving time on that date into account.",
+ lunaDudosa:"The moon changed sign that day: the birth time would tell you which one it is.",ascLimite:s=>`The rising is close to a sign change: if the time isn't exact, it could be ${s}.`,
+ sinHoraNota:"Without the time, only the Sun is known (and the Moon if it didn't change sign that day). You can add it later in Edit."});
+Object.assign(T.it,{sabesHora:"Conosci l'ora di nascita?",siHora:"Sì",yaSeAsc:"Conosco il mio ascendente",noHora:"No",hora:"Ora di nascita",ciudad:"Città di nascita",ciudadP:"Se non c'è, scegli la più vicina.",
+ calculado:"Con l'ora e la città, l'app calcola ascendente, discendente e luna natale, considerando l'ora legale di quella data.",
+ lunaDudosa:"Quel giorno la luna ha cambiato segno: l'ora di nascita ti direbbe quale dei due è.",ascLimite:s=>`L'ascendente è vicino al cambio di segno: se l'ora non è esatta, potrebbe essere ${s}.`,
+ sinHoraNota:"Senza l'ora si conosce solo il Sole (e la Luna se quel giorno non ha cambiato segno). Puoi aggiungerla dopo in Modifica."});
+
+const APP = { nombre:"Vibración 33", version:"1.5.0" };
 const CLAVE = "vibracion33.datos";
 const CACHE_MAZO = "vibracion33-mazo";
 const $ = s => document.querySelector(s);
@@ -1073,50 +1090,107 @@ function pintarNumeros(){
 }
 
 /* ---------- Mi cielo ---------- */
+const CIUDADES = [
+ ["Chile",[["arica","Arica",-18.4783,-70.3126,"America/Santiago"],["iquique","Iquique",-20.2133,-70.1503,"America/Santiago"],["antofagasta","Antofagasta",-23.6509,-70.3975,"America/Santiago"],["calama","Calama",-22.4544,-68.9294,"America/Santiago"],["copiapo","Copiapó",-27.3668,-70.3323,"America/Santiago"],["laserena","La Serena",-29.9027,-71.2519,"America/Santiago"],["valparaiso","Valparaíso",-33.0472,-71.6127,"America/Santiago"],["vina","Viña del Mar",-33.0245,-71.5518,"America/Santiago"],["santiago","Santiago",-33.4489,-70.6693,"America/Santiago"],["rancagua","Rancagua",-34.1708,-70.7444,"America/Santiago"],["talca","Talca",-35.4264,-71.6554,"America/Santiago"],["chillan","Chillán",-36.6066,-72.1034,"America/Santiago"],["concepcion","Concepción",-36.8201,-73.0444,"America/Santiago"],["temuco","Temuco",-38.7359,-72.5904,"America/Santiago"],["valdivia","Valdivia",-39.8142,-73.2459,"America/Santiago"],["osorno","Osorno",-40.5745,-73.1310,"America/Santiago"],["puertomontt","Puerto Montt",-41.4689,-72.9411,"America/Santiago"],["coyhaique","Coyhaique",-45.5752,-72.0662,"America/Santiago"],["puntaarenas","Punta Arenas",-53.1638,-70.9171,"America/Punta_Arenas"]]],
+ ["Argentina",[["buenosaires","Buenos Aires",-34.6037,-58.3816,"America/Argentina/Buenos_Aires"],["laplata","La Plata",-34.9214,-57.9545,"America/Argentina/Buenos_Aires"],["mardelplata","Mar del Plata",-38.0055,-57.5426,"America/Argentina/Buenos_Aires"],["rosario","Rosario",-32.9442,-60.6505,"America/Argentina/Cordoba"],["cordoba","Córdoba",-31.4201,-64.1888,"America/Argentina/Cordoba"],["mendoza","Mendoza",-32.8895,-68.8458,"America/Argentina/Mendoza"],["salta","Salta",-24.7821,-65.4232,"America/Argentina/Salta"],["tucuman","San Miguel de Tucumán",-26.8083,-65.2176,"America/Argentina/Tucuman"],["neuquen","Neuquén",-38.9516,-68.0591,"America/Argentina/Salta"],["bariloche","Bariloche",-41.1335,-71.3103,"America/Argentina/Salta"],["ushuaia","Ushuaia",-54.8019,-68.3030,"America/Argentina/Ushuaia"]]],
+ ["Latinoamérica",[["lima","Lima, Perú",-12.0464,-77.0428,"America/Lima"],["lapaz","La Paz, Bolivia",-16.4897,-68.1193,"America/La_Paz"],["santacruz","Santa Cruz, Bolivia",-17.8146,-63.1561,"America/La_Paz"],["quito","Quito, Ecuador",-0.1807,-78.4678,"America/Guayaquil"],["guayaquil","Guayaquil, Ecuador",-2.1710,-79.9224,"America/Guayaquil"],["bogota","Bogotá, Colombia",4.7110,-74.0721,"America/Bogota"],["medellin","Medellín, Colombia",6.2442,-75.5812,"America/Bogota"],["caracas","Caracas, Venezuela",10.4806,-66.9036,"America/Caracas"],["montevideo","Montevideo, Uruguay",-34.9011,-56.1645,"America/Montevideo"],["asuncion","Asunción, Paraguay",-25.2637,-57.5759,"America/Asuncion"],["saopaulo","São Paulo, Brasil",-23.5505,-46.6333,"America/Sao_Paulo"],["rio","Río de Janeiro, Brasil",-22.9068,-43.1729,"America/Sao_Paulo"],["cdmx","Ciudad de México",19.4326,-99.1332,"America/Mexico_City"],["guadalajara","Guadalajara, México",20.6597,-103.3496,"America/Mexico_City"],["habana","La Habana, Cuba",23.1136,-82.3666,"America/Havana"],["panama","Ciudad de Panamá",8.9824,-79.5199,"America/Panama"],["sanjose","San José, Costa Rica",9.9281,-84.0907,"America/Costa_Rica"]]],
+ ["Norteamérica",[["miami","Miami",25.7617,-80.1918,"America/New_York"],["nuevayork","Nueva York",40.7128,-74.0060,"America/New_York"],["losangeles","Los Ángeles",34.0522,-118.2437,"America/Los_Angeles"],["toronto","Toronto",43.6532,-79.3832,"America/Toronto"]]],
+ ["España",[["madrid","Madrid",40.4168,-3.7038,"Europe/Madrid"],["barcelona","Barcelona",41.3874,2.1686,"Europe/Madrid"],["valencia","Valencia",39.4699,-0.3763,"Europe/Madrid"],["sevilla","Sevilla",37.3891,-5.9845,"Europe/Madrid"],["bilbao","Bilbao",43.2630,-2.9350,"Europe/Madrid"]]],
+ ["Italia",[["roma","Roma",41.9028,12.4964,"Europe/Rome"],["milan","Milán",45.4642,9.1900,"Europe/Rome"],["napoles","Nápoles",40.8518,14.2681,"Europe/Rome"],["florencia","Florencia",43.7696,11.2558,"Europe/Rome"],["turin","Turín",45.0703,7.6869,"Europe/Rome"],["venecia","Venecia",45.4408,12.3155,"Europe/Rome"],["palermo","Palermo",38.1157,13.3615,"Europe/Rome"],["bolonia","Bolonia",44.4949,11.3426,"Europe/Rome"]]],
+ ["Europa",[["paris","París",48.8566,2.3522,"Europe/Paris"],["londres","Londres",51.5074,-0.1278,"Europe/London"],["berlin","Berlín",52.5200,13.4050,"Europe/Berlin"],["lisboa","Lisboa",38.7223,-9.1393,"Europe/Lisbon"],["amsterdam","Ámsterdam",52.3676,4.9041,"Europe/Amsterdam"]]]
+];
+const ciudad = id => { for(const [,l] of CIUDADES){ const c=l.find(x=>x[0]===id); if(c) return c; } return null; };
+/* Hora local de nacimiento → instante UTC, usando el historial de husos horarios del celular (incluye horario de verano) */
+function desfase(ms, tz){
+  const p=Object.fromEntries(new Intl.DateTimeFormat("en-US",{timeZone:tz,hourCycle:"h23",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"}).formatToParts(new Date(ms)).map(x=>[x.type,x.value]));
+  return Date.UTC(+p.year,+p.month-1,+p.day,+p.hour%24,+p.minute,+p.second) - ms;
+}
+function localAUtc(fecha, hora, tz){
+  const [y,m,d]=fecha.split("-").map(Number), [h,mi]=hora.split(":").map(Number), base=Date.UTC(y,m-1,d,h,mi);
+  let ms=base-desfase(base,tz); ms=base-desfase(ms,tz); return new Date(ms);
+}
+function ascendente(fechaUtc, lat, lon){
+  const D=fechaUtc.getTime()/864e5+2440587.5-2451545.0, T=D/36525;
+  const gmst=n360(280.46061837+360.98564736629*D+0.000387933*T*T), ramc=n360(gmst+lon)*RAD, eps=(23.4393-0.0000004*D)*RAD, phi=lat*RAD;
+  return n360(Math.atan2(Math.cos(ramc), -(Math.sin(ramc)*Math.cos(eps)+Math.tan(phi)*Math.sin(eps)))/RAD);
+}
 function solDe(fecha){ const [y,m,d]=fecha.split("-").map(Number); const lon=astros(new Date(Date.UTC(y,m-1,d,15))).sol; return {signo:signoDe(lon), cuspide:(lon%30)<1.2||(lon%30)>28.8}; }
-function asegurarYo(){ if(!datos.perfiles.length){ datos.perfiles.push({id:"yo", nombre:"", nacimiento:datos.ajustes.nacimiento, asc:null, luna:null}); guardar(); } }
+function asegurarYo(){
+  if(!datos.perfiles.length) datos.perfiles.push({id:"yo", nombre:"", nacimiento:datos.ajustes.nacimiento, modo:"hora", hora:"07:16", ciudad:"santiago", asc:null, luna:null});
+  datos.perfiles.forEach(p=>{ if(!p.modo){ if(p.id==="yo"){ Object.assign(p,{modo:"hora",hora:"07:16",ciudad:"santiago"}); } else p.modo = p.asc!=null ? "manual" : "no"; } });
+  guardar();
+}
 const nombrePerfil = p => p.nombre || t().yo;
 function posicionesCielo(p){
-  const s=solDe(p.nacimiento), out=[{rol:t().sol, desc:t().solP, signo:s.signo}];
-  if(p.asc!=null){ out.push({rol:t().ascendente, desc:t().ascP, signo:p.asc}); out.push({rol:t().descendente, desc:t().descP, signo:(p.asc+6)%12}); }
-  if(p.luna!=null) out.push({rol:t().luna, desc:t().lunaP, signo:p.luna});
-  return {pos:out, cuspide:s.cuspide};
+  const s=solDe(p.nacimiento), out=[{rol:t().sol, desc:t().solP, signo:s.signo}], notas=[];
+  if(s.cuspide) notas.push(t().cuspide);
+  const c = p.modo==="hora" && p.hora && ciudad(p.ciudad);
+  if(c){
+    const u=localAUtc(p.nacimiento,p.hora,c[4]), asc=ascendente(u,c[2],c[3]), lun=astros(u).luna, gr=asc%30;
+    out.push({rol:t().ascendente, desc:t().ascP, signo:signoDe(asc), grados:Math.floor(gr)});
+    out.push({rol:t().descendente, desc:t().descP, signo:(signoDe(asc)+6)%12, grados:Math.floor(gr)});
+    out.push({rol:t().luna, desc:t().lunaP, signo:signoDe(lun), grados:Math.floor(lun%30)});
+    if(gr<2) notas.push(t().ascLimite(DADOS_TXT[L].s[(signoDe(asc)+11)%12][0])); else if(gr>28) notas.push(t().ascLimite(DADOS_TXT[L].s[(signoDe(asc)+1)%12][0]));
+  } else if(p.modo==="manual" && p.asc!=null){
+    out.push({rol:t().ascendente, desc:t().ascP, signo:p.asc}); out.push({rol:t().descendente, desc:t().descP, signo:(p.asc+6)%12});
+    if(p.luna!=null) out.push({rol:t().luna, desc:t().lunaP, signo:p.luna});
+  } else {
+    const [y,m,d]=p.nacimiento.split("-").map(Number), tz="America/Santiago";
+    const l0=signoDe(astros(localAUtc(p.nacimiento,"00:00",tz)).luna), l1=signoDe(astros(localAUtc(p.nacimiento,"23:59",tz)).luna);
+    out.push({rol:t().luna, desc:t().lunaP, signo:l0, alt:l0!==l1?l1:null});
+    if(l0!==l1) notas.push(t().lunaDudosa); notas.push(t().sinHoraNota);
+  }
+  return {pos:out, notas, cuspide:s.cuspide};
 }
+const signoTxt = o => DADOS_TXT[L].s[o.signo][0] + (o.alt!=null ? ` / ${DADOS_TXT[L].s[o.alt][0]}` : "") + (o.grados!=null ? ` ${o.grados}°` : "");
 function pintarCielo(){
   asegurarYo();
   const c=$("#estCont");
-  c.innerHTML=`<p class="nota-info">${t().cieloSub}</p>` + datos.perfiles.map(p=>{ const {pos,cuspide}=posicionesCielo(p);
-    return `<article class="perfil"><header><h3>${esc(nombrePerfil(p))}</h3><small>${fechaDe(p.nacimiento).toLocaleDateString(LOCALE[L],{day:"numeric",month:"long",year:"numeric"})}</small></header>
+  c.innerHTML=`<p class="nota-info">${t().cieloSub}</p>` + datos.perfiles.map(p=>{ const {pos,notas}=posicionesCielo(p), ci=p.modo==="hora"&&ciudad(p.ciudad);
+    return `<article class="perfil"><header><h3>${esc(nombrePerfil(p))}</h3><small>${fechaDe(p.nacimiento).toLocaleDateString(LOCALE[L],{day:"numeric",month:"long",year:"numeric"})}${ci?` · ${p.hora} · ${ci[1]}`:""}</small></header>
       ${pos.map(o=>{ const cc=carta("m"+SIGNO_CARTA[o.signo]), x=txt(cc);
-        return `<div class="astro-fila"><span class="astro-glifo">${DADOS_TXT.glifosS[o.signo]}\uFE0E</span><div><small>${o.rol}</small><b>${DADOS_TXT[L].s[o.signo][0]}</b><p>${o.desc} · ${DADOS_TXT[L].s[o.signo][1]}</p></div>
+        return `<div class="astro-fila"><span class="astro-glifo">${DADOS_TXT.glifosS[o.signo]}\uFE0E</span><div><small>${o.rol}</small><b>${signoTxt(o)}</b><p>${o.desc} · ${DADOS_TXT[L].s[o.signo][1]}</p></div>
           <button class="astro-carta" data-id="${cc.id}" aria-label="${esc(x.nombre)}">${caraSVG(cc,false,true)}<span>${x.etiqueta}</span></button></div>`; }).join("")}
-      ${cuspide?`<p class="nota-info" style="font-size:13px;margin:8px 0 0">${t().cuspide}</p>`:""}
+      ${notas.map(n=>`<p class="nota-info" style="font-size:13px;margin:8px 0 0">${n}</p>`).join("")}
       <div class="fila-btn" style="margin-top:12px"><button class="btn sec" data-ed="${p.id}">${t().editar}</button><button class="btn ig" data-sh="${p.id}">✦ ${t().compartir}</button></div></article>`; }).join("") +
-    `<button class="btn grande" id="nuevoPerfil" style="margin-top:8px">+ ${t().nuevoPerfil}</button><p class="nota-info" style="font-size:13px;margin-top:10px">${t().descAuto} ${t().perfilesAviso}</p>`;
+    `<button class="btn grande" id="nuevoPerfil" style="margin-top:8px">+ ${t().nuevoPerfil}</button><p class="nota-info" style="font-size:13px;margin-top:10px">${t().calculado} ${t().perfilesAviso}</p>`;
   c.querySelectorAll(".astro-carta").forEach(b=>b.onclick=()=>abrirCarta(b.dataset.id));
   c.querySelectorAll("[data-ed]").forEach(b=>b.onclick=()=>editarPerfil(b.dataset.ed));
   c.querySelectorAll("[data-sh]").forEach(b=>b.onclick=()=>elegirFormato(f=>imgCielo(f, datos.perfiles.find(p=>p.id===b.dataset.sh)), true));
   $("#nuevoPerfil").onclick=()=>editarPerfil(null);
 }
 function editarPerfil(id){
-  const p = id ? datos.perfiles.find(x=>x.id===id) : {id:Date.now().toString(36), nombre:"", nacimiento:"1990-01-01", asc:null, luna:null};
+  const orig = id ? datos.perfiles.find(x=>x.id===id) : null;
+  const p = orig ? {...orig} : {id:Date.now().toString(36), nombre:"", nacimiento:"1995-01-01", modo:"hora", hora:"", ciudad:"santiago", asc:null, luna:null};
   const opc = sel => `<option value="">${t().noSe}</option>` + DADOS_TXT[L].s.map((s,i)=>`<option value="${i}" ${sel===i?"selected":""}>${DADOS_TXT.glifosS[i]}\uFE0E ${s[0]}</option>`).join("");
-  abrirHoja(`<h3 style="margin-bottom:14px">${id?esc(nombrePerfil(p)):t().nuevoPerfil}</h3>
-    <div class="campo"><label for="pNom">${t().nombre}</label><input id="pNom" maxlength="40" value="${esc(p.nombre)}" placeholder="${p.id==="yo"?t().yo:""}"></div>
-    <div class="campo"><label for="pNac">${t().nacimiento}</label><input id="pNac" type="date" class="fecha" style="width:100%" value="${p.nacimiento}"></div>
-    <div class="campo"><label for="pAsc">${t().ascendente}</label><select id="pAsc" class="selector">${opc(p.asc)}</select></div>
-    <p class="nota-info" style="font-size:13px;margin:-8px 0 16px">${t().descAuto}</p>
-    <div class="campo"><label for="pLuna">${t().lunaNatal}</label><select id="pLuna" class="selector">${opc(p.luna)}</select></div>
-    <div class="fila-btn"><button class="btn" id="pGuardar">${t().guardar}</button>${id&&id!=="yo"?`<button class="btn peligro" id="pBorrar">${t().borrarPerfil}</button>`:""}</div>`);
-  hojaCont.querySelector("#pGuardar").onclick=()=>{
-    const nac=hojaCont.querySelector("#pNac").value; if(!nac) return;
-    const v=s=>s===""?null:+s;
-    Object.assign(p,{nombre:hojaCont.querySelector("#pNom").value.trim(), nacimiento:nac, asc:v(hojaCont.querySelector("#pAsc").value), luna:v(hojaCont.querySelector("#pLuna").value)});
-    if(!id) datos.perfiles.push(p);
-    if(p.id==="yo") datos.ajustes.nacimiento=nac;
-    guardar(); cerrarHoja(); pintarEstudio();
+  const opcCiudad = sel => CIUDADES.map(([pais,l])=>`<optgroup label="${pais}">${l.map(c=>`<option value="${c[0]}" ${sel===c[0]?"selected":""}>${c[1]}</option>`).join("")}</optgroup>`).join("");
+  const leer=()=>{ const q=s=>hojaCont.querySelector(s); p.nombre=q("#pNom").value.trim(); p.nacimiento=q("#pNac").value||p.nacimiento;
+    if(q("#pHora")){ p.hora=q("#pHora").value; p.ciudad=q("#pCiudad").value; }
+    if(q("#pAsc")){ const v=s=>s===""?null:+s; p.asc=v(q("#pAsc").value); p.luna=v(q("#pLuna").value); } };
+  const pintar=()=>{
+    abrirHoja(`<h3 style="margin-bottom:14px">${orig?esc(nombrePerfil(orig)):t().nuevoPerfil}</h3>
+      <div class="campo"><label for="pNom">${t().nombre}</label><input id="pNom" maxlength="40" value="${esc(p.nombre)}" placeholder="${p.id==="yo"?t().yo:""}"></div>
+      <div class="campo"><label for="pNac">${t().nacimiento}</label><input id="pNac" type="date" class="fecha" style="width:100%" value="${p.nacimiento}"></div>
+      <p class="etiqueta-campo">${t().sabesHora}</p>
+      <div class="modos" role="group">${[["hora",t().siHora],["manual",t().yaSeAsc],["no",t().noHora]].map(([k,n])=>`<button class="chip" data-modo="${k}" aria-pressed="${p.modo===k}">${n}</button>`).join("")}</div>
+      ${p.modo==="hora" ? `<div class="campo"><label for="pHora">${t().hora}</label><input id="pHora" type="time" class="fecha" style="width:100%" value="${p.hora||""}"></div>
+        <div class="campo"><label for="pCiudad">${t().ciudad}</label><select id="pCiudad" class="selector">${opcCiudad(p.ciudad)}</select><p class="nota-info" style="font-size:13px;margin:6px 0 0">${t().ciudadP}</p></div>`
+      : p.modo==="manual" ? `<div class="campo"><label for="pAsc">${t().ascendente}</label><select id="pAsc" class="selector">${opc(p.asc)}</select></div>
+        <p class="nota-info" style="font-size:13px;margin:-8px 0 16px">${t().descAuto}</p>
+        <div class="campo"><label for="pLuna">${t().lunaNatal}</label><select id="pLuna" class="selector">${opc(p.luna)}</select></div>`
+      : `<p class="nota-info">${t().sinHoraNota}</p>`}
+      <div class="fila-btn"><button class="btn" id="pGuardar">${t().guardar}</button>${orig&&id!=="yo"?`<button class="btn peligro" id="pBorrar">${t().borrarPerfil}</button>`:""}</div>`);
+    hojaCont.querySelectorAll("[data-modo]").forEach(b=>b.onclick=()=>{ leer(); p.modo=b.dataset.modo; pintar(); });
+    hojaCont.querySelector("#pGuardar").onclick=()=>{
+      leer(); if(!p.nacimiento) return;
+      if(p.modo==="hora" && !p.hora){ hojaCont.querySelector("#pHora").focus(); return; }
+      if(orig) Object.assign(orig,p); else datos.perfiles.push(p);
+      if(p.id==="yo") datos.ajustes.nacimiento=p.nacimiento;
+      guardar(); cerrarHoja(); pintarEstudio();
+    };
+    const b=hojaCont.querySelector("#pBorrar"); if(b) b.onclick=()=>{ if(!confirm(t().confirmBorrarPerfil)) return; datos.perfiles=datos.perfiles.filter(x=>x.id!==id); guardar(); cerrarHoja(); pintarEstudio(); };
   };
-  const b=hojaCont.querySelector("#pBorrar"); if(b) b.onclick=()=>{ if(!confirm(t().confirmBorrarPerfil)) return; datos.perfiles=datos.perfiles.filter(x=>x.id!==id); guardar(); cerrarHoja(); pintarEstudio(); };
+  pintar();
 }
 
 /* ---------- Tiradas ---------- */
@@ -1393,10 +1467,10 @@ async function imgCielo(fmt, p){
   for(let k=0;k<tres.length;k++){ const o=tres[k], x=gap+k*(w+gap), cc=carta("m"+SIGNO_CARTA[o.signo]);
     const h=await cartaEnLienzo(ctx,cc,false,x,460,w);
     texto(ctx,o.rol.toUpperCase(),x+w/2,460+h+60,{size:24,serif:false,weight:500,color:"#F7C948",spacing:4});
-    texto(ctx,`${DADOS_TXT.glifosS[o.signo]}\uFE0E ${DADOS_TXT[L].s[o.signo][0]}`,x+w/2,460+h+112,{size:46});
+    texto(ctx,`${DADOS_TXT.glifosS[o.signo]}\uFE0E ${signoTxt(o)}`,x+w/2,460+h+112,{size:signoTxt(o).length>12?38:46});
     texto(ctx,txt(cc).nombre,x+w/2,460+h+156,{size:30,italic:true,weight:500,color:"#C9BFD9"}); yMax=460+h+156; }
   let y=yMax+100;
-  pos.forEach(o=>{ y=parrafo(ctx,`${o.rol}: ${o.desc}, ${DADOS_TXT[L].s[o.signo][1]}.`,W/2,y,880,48,{size:34,weight:500})+14; });
+  pos.forEach(o=>{ y=parrafo(ctx,`${o.rol} ${({es:"en",en:"in",it:"in"})[L]} ${DADOS_TXT[L].s[o.signo][0]}${o.alt!=null?" / "+DADOS_TXT[L].s[o.alt][0]:""}: ${o.desc}, ${DADOS_TXT[L].s[o.signo][1]}.`,W/2,y,880,48,{size:34,weight:500})+14; });
   pie(ctx,W,1830); return entregar(cv,`vibracion33-cielo-${(nombre||"yo").toLowerCase().replace(/\W+/g,"-")}.png`);
 }
 

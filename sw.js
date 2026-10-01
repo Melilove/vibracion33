@@ -1,5 +1,5 @@
 /* Cambia la versión cada vez que subas cambios, así el celular descarga lo nuevo. */
-const CACHE = "vibracion33-v1.4.0";
+const CACHE = "vibracion33-v1.5.0";
 const CACHE_MAZO = "vibracion33-mazo";   // ilustraciones de las cartas (no se borra al actualizar)
 const BASE = ["./","index.html","manifest.json","icon-192.png","icon-512.png","icon-maskable-512.png","apple-touch-icon.png"];
 
