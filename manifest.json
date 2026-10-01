@@ -1,0 +1,25 @@
+{
+  "id": "./?app=vibracion33",
+  "name": "Vibración 33",
+  "short_name": "Vibración 33",
+  "description": "Lo visualizo. Lo siento. Lo decreto. Aprende tarot con tu decreto, la luna, tiradas y diario.",
+  "lang": "es",
+  "dir": "ltr",
+  "start_url": "./?app=vibracion33",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#14183A",
+  "theme_color": "#14183A",
+  "categories": ["lifestyle", "education", "entertainment"],
+  "prefer_related_applications": false,
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ],
+  "screenshots": [
+    {"src": "captura-1.png", "sizes": "780x1688", "type": "image/png", "form_factor": "narrow", "label": "Tu carta del día"},
+    {"src": "captura-2.png", "sizes": "780x1688", "type": "image/png", "form_factor": "narrow", "label": "El ciclo de la luna"}
+  ]
+}

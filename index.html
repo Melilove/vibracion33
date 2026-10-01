@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vibración 33</title>
+<meta name="description" content="Lo visualizo. Lo siento. Lo decreto. Aprende tarot con tu decreto, la luna, tiradas y diario.">
+<meta name="theme-color" content="#14183A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Vibración 33">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --noche:#14183A; --tinta:#1E2452; --tinta-2:#283071; --linea:#38418A;
+  --crema:#F3E6D3; --crema-suave:#C9BFD9; --iris:#7FB6E6; --tenue:#8E88AE;
+  --oro:#F7C948; --naranja:#F28A2E; --rojo:#E23A2A;
+  --fuego:linear-gradient(160deg,#F9D45C 0%,#F28A2E 50%,#E23A2A 100%);
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --sans:"Jost","Avenir Next",system-ui,-apple-system,sans-serif;
+  --nav-h:64px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font-variant-numeric:lining-nums;background:radial-gradient(120% 70% at 50% 0%,#232A63 0%,var(--noche) 60%) fixed,var(--noche);
+  color:var(--crema);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.55;cursor:default}
+:focus-visible{outline:2px solid var(--iris);outline-offset:3px;border-radius:6px}
+
+/* cielo estrellado */
+#cielo{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+#cielo i{position:absolute;width:2px;height:2px;border-radius:50%;background:#F3E6D3;opacity:.15;animation:titila var(--d,5s) ease-in-out var(--r,0s) infinite}
+#cielo i.g{width:3px;height:3px;box-shadow:0 0 6px rgba(247,201,72,.6);background:#F9E7B0}
+@keyframes titila{0%,100%{opacity:.12}50%{opacity:.85}}
+#cielo b{position:absolute;width:90px;height:1px;background:linear-gradient(90deg,rgba(243,230,211,0),rgba(243,230,211,.8));transform:rotate(-24deg);opacity:0;animation:fugaz 11s ease-in 4s infinite}
+@keyframes fugaz{0%{opacity:0;translate:0 0}2%{opacity:1}7%{opacity:0;translate:-260px 120px}100%{opacity:0;translate:-260px 120px}}
+
+.app{position:relative;z-index:1;max-width:560px;margin:0 auto;min-height:100%;
+  padding:calc(env(safe-area-inset-top,0px) + 6px) 20px calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 24px)}
+header.top{display:grid;grid-template-columns:48px 1fr 48px;align-items:center;padding:8px 0 2px}
+.marca{font-family:var(--serif);font-weight:600;font-size:25px;letter-spacing:.05em;margin:0;text-align:center;white-space:nowrap}
+.marca span{background:linear-gradient(90deg,#F7C948,#F28A2E,#E23A2A,#F7C948);background-size:300% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:brillo 7s linear infinite}
+@keyframes brillo{to{background-position:300% 0}}
+.icon-btn{background:none;border:0;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--crema-suave)}
+.icon-btn svg{width:22px;height:22px}
+.icon-btn.der{justify-self:end}
+.idioma-btn{justify-self:start;background:none;border:1px solid var(--linea);border-radius:999px;height:32px;padding:0 11px;font-size:13px;font-weight:500;letter-spacing:.06em;color:var(--crema-suave)}
+
+.vista{display:none}
+.vista.activa{display:block;animation:aparece .45s cubic-bezier(.2,.7,.2,1) both}
+@keyframes aparece{from{opacity:0;transform:translateY(10px)}}
+h2.titulo{font-family:var(--serif);font-weight:500;font-size:31px;line-height:1.15;margin:16px 0 4px}
+.sub{color:var(--crema-suave);margin:0 0 18px;font-size:15px}
+
+/* cartas */
+.carta-svg{display:block;width:100%;height:auto;border-radius:6%/3.6%;transition:transform .5s ease}
+.carta-svg.inv{transform:rotate(180deg)}
+.carta-img{display:block;width:100%;aspect-ratio:1110/1920;object-fit:cover;border-radius:5%/3%;background:var(--tinta-2);
+  transition:transform .5s ease;box-shadow:0 0 0 1px rgba(247,201,72,.25)}
+.carta-img.inv{transform:rotate(180deg)}
+
+/* luna */
+.luna-btn{display:flex;align-items:center;gap:12px;width:100%;background:rgba(30,36,82,.55);border:1px solid var(--linea);
+  border-radius:16px;padding:10px 14px;text-align:left;margin:0 0 6px}
+.luna-btn svg{width:40px;height:40px;flex:none;animation:respira 6s ease-in-out infinite}
+@keyframes respira{0%,100%{filter:drop-shadow(0 0 2px rgba(243,230,211,.2))}50%{filter:drop-shadow(0 0 10px rgba(243,230,211,.55))}}
+.luna-btn b{display:block;font-family:var(--serif);font-weight:600;font-size:19px;line-height:1.2}
+.luna-btn small{color:var(--crema-suave);font-size:13px}
+.luna-grande{width:140px;margin:6px auto 12px;display:block}
+.fases{list-style:none;padding:0;margin:8px 0 0}
+.fases li{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--linea)}
+.fases li svg{width:28px;height:28px;flex:none}
+.fases li span{flex:1}
+.fases li time{color:var(--crema-suave);font-size:14px}
+
+/* hoy */
+.escenario{perspective:1200px;width:min(60vw,240px);margin:14px auto 22px}
+.giro{position:relative;width:100%;aspect-ratio:1110/1920;transform-style:preserve-3d;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.giro.revelada{transform:rotateY(180deg)}
+.cara{position:absolute;inset:0;display:grid;align-items:center;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.cara.frente{transform:rotateY(180deg)}
+.giro .carta-svg.reverso{height:100%}
+.reverso-btn{all:unset;display:block;width:100%;height:100%;cursor:pointer;border-radius:6%/3.6%}
+.reverso-btn:focus-visible{outline:2px solid var(--iris);outline-offset:4px}
+.giro:not(.revelada) .reverso-btn{animation:flota 4s ease-in-out infinite}
+@keyframes flota{0%,100%{transform:translateY(0);filter:drop-shadow(0 6px 10px rgba(0,0,0,.25))}50%{transform:translateY(-8px);filter:drop-shadow(0 0 22px rgba(242,138,46,.4))}}
+.giro.encendida::after{content:"";position:absolute;inset:-16%;border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(249,212,92,.6),rgba(242,138,46,.28) 55%,transparent);animation:llama 1.7s ease-out forwards}
+@keyframes llama{0%{opacity:0;transform:scale(.6)}35%{opacity:1}100%{opacity:0;transform:scale(1.4)}}
+.chispas{position:absolute;inset:0;pointer-events:none}
+.chispas i{position:absolute;left:50%;top:50%;width:6px;height:6px;border-radius:50%;background:var(--oro);box-shadow:0 0 8px var(--naranja);
+  animation:chispa 1.2s ease-out forwards}
+@keyframes chispa{from{opacity:1;transform:translate(-50%,-50%)}to{opacity:0;transform:translate(var(--x),var(--y)) scale(.3)}}
+.lectura{animation:aparece .6s .7s cubic-bezier(.2,.7,.2,1) both}
+.lectura.sin-anim{animation:none}
+
+.campo{display:block;margin:0 0 18px}
+.campo label{display:block;font-size:14px;color:var(--crema-suave);margin-bottom:6px}
+.campo input,.campo textarea{width:100%;background:rgba(30,36,82,.7);border:1px solid var(--linea);border-radius:12px;padding:12px 14px;outline:none;resize:vertical}
+.campo textarea{min-height:130px;font-family:var(--serif);font-size:19px;line-height:1.5}
+.campo input:focus,.campo textarea:focus{border-color:var(--iris)}
+.pista{text-align:center;color:var(--crema-suave);font-family:var(--serif);font-style:italic;font-size:19px;margin:0 0 6px}
+.lectura h3{font-family:var(--serif);font-weight:600;font-size:30px;line-height:1.1;margin:0;text-align:center}
+.orient{text-align:center;color:var(--oro);margin:6px 0 2px;font-size:15px}
+.clave{text-align:center;color:var(--crema-suave);font-style:italic;font-family:var(--serif);font-size:18px;margin:0 0 18px}
+.significado{font-family:var(--serif);font-size:20px;line-height:1.55;margin:0 0 22px;padding-left:14px;border-left:2px solid var(--naranja)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:12px 22px;font-weight:500;
+  background:var(--fuego);color:#2A0E05;transition:transform .15s ease}
+.btn:active{transform:scale(.96)}
+.btn.sec{background:transparent;color:var(--crema);border:1px solid var(--linea)}
+.btn.peligro{background:transparent;color:#FF9C8C;border:1px solid #7A3340}
+.btn.grande{width:100%;padding:15px 22px;font-size:17px}
+.fila-btn{display:flex;gap:10px;flex-wrap:wrap}
+
+/* firma */
+.firma{text-align:center;margin:40px 0 4px;display:grid;gap:2px}
+.firma small{color:var(--tenue);font-size:12px;letter-spacing:.04em}
+.firma strong{font-family:var(--serif);font-style:italic;font-weight:600;font-size:26px;line-height:1.1;
+  background:linear-gradient(90deg,#F9D45C,#F28A2E,#E23A2A,#F9D45C);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:brillo 9s linear infinite}
+.firma span{color:var(--tenue);font-size:12px}
+
+/* mazo */
+.filtros{display:flex;gap:8px;overflow-x:auto;padding:2px 20px 10px;margin:0 -20px;scrollbar-width:none}
+.filtros::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--linea);background:transparent;border-radius:999px;padding:7px 15px;font-size:15px;color:var(--crema-suave);transition:background .2s,color .2s}
+.chip[aria-pressed="true"]{background:var(--crema);color:var(--noche);border-color:var(--crema)}
+.buscar{width:100%;background:rgba(30,36,82,.7);border:1px solid var(--linea);border-radius:12px;padding:11px 14px;margin:0 0 18px;outline:none}
+.buscar:focus{border-color:var(--iris)}
+.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:18px 12px}
+.mini{all:unset;cursor:pointer;display:block;text-align:center;border-radius:8px;transition:transform .2s ease}
+.mini:active{transform:scale(.95)}
+.mini:focus-visible{outline:2px solid var(--iris);outline-offset:4px}
+.mini span{display:block;font-size:13px;line-height:1.25;margin-top:6px;color:var(--crema-suave)}
+.vacio{color:var(--crema-suave);text-align:center;padding:30px 0}
+
+/* dados */
+.modos{display:flex;gap:8px;margin:0 0 16px}
+.mesa{display:flex;justify-content:center;gap:14px;margin:8px 0 18px;min-height:120px;align-items:center}
+.dado{width:96px;height:96px;flex:none}
+.dado svg{width:100%;height:100%;display:block;filter:drop-shadow(0 8px 14px rgba(0,0,0,.35))}
+.mesa.rodando .dado{animation:rueda .9s cubic-bezier(.3,.6,.3,1)}
+.mesa.rodando .dado:nth-child(2){animation-delay:.08s}
+.mesa.rodando .dado:nth-child(3){animation-delay:.16s}
+@keyframes rueda{0%{transform:translateY(0) rotate(0)}30%{transform:translateY(-38px) rotate(200deg)}60%{transform:translateY(0) rotate(330deg)}78%{transform:translateY(-10px) rotate(352deg)}100%{transform:translateY(0) rotate(360deg)}}
+.leyenda{display:flex;justify-content:center;gap:14px;margin:-8px 0 14px;font-size:12px;color:var(--crema-suave)}
+.leyenda span{width:96px;text-align:center}
+.resultado{border:1px solid var(--linea);border-radius:16px;padding:6px 16px;margin:0 0 18px;background:rgba(30,36,82,.45);animation:aparece .5s .5s both}
+.resultado .fila{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid rgba(56,65,138,.6)}
+.resultado .fila:last-child{border-bottom:0}
+.resultado dt{font-size:14px;color:var(--oro)}
+.resultado dd{margin:0;font-family:var(--serif);font-size:19px;line-height:1.35}
+.resultado dd small{display:block;font-family:var(--sans);font-size:14px;color:var(--crema-suave)}
+.suma{text-align:center;font-family:var(--serif);font-size:40px;font-weight:600;margin:0 0 18px;animation:aparece .5s .5s both}
+.suma small{display:block;font-family:var(--sans);font-size:14px;font-weight:400;color:var(--crema-suave)}
+.nota-info{color:var(--crema-suave);font-size:14px;margin:0 0 16px}
+
+/* diario */
+.resumen{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 18px}
+.dato{border:1px solid var(--linea);border-radius:14px;padding:14px}
+.dato b{display:block;font-family:var(--serif);font-weight:600;font-size:26px;line-height:1.1}
+.dato small{color:var(--crema-suave);font-size:13px}
+.barras{border:1px solid var(--linea);border-radius:14px;padding:14px 16px;margin:0 0 26px}
+.barras p{margin:0 0 10px;font-size:14px;color:var(--crema-suave)}
+.barra{display:grid;grid-template-columns:80px 1fr 26px;align-items:center;gap:10px;font-size:14px;margin:6px 0}
+.barra i{display:block;height:8px;border-radius:4px;background:var(--tinta-2);overflow:hidden}
+.barra i em{display:block;height:100%;border-radius:4px;transform-origin:left;animation:crece .9s cubic-bezier(.2,.7,.2,1) both}
+@keyframes crece{from{transform:scaleX(0)}}
+.barra output{text-align:right;color:var(--crema-suave)}
+.entrada{all:unset;cursor:pointer;display:grid;grid-template-columns:56px 1fr;gap:14px;align-items:start;width:100%;padding:14px 0;border-bottom:1px solid rgba(56,65,138,.6)}
+.entrada:focus-visible{outline:2px solid var(--iris);outline-offset:2px}
+.entrada time{font-size:13px;color:var(--crema-suave);display:flex;align-items:center;gap:6px}
+.entrada time svg{width:14px;height:14px}
+.entrada h4{font-family:var(--serif);font-weight:600;font-size:21px;margin:0;line-height:1.2}
+.entrada p{margin:4px 0 0;color:var(--crema-suave);font-size:15px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.entrada .mini-dado{width:56px;height:56px}
+
+/* hoja */
+dialog{border:0;padding:0;background:transparent;color:var(--crema);max-width:none;max-height:none;width:100%;height:100%;margin:0}
+dialog::backdrop{background:rgba(8,10,28,.7)}
+.hoja{position:absolute;left:0;right:0;bottom:0;max-height:92%;overflow-y:auto;max-width:560px;margin:0 auto;background:var(--tinta);
+  border-radius:22px 22px 0 0;padding:14px 20px calc(env(safe-area-inset-bottom,0px) + 28px);animation:sube .38s cubic-bezier(.2,.7,.2,1)}
+@keyframes sube{from{transform:translateY(60px);opacity:0}}
+.asa{width:40px;height:4px;border-radius:2px;background:var(--linea);margin:0 auto 6px}
+.hoja-top{display:flex;justify-content:flex-end;margin:-4px -8px 0}
+.hoja .carta-grande{width:min(52vw,210px);margin:0 auto 18px}
+.hoja h3{font-family:var(--serif);font-weight:600;font-size:30px;line-height:1.1;margin:0;text-align:center}
+.meta{text-align:center;color:var(--crema-suave);font-size:14px;margin:6px 0 4px}
+.seccion{margin:18px 0 0}
+.seccion h4{margin:0 0 6px;font-weight:500;font-size:15px;color:var(--oro)}
+.seccion.inv h4{color:var(--iris)}
+.seccion p{margin:0;font-family:var(--serif);font-size:19px;line-height:1.5}
+.alterna{display:flex;justify-content:center;gap:8px;margin:0 0 6px}
+.guardado{font-size:13px;color:var(--iris);min-height:18px;margin-top:-10px}
+.ajuste{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid var(--linea)}
+.ajuste p{margin:2px 0 0;color:var(--crema-suave);font-size:14px}
+.interruptor{position:relative;width:52px;height:30px;flex:none;appearance:none;-webkit-appearance:none;margin:0;background:var(--linea);border-radius:999px;transition:background .2s}
+.interruptor::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:var(--crema);transition:transform .2s}
+.interruptor:checked{background:var(--naranja)}
+.interruptor:checked::after{transform:translateX(22px)}
+.idiomas{display:grid;gap:10px;margin:14px 0 4px}
+.idiomas button{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--linea);background:transparent;border-radius:14px;padding:14px 16px;font-size:17px}
+.idiomas button[aria-pressed="true"]{border-color:var(--oro);color:var(--oro)}
+
+/* navegación */
+nav.abajo{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(20,24,58,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-top:1px solid rgba(56,65,138,.7);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav.abajo div{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);height:var(--nav-h)}
+nav.abajo button{background:none;border:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--tenue);font-size:12px;transition:color .2s}
+nav.abajo button svg{width:24px;height:24px;transition:transform .25s cubic-bezier(.2,.7,.2,1)}
+nav.abajo button[aria-current="page"]{color:var(--oro)}
+nav.abajo button[aria-current="page"] svg{transform:translateY(-2px) scale(1.08)}
+
+.aviso{position:fixed;left:50%;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 16px);transform:translateX(-50%) translateY(10px);
+  background:var(--crema);color:var(--noche);padding:10px 18px;border-radius:999px;font-size:15px;opacity:0;pointer-events:none;transition:all .25s;z-index:20;white-space:nowrap}
+.aviso.ver{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+svg text{font-variant-numeric:lining-nums}
+
+/* ===== v1.3 ===== */
+header.top{align-items:start}
+.marca-wrap{text-align:center;padding-top:4px}
+.slogan{margin:1px 0 0;font-family:var(--serif);font-style:italic;font-size:14.5px;color:var(--crema-suave);letter-spacing:.02em;white-space:nowrap}
+.icon-btn,.idioma-btn{margin-top:4px}
+nav.abajo div{grid-template-columns:repeat(5,1fr)}
+nav.abajo button{font-size:11.5px}
+
+.racha{border:1px solid var(--linea);border-radius:16px;padding:12px 14px;margin:0 0 10px;background:rgba(30,36,82,.55)}
+.racha-top{display:flex;align-items:center;gap:12px;margin-bottom:9px}
+.racha-fuego{font-size:24px;line-height:1;animation:respira 3s ease-in-out infinite}
+.racha-top div{flex:1}
+.racha-top b{display:block;font-family:var(--serif);font-weight:600;font-size:19px;line-height:1.2}
+.racha-top small{color:var(--crema-suave);font-size:13px}
+.racha-top em{font-style:normal;font-family:var(--serif);font-weight:600;font-size:20px;color:var(--oro)}
+.racha-barra{display:block;height:6px;border-radius:3px;background:var(--tinta-2);overflow:hidden}
+.racha-barra em{display:block;height:100%;border-radius:3px;background:var(--fuego);transform-origin:left;animation:crece 1.1s cubic-bezier(.2,.7,.2,1) both}
+.aviso-luna{display:flex;align-items:center;gap:12px;border:1px solid rgba(247,201,72,.45);border-radius:16px;padding:12px 14px;margin:6px 0 0;
+  background:linear-gradient(120deg,rgba(242,138,46,.14),rgba(30,36,82,.4))}
+.aviso-luna p{margin:0;flex:1;font-size:15px}
+.aviso-luna .btn{padding:9px 14px;font-size:14px;flex:none}
+
+.tres{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:6px 0 18px}
+.slot{text-align:center;background:none;border:0;padding:0}
+.slot .escen{perspective:900px}
+.slot .giro{transition-duration:.9s}
+.slot b{display:block;font-family:var(--serif);font-weight:600;font-size:17px;margin-top:8px;line-height:1.2}
+.slot small{display:block;font-size:12px;color:var(--crema-suave);line-height:1.3}
+.slot .reverso-btn[tabindex="-1"]{opacity:.55}
+.slot.ver{cursor:pointer;color:inherit}
+.aparece{animation:aparece .6s cubic-bezier(.2,.7,.2,1) both}
+.cuenta{display:flex;align-items:center;gap:16px;border:1px solid var(--linea);border-radius:16px;padding:14px 16px;margin:0 0 22px}
+.cuenta b{font-family:var(--serif);font-size:46px;font-weight:600;line-height:1;background:var(--fuego);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cuenta p{margin:0;font-size:15px}
+.subtitulo{font-family:var(--serif);font-weight:600;font-size:22px;margin:0 0 4px}
+
+.progreso{margin:0 0 14px}
+.progreso b{display:block;font-family:var(--serif);font-weight:600;font-size:20px;margin-bottom:6px}
+.escenario.estudio{width:min(56vw,220px);margin:12px auto 16px}
+.respuesta{width:100%;height:100%;background:var(--tinta);border:1px solid var(--oro);border-radius:5%/3%;padding:16px 14px;overflow-y:auto;text-align:center;display:flex;flex-direction:column;justify-content:center}
+.respuesta h3{font-family:var(--serif);font-weight:600;font-size:24px;line-height:1.1;margin:0 0 6px}
+.respuesta .clave{margin:0 0 10px;font-size:16px}
+.respuesta p{margin:0 0 8px;font-family:var(--serif);font-size:16px;line-height:1.35}
+.respuesta .inv-txt{color:var(--iris);font-size:14.5px}
+.fila-btn.duo{display:grid;grid-template-columns:1fr 1fr;margin:0 0 14px}
+
+.numero{display:grid;grid-template-columns:74px 1fr;gap:14px;padding:16px 0;border-bottom:1px solid var(--linea)}
+.num-cifra{font-family:var(--serif);font-weight:600;font-size:56px;line-height:1;text-align:center;background:var(--fuego);-webkit-background-clip:text;background-clip:text;color:transparent}
+.num-txt small{color:var(--oro);font-size:14px}
+.num-txt p{margin:2px 0 10px;font-family:var(--serif);font-size:19px;line-height:1.35}
+.num-carta{display:flex;align-items:center;gap:10px;background:none;border:1px solid var(--linea);border-radius:12px;padding:6px 12px 6px 6px;font-size:14px;text-align:left}
+.num-mini{width:30px;flex:none}
+
+.abanico{position:relative;width:56px;height:97px}
+.abanico > *{position:absolute;width:40px;top:6px}
+.abanico > :nth-child(1){left:0;transform:rotate(-10deg)}
+.abanico > :nth-child(2){left:8px;top:0;z-index:1}
+.abanico > :nth-child(3){left:16px;transform:rotate(10deg);z-index:2}
+.abanico > .inv:nth-child(1){transform:rotate(170deg)}
+.abanico > .inv:nth-child(2){transform:rotate(180deg)}
+.abanico > .inv:nth-child(3){transform:rotate(190deg)}
+.fecha{background:rgba(30,36,82,.7);border:1px solid var(--linea);border-radius:10px;padding:8px 10px;color-scheme:dark;flex:none}
+
+/* ritual */
+.ritual{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;
+  background:radial-gradient(90% 60% at 50% 40%,#2A3170 0%,#14183A 70%);animation:entra .6s ease both}
+@keyframes entra{from{opacity:0}}
+.ritual.sale{animation:salir .7s ease forwards}
+@keyframes salir{to{opacity:0;transform:scale(1.04)}}
+.ritual-sello{width:96px;height:96px;border-radius:24px;margin-bottom:8px;animation:respira 4s ease-in-out infinite}
+.ritual-sello.grande{width:150px;height:150px;border-radius:36px}
+.ritual small{color:var(--crema-suave);font-size:14px;letter-spacing:.04em}
+.frase{margin:0;font-family:var(--serif);font-weight:600;font-size:40px;line-height:1.15;opacity:0;animation:frase 1.1s cubic-bezier(.2,.7,.2,1) forwards}
+.f1{animation-delay:.5s}.f2{animation-delay:1.6s}
+@keyframes frase{from{opacity:0;transform:translateY(14px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+.ritual-btn{font-family:var(--serif);font-size:30px;font-weight:600;padding:10px 34px;margin-top:6px;opacity:0;animation:frase 1.1s 2.7s cubic-bezier(.2,.7,.2,1) forwards, chispea 2.4s 3.8s ease-in-out infinite}
+@keyframes chispea{0%,100%{box-shadow:0 0 0 rgba(242,138,46,0)}50%{box-shadow:0 0 30px rgba(242,138,46,.55)}}
+.ritual-dia{opacity:0;animation:frase .8s 3.4s forwards}
+.celebra-txt{max-width:320px;margin:0;font-family:var(--serif);font-size:20px;opacity:0;animation:frase 1s 1s forwards}
+@media (prefers-reduced-motion:reduce){.frase,.ritual-btn,.ritual-dia,.celebra-txt{opacity:1}}
+
+/* ===== v1.4: navegación flotante con el sello al centro ===== */
+:root{--nav-h:72px}
+.app{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 48px)}
+nav.abajo{left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);background:none;border:0;backdrop-filter:none;-webkit-backdrop-filter:none;padding:0}
+nav.abajo .barra{max-width:536px;margin:0 auto;height:var(--nav-h);display:grid;grid-template-columns:repeat(5,1fr);align-items:center;
+  background:rgba(30,36,82,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(56,65,138,.9);border-radius:26px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+nav.abajo button.centro{position:relative;top:-20px;gap:4px}
+nav.abajo button.centro img{width:62px;height:62px;border-radius:19px;box-shadow:0 0 0 4px #14183A,0 0 22px rgba(242,138,46,.45);transition:transform .25s,box-shadow .25s}
+nav.abajo button.centro[aria-current="page"] img{transform:scale(1.06);box-shadow:0 0 0 4px #14183A,0 0 0 6px #F7C948,0 0 34px rgba(242,138,46,.7)}
+nav.abajo button.centro span{margin-top:-2px}
+.aviso{bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 30px)}
+.pestanas{display:flex;gap:8px;overflow-x:auto;padding:2px 20px 4px;margin:6px -20px 18px;scrollbar-width:none}
+.pestanas::-webkit-scrollbar{display:none}
+.pestanas .chip{padding:8px 16px}
+
+.luna-btn{position:relative}
+.flecha{margin-left:auto;font-size:26px;color:var(--crema-suave)}
+.instalar{margin:10px 0 4px}
+.instalar img{border-radius:12px;flex:none}
+.instalar p{font-size:14px}.instalar small{color:var(--crema-suave)}
+.instalar .btn{width:44px;height:44px;padding:0;font-size:20px}
+.btn.ig{background:linear-gradient(120deg,rgba(242,138,46,.18),rgba(226,58,42,.12));color:var(--crema);border:1px solid rgba(247,201,72,.55)}
+
+.anillo{width:min(86vw,330px);margin:0 auto}
+.anillo > svg{display:block;width:100%;height:auto;overflow:visible}
+.anillo .fase.on{filter:drop-shadow(0 0 8px rgba(247,201,72,.7))}
+.luna-centro{filter:drop-shadow(0 0 18px rgba(243,230,211,.35));animation:respira 6s ease-in-out infinite}
+.luna-nombre{font-family:var(--serif);font-weight:600;font-size:36px;text-align:center;margin:4px 0 0}
+.signo-luna{text-align:center;margin:8px auto 0;padding:6px 16px;border:1px solid rgba(247,201,72,.5);border-radius:999px;width:max-content;font-size:15px}
+.mes-cab{display:flex;justify-content:space-between;align-items:center;margin:0 0 10px}
+.mes-cab b{font-family:var(--serif);font-weight:600;font-size:22px}
+.mes-cab .icon-btn{font-size:28px;color:var(--crema)}
+.calendario{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.calendario .sem{text-align:center;font-size:12px;color:var(--crema-suave);padding-bottom:4px}
+.dia{position:relative;display:flex;flex-direction:column;align-items:center;padding:6px 0 5px;border-radius:12px;min-height:62px}
+.dia svg{width:24px;height:24px}
+.dia span{font-size:13px;margin-top:3px}
+.dia small{font-size:8.5px;line-height:1.1;color:var(--oro);text-align:center;margin-top:1px}
+.dia.evento{background:rgba(247,201,72,.08)}
+.dia.hoy{background:var(--crema);color:var(--noche)}
+.dia.hoy small{color:#8A4B0B}
+.espejo{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--linea)}
+.espejo svg{width:40px;height:40px}
+.espejo b{font-family:var(--serif);font-size:19px;display:block}
+.espejo small{color:var(--crema-suave);font-size:13px;display:block}
+.espejo.vacio-fase{opacity:.5}
+.enlace{background:none;border:0;padding:2px 0;color:var(--oro);font-size:14px;text-align:left;text-decoration:underline;text-underline-offset:3px}
+
+.perfil{border:1px solid var(--linea);border-radius:18px;padding:16px;margin:0 0 14px;background:rgba(30,36,82,.45)}
+.perfil header{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px}
+.perfil h3{font-family:var(--serif);font-weight:600;font-size:26px;margin:0}
+.perfil header small{color:var(--crema-suave);font-size:13px}
+.astro-fila{display:grid;grid-template-columns:38px 1fr 44px;gap:12px;align-items:center;padding:10px 0;border-top:1px solid rgba(56,65,138,.6)}
+.astro-glifo{font-size:28px;text-align:center;color:var(--oro);font-family:"Segoe UI Symbol","Apple Symbols",serif}
+.astro-fila small{color:var(--oro);font-size:12px;letter-spacing:.04em}
+.astro-fila b{display:block;font-family:var(--serif);font-weight:600;font-size:20px;line-height:1.1}
+.astro-fila p{margin:2px 0 0;font-size:13.5px;color:var(--crema-suave)}
+.astro-carta{background:none;border:0;padding:0;text-align:center;font-size:11px;color:var(--crema-suave)}
+.selector{width:100%;background:rgba(30,36,82,.9);border:1px solid var(--linea);border-radius:12px;padding:12px 14px;color:var(--crema);color-scheme:dark}
+.elige{display:grid;grid-template-columns:76px 1fr;gap:14px;align-items:start;padding:12px 0;border-bottom:1px solid var(--linea)}
+.hueco{aspect-ratio:1110/1920;border:1.5px dashed var(--linea);border-radius:8px;display:grid;place-items:center;font-family:var(--serif);font-size:30px;color:var(--crema-suave)}
+.elige-campos label{display:block;margin-bottom:6px}
+.check{display:flex!important;align-items:center;gap:8px;margin-top:8px;font-size:14px;color:var(--crema-suave)}
+.check input{accent-color:var(--naranja);width:18px;height:18px}
+.mini-sig{margin:8px 0 0;font-family:var(--serif);font-size:16px;line-height:1.35}
+.formatos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 4px}
+.formato{display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 10px;border:1px solid var(--linea);border-radius:16px;background:transparent}
+.formato b{font-family:var(--serif);font-size:19px}.formato small{color:var(--crema-suave)}
+.fmt-historia,.fmt-post{display:block;border:2px solid var(--oro);border-radius:6px;background:linear-gradient(#2A3170,#14183A)}
+.fmt-historia{width:34px;height:60px}.fmt-post{width:52px;height:52px;margin:4px 0}
+.voz-btn{opacity:0;animation:frase .8s 2.2s forwards;padding:8px 16px;font-size:14px}
+.grabando{color:#FF9C8C!important;border-color:#FF9C8C!important;animation:respira 1.2s infinite}
+
+</style>
+</head>
+<body>
+<div id="cielo" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="gFuego" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F9D45C"/><stop offset=".5" stop-color="#F28A2E"/><stop offset="1" stop-color="#E23A2A"/></linearGradient>
+  <linearGradient id="gFondo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#262D63"/><stop offset="1" stop-color="#141838"/></linearGradient>
+  <radialGradient id="gOjo"><stop offset=".7" stop-color="#2E44A0"/><stop offset="1" stop-color="#2E44A0" stop-opacity="0"/></radialGradient>
+</defs></svg>
+<div class="app">
+  <header class="top">
+    <button class="idioma-btn" id="idiomaBtn">ES</button>
+    <div class="marca-wrap"><h1 class="marca">Vibración <span>33</span></h1><p class="slogan" id="slogan">Lo visualizo. Lo siento. Lo decreto.</p></div>
+    <button class="icon-btn der" id="abrirAjustes" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+  </header>
+  <main>
+    <section class="vista activa" id="vHoy"></section>
+    <section class="vista" id="vLuna"></section>
+    <section class="vista" id="vEstudio"></section>
+    <section class="vista" id="vTiradas"></section>
+    <section class="vista" id="vDiario"></section>
+  </main>
+</div>
+<nav class="abajo" aria-label="Secciones"><div class="barra">
+  <button data-vista="vLuna" data-t="luna"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg><span>Luna</span></button>
+  <button data-vista="vEstudio" data-t="estudio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg><span>Estudio</span></button>
+  <button data-vista="vHoy" data-t="hoy" class="centro" aria-current="page"><img src="icon-192.png" alt=""><span>Hoy</span></button>
+  <button data-vista="vTiradas" data-t="tiradas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="2.5" y="6" width="7" height="12" rx="1.3" transform="rotate(-12 6 12)"/><rect x="8.5" y="4.5" width="7" height="12" rx="1.3"/><rect x="14.5" y="6" width="7" height="12" rx="1.3" transform="rotate(12 18 12)"/></svg><span>Tiradas</span></button>
+  <button data-vista="vDiario" data-t="diario"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H19v16H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M4 20.5A1.5 1.5 0 0 0 5.5 22H19v-3M9 8h6"/></svg><span>Diario</span></button>
+</div></nav>
+<dialog id="hoja"><div class="hoja" id="hojaCont"></div></dialog>
+<div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+<script>
+/* ===== Datos de Vibración 33 ===== */
+const MAY_BASE=[["✧","Aire"],["☿","Mercurio"],["☽","Luna"],["♀","Venus"],["♈","Aries"],["♉","Tauro"],["♊","Géminis"],["♋","Cáncer"],["♌","Leo"],["♍","Virgo"],["♃","Júpiter"],["♎","Libra"],["▽","Agua"],["♏","Escorpio"],["♐","Sagitario"],["♑","Capricornio"],["♂","Marte"],["♒","Acuario"],["♓","Piscis"],["☉","Sol"],["△","Fuego"],["♄","Saturno"]];
+const MAY_TXT={es:[["El Loco","inicio, libertad, salto de fe","Un comienzo nuevo te invita a confiar y lanzarte, aunque no veas todo el camino.","Imprudencia o miedo a dar el paso: revisa si saltas sin mirar o si te frenas de más."],["El Mago","voluntad, habilidad, manifestación","Tienes las herramientas para hacer realidad lo que te propones; es momento de actuar.","Talento disperso o manipulación: tu energía no está alineada con tu intención."],["La Sacerdotisa","intuición, misterio, saber interior","Escucha tu voz interna; la respuesta llega en silencio, no en la prisa.","Desconexión de tu intuición o secretos ocultos: vuelve hacia adentro."],["La Emperatriz","abundancia, creatividad, cuidado","Momento fértil para crear, cuidar y disfrutar; la abundancia crece cuando te nutres.","Bloqueo creativo o descuido de ti misma: das tanto que te vacías."],["El Emperador","estructura, autoridad, estabilidad","Orden, límites claros y liderazgo: construye bases sólidas.","Rigidez, control excesivo o falta de disciplina."],["El Hierofante","tradición, enseñanza, creencias","Aprender de una maestra, una tradición o una institución; el camino conocido te sostiene.","Cuestionar normas y romper con lo establecido para encontrar tu propia verdad."],["Los Enamorados","amor, elección, valores","Una unión o una decisión importante tomada desde el corazón y tus valores.","Desequilibrio en una relación o una elección que contradice lo que valoras."],["El Carro","determinación, avance, victoria","Avanzas con fuerza de voluntad; mantener el rumbo te lleva a la meta.","Falta de dirección o fuerzas que tiran en sentidos opuestos."],["La Fuerza","coraje, temple, compasión","La verdadera fuerza es suave: paciencia y valentía para domar tus impulsos.","Inseguridad, dudas sobre ti misma o emociones desbordadas."],["El Ermitaño","introspección, soledad, búsqueda","Tiempo de retirarte, reflexionar y buscar tu propia luz.","Aislamiento excesivo o resistencia a mirar hacia adentro."],["La Rueda de la Fortuna","ciclos, destino, cambio","La vida gira: un cambio de ciclo trae oportunidades.","Resistencia al cambio o sensación de mala racha; lo que baja también vuelve a subir."],["La Justicia","verdad, equilibrio, causa y efecto","Decisiones justas y honestas: cosechas lo que siembras.","Injusticia, evasión de responsabilidades o autoengaño."],["El Colgado","pausa, rendición, nueva perspectiva","Detenerte y mirar desde otro ángulo revela lo que no veías.","Estancamiento, sacrificios inútiles o resistencia a soltar."],["La Muerte","transformación, cierre, renacer","Un ciclo termina para que otro comience; soltar abre espacio a lo nuevo.","Miedo al cambio o aferrarte a lo que ya cumplió su ciclo."],["La Templanza","equilibrio, paciencia, armonía","Mezclar con calma los opuestos: el punto medio sana.","Excesos, impaciencia o desequilibrio."],["El Diablo","apego, tentación, sombra","Mira lo que te ata —hábitos, miedos, relaciones—; las cadenas suelen estar sueltas.","Liberación: rompes un apego o reconoces tu sombra."],["La Torre","ruptura, revelación, despertar","Algo construido sobre bases falsas cae; duele, pero libera.","Evitar un cambio inevitable, o una crisis interna más silenciosa."],["La Estrella","esperanza, sanación, inspiración","Después de la tormenta llega la calma: confía y renueva tu fe.","Desánimo o desconexión de tu propósito; tu luz sigue ahí."],["La Luna","intuición, ilusión, inconsciente","No todo es lo que parece: navega la incertidumbre con tu intuición.","Se disipan confusiones y miedos; la verdad sale a la luz."],["El Sol","alegría, éxito, vitalidad","Claridad, celebración y energía positiva: brillas.","Alegría opacada o exceso de optimismo; tu niña interior pide atención."],["El Juicio","llamado, renacimiento, evaluación","Despiertas a un propósito mayor: momento de evaluar y renacer.","Autocrítica dura o ignorar un llamado interior."],["El Mundo","logro, integración, cierre de ciclo","Completas una etapa con plenitud: celebra lo recorrido.","Algo queda pendiente para cerrar el ciclo; falta un último paso."]],
+en:[["The Fool","beginnings, freedom, leap of faith","A new beginning invites you to trust and jump in, even if you can't see the whole path.","Recklessness or fear of taking the step: check whether you're leaping blindly or holding back too much."],["The Magician","willpower, skill, manifestation","You have the tools to make your intention real; it's time to act.","Scattered talent or manipulation: your energy isn't aligned with your intention."],["The High Priestess","intuition, mystery, inner knowing","Listen to your inner voice; the answer comes in silence, not in a rush.","Disconnected from your intuition, or hidden secrets: turn inward."],["The Empress","abundance, creativity, nurturing","A fertile time to create, nurture and enjoy; abundance grows when you nourish yourself.","Creative block or self-neglect: you give so much that you run empty."],["The Emperor","structure, authority, stability","Order, clear boundaries and leadership: build solid foundations.","Rigidity, excessive control or lack of discipline."],["The Hierophant","tradition, teaching, beliefs","Learning from a teacher, a tradition or an institution; the known path supports you.","Questioning norms and breaking with convention to find your own truth."],["The Lovers","love, choice, values","A union or an important decision made from the heart and your values.","Imbalance in a relationship, or a choice that contradicts what you value."],["The Chariot","determination, progress, victory","You move forward with willpower; holding your course takes you to the goal.","Lack of direction, or forces pulling in opposite ways."],["Strength","courage, composure, compassion","True strength is gentle: patience and bravery to tame your impulses.","Insecurity, self-doubt or overflowing emotions."],["The Hermit","introspection, solitude, search","Time to withdraw, reflect and seek your own light.","Excessive isolation, or resisting looking within."],["Wheel of Fortune","cycles, destiny, change","Life turns: a new cycle brings opportunities.","Resisting change or feeling a bad streak; what goes down comes back up."],["Justice","truth, balance, cause and effect","Fair, honest decisions: you reap what you sow.","Injustice, avoiding responsibility or self-deception."],["The Hanged Man","pause, surrender, new perspective","Stopping and looking from another angle reveals what you couldn't see.","Stagnation, pointless sacrifice or resistance to letting go."],["Death","transformation, endings, rebirth","One cycle ends so another can begin; letting go makes room for the new.","Fear of change, or clinging to what has run its course."],["Temperance","balance, patience, harmony","Blend opposites calmly: the middle path heals.","Excess, impatience or imbalance."],["The Devil","attachment, temptation, shadow","Look at what binds you — habits, fears, relationships; the chains are often loose.","Release: you break an attachment or face your shadow."],["The Tower","upheaval, revelation, awakening","Something built on false foundations falls; it hurts, but it frees you.","Avoiding an inevitable change, or a quieter inner crisis."],["The Star","hope, healing, inspiration","After the storm comes calm: trust and renew your faith.","Discouragement or disconnection from your purpose; your light is still there."],["The Moon","intuition, illusion, the unconscious","Not everything is as it seems: navigate uncertainty with your intuition.","Confusion and fears clear; the truth comes to light."],["The Sun","joy, success, vitality","Clarity, celebration and positive energy: you shine.","Dimmed joy or too much optimism; your inner child needs attention."],["Judgement","calling, rebirth, evaluation","You awaken to a greater purpose: time to evaluate and be reborn.","Harsh self-criticism or ignoring an inner calling."],["The World","completion, integration, end of a cycle","You complete a stage fully: celebrate how far you've come.","Something is still pending to close the cycle; one last step remains."]],
+it:[["Il Matto","inizio, libertà, salto di fede","Un nuovo inizio ti invita a fidarti e lanciarti, anche se non vedi tutto il cammino.","Imprudenza o paura di fare il passo: chiediti se salti alla cieca o se ti trattieni troppo."],["Il Mago","volontà, abilità, manifestazione","Hai gli strumenti per realizzare ciò che desideri: è il momento di agire.","Talento disperso o manipolazione: la tua energia non è allineata con la tua intenzione."],["La Papessa","intuizione, mistero, sapere interiore","Ascolta la tua voce interiore; la risposta arriva nel silenzio, non nella fretta.","Disconnessione dall'intuizione o segreti nascosti: torna dentro di te."],["L'Imperatrice","abbondanza, creatività, cura","Momento fertile per creare, curare e godere; l'abbondanza cresce quando ti nutri.","Blocco creativo o trascuratezza verso te stessa: dai tanto da svuotarti."],["L'Imperatore","struttura, autorità, stabilità","Ordine, limiti chiari e leadership: costruisci basi solide.","Rigidità, controllo eccessivo o mancanza di disciplina."],["Il Papa","tradizione, insegnamento, credenze","Imparare da una guida, una tradizione o un'istituzione; la via conosciuta ti sostiene.","Mettere in discussione le regole per trovare la tua verità."],["Gli Amanti","amore, scelta, valori","Un'unione o una decisione importante presa con il cuore e i tuoi valori.","Squilibrio in una relazione o una scelta contraria ai tuoi valori."],["Il Carro","determinazione, avanzamento, vittoria","Avanzi con forza di volontà; mantenere la rotta ti porta alla meta.","Mancanza di direzione o forze che tirano in direzioni opposte."],["La Forza","coraggio, temperamento, compassione","La vera forza è dolce: pazienza e coraggio per domare gli impulsi.","Insicurezza, dubbi su te stessa o emozioni travolgenti."],["L'Eremita","introspezione, solitudine, ricerca","Tempo di ritirarti, riflettere e cercare la tua luce.","Isolamento eccessivo o resistenza a guardarti dentro."],["La Ruota della Fortuna","cicli, destino, cambiamento","La vita gira: un nuovo ciclo porta opportunità.","Resistenza al cambiamento o un periodo sfortunato; ciò che scende torna a salire."],["La Giustizia","verità, equilibrio, causa ed effetto","Decisioni giuste e oneste: raccogli ciò che semini.","Ingiustizia, fuga dalle responsabilità o autoinganno."],["L'Appeso","pausa, resa, nuova prospettiva","Fermarti e guardare da un'altra angolazione rivela ciò che non vedevi.","Stallo, sacrifici inutili o resistenza a lasciar andare."],["La Morte","trasformazione, chiusura, rinascita","Un ciclo finisce perché un altro inizi; lasciar andare fa spazio al nuovo.","Paura del cambiamento o attaccamento a ciò che ha esaurito il suo ciclo."],["La Temperanza","equilibrio, pazienza, armonia","Unire gli opposti con calma: la via di mezzo guarisce.","Eccessi, impazienza o squilibrio."],["Il Diavolo","attaccamento, tentazione, ombra","Guarda ciò che ti lega — abitudini, paure, relazioni; spesso le catene sono allentate.","Liberazione: rompi un attaccamento o riconosci la tua ombra."],["La Torre","rottura, rivelazione, risveglio","Ciò che è costruito su basi false crolla; fa male, ma libera.","Evitare un cambiamento inevitabile o una crisi interiore più silenziosa."],["La Stella","speranza, guarigione, ispirazione","Dopo la tempesta arriva la calma: fidati e rinnova la tua fede.","Scoraggiamento o distacco dal tuo scopo; la tua luce è ancora lì."],["La Luna","intuizione, illusione, inconscio","Non tutto è come sembra: attraversa l'incertezza con l'intuizione.","Confusione e paure si dissolvono; la verità viene a galla."],["Il Sole","gioia, successo, vitalità","Chiarezza, festa ed energia positiva: brilli.","Gioia offuscata o troppo ottimismo; la tua bambina interiore chiede attenzione."],["Il Giudizio","chiamata, rinascita, valutazione","Ti risvegli a uno scopo più grande: tempo di valutare e rinascere.","Autocritica severa o ignorare una chiamata interiore."],["Il Mondo","realizzazione, integrazione, fine di un ciclo","Completi una tappa con pienezza: celebra il cammino fatto.","Qualcosa resta in sospeso per chiudere il ciclo; manca un ultimo passo."]]};
+const MEN_TXT={es:{"bastos":[["inspiración, nuevo proyecto, chispa","Nace una idea o una pasión con mucha energía: enciéndela.","Retrasos o falta de motivación para empezar."],["planificación, decisión, visión","Planificas tu siguiente paso con el mundo frente a ti.","Miedo a lo desconocido o planes que no se concretan."],["expansión, perspectiva, espera","Tus esfuerzos empiezan a dar frutos: mira más lejos.","Obstáculos para crecer o expectativas frustradas."],["celebración, hogar, estabilidad","Momento de celebrar logros y disfrutar en comunidad.","Tensiones en el hogar o una celebración postergada."],["conflicto, competencia, roces","Choques de ideas o competencia: pueden estimularte o desgastarte.","Evitar conflictos, o resolver por fin una tensión."],["victoria, reconocimiento, confianza","Éxito y reconocimiento por tu esfuerzo.","Inseguridad, falta de reconocimiento o ego inflado."],["defensa, perseverancia, postura","Defiendes tu lugar y tus convicciones con firmeza.","Agotamiento de vivir a la defensiva, o ceder bajo presión."],["rapidez, movimiento, noticias","Las cosas avanzan rápido: noticias o viajes en camino.","Retrasos, prisas o energía dispersa."],["resiliencia, cansancio, última prueba","Estás cansada pero cerca: resiste un poco más.","Agotamiento o actitud excesivamente defensiva."],["carga, responsabilidad, sobreexigencia","Llevas demasiado peso: revisa qué puedes soltar o delegar.","Liberarte de cargas, o colapsar por no soltarlas."],["entusiasmo, exploración, mensaje","Curiosidad y ganas de explorar algo nuevo.","Ideas sin dirección o impaciencia."],["acción, aventura, impulso","Te lanzas con pasión hacia lo que quieres.","Impulsividad, imprudencia o frustración."],["confianza, carisma, determinación","Brillas con seguridad, calidez y valentía.","Inseguridad, celos o energía agotada."],["liderazgo, visión, emprendimiento","Lideras con visión y capacidad de inspirar.","Autoritarismo, impulsividad o expectativas demasiado altas."]],"copas":[["amor nuevo, emoción, apertura","Se abre tu corazón: amor, compasión o un vínculo nuevo.","Emociones bloqueadas o amor propio descuidado."],["unión, conexión, reciprocidad","Un vínculo equilibrado y mutuo: atracción o alianza.","Desequilibrio o desconexión en una relación."],["amistad, celebración, comunidad","Alegría compartida con amigas y comunidad.","Excesos, chismes o sentirte excluida."],["apatía, contemplación, insatisfacción","Ensimismamiento: no ves la oportunidad que te ofrecen.","Despertar y abrirte de nuevo a lo que llega."],["pérdida, duelo, arrepentimiento","Lamentas lo perdido, pero aún quedan copas en pie detrás tuyo.","Aceptación: empiezas a sanar."],["nostalgia, infancia, recuerdos","Recuerdos dulces, inocencia o reencuentros del pasado.","Vivir anclada en el pasado; es tiempo de avanzar."],["opciones, fantasía, ilusión","Muchas opciones y sueños: distingue lo real de lo ilusorio.","Claridad para elegir; la confusión se disipa."],["partida, búsqueda, soltar","Te alejas de algo que ya no te llena para buscar más sentido.","Miedo a partir, o quedarte por costumbre."],["satisfacción, deseo cumplido, gratitud","La carta de los deseos: plenitud y gratitud.","Insatisfacción, o buscar afuera lo que está adentro."],["plenitud, familia, armonía","Felicidad emocional y armonía en tus vínculos.","Tensiones familiares o ideales que no calzan con la realidad."],["sensibilidad, mensaje, intuición creativa","Una sorpresa emocional o una intuición creativa.","Inmadurez emocional o bloqueo creativo."],["romance, encanto, propuesta","Sigues al corazón: propuestas o invitaciones.","Ilusiones, cambios de humor o promesas vacías."],["empatía, intuición, contención","Compasión, intuición profunda y cuidado.","Absorber emociones ajenas o descuidarte."],["calma, madurez emocional, sabiduría","Manejas tus emociones con madurez y serenidad.","Represión emocional o manipulación."]],"espadas":[["claridad, verdad, idea","Una idea clara corta la confusión; la verdad se revela.","Confusión mental o mal uso de las palabras."],["indecisión, bloqueo, tregua","Evitas decidir; quitarte la venda es necesario.","Información nueva que destraba una decisión, o sobrecarga."],["dolor, desamor, herida","Una verdad dolorosa o pena del corazón; reconocerla sana.","Recuperación y liberación del dolor."],["descanso, recuperación, pausa","Necesitas descansar y recuperar fuerzas.","Agotamiento, o volver a la actividad."],["conflicto, derrota, ego","Ganar a cualquier costo deja heridas: elige tus batallas.","Reconciliación o soltar resentimientos."],["transición, avance, alejarse","Dejas atrás aguas turbulentas hacia algo más tranquilo.","Resistencia a avanzar o asuntos sin resolver."],["estrategia, engaño, sigilo","Actuar con astucia; ojo con engaños propios o ajenos.","Confesión o verdades que salen a la luz."],["restricción, miedo, sentirse atrapada","Te sientes atrapada, pero las ataduras son más mentales que reales.","Liberación y nuevas perspectivas."],["ansiedad, preocupación, insomnio","Los miedos crecen de noche; no todo es tan grave como parece.","Esperanza: la ansiedad empieza a ceder."],["final, fondo, cierre doloroso","Tocas fondo, y desde aquí solo se puede subir.","Recuperación lenta o resistencia a un final inevitable."],["curiosidad, mente aguda, vigilancia","Ganas de aprender y comunicar ideas nuevas.","Chismes, palabras impulsivas o mente dispersa."],["rapidez, ambición, franqueza","Avanzas veloz con ideas claras y determinación.","Precipitación o palabras hirientes."],["lucidez, independencia, honestidad","Juicio claro, límites firmes y verdad sin rodeos.","Frialdad, amargura o dureza excesiva."],["autoridad, razón, ética","Decisiones racionales y justas desde la claridad.","Abuso de poder o manipulación con la razón."]],"oros":[["oportunidad, prosperidad, inicio","Una oportunidad concreta de prosperidad: trabajo, dinero o salud.","Oportunidad perdida o mala planificación."],["equilibrio, adaptación, malabarismo","Equilibras varias responsabilidades con flexibilidad.","Desorden o demasiados frentes abiertos."],["colaboración, oficio, aprendizaje","Trabajo en equipo y reconocimiento de tus habilidades.","Falta de cooperación o trabajo descuidado."],["seguridad, control, ahorro","Proteges lo que tienes; cuida no aferrarte de más.","Soltar el control, o gastar sin medida."],["escasez, dificultad, exclusión","Tiempos difíciles; la ayuda está más cerca de lo que crees.","Recuperación: sales de una mala racha."],["generosidad, dar y recibir","Compartir recursos y recibir apoyo.","Deudas, desigualdad o dar con condiciones."],["paciencia, inversión, evaluación","Tu esfuerzo crece lento: evalúa y ten paciencia.","Impaciencia o esfuerzo sin resultados."],["dedicación, maestría, práctica","Perfeccionas tu oficio con constancia.","Perfeccionismo o falta de enfoque."],["independencia, logro, disfrute","Disfrutas los frutos de tu trabajo con autonomía.","Dependencia económica o exceso de trabajo."],["legado, riqueza, estabilidad","Prosperidad duradera y bases sólidas.","Inestabilidad o conflictos familiares por bienes."],["estudio, ambición, nuevas metas","Ganas de aprender y empezar algo concreto.","Falta de avance o procrastinación."],["constancia, responsabilidad, rutina","Avanzas paso a paso con trabajo constante.","Estancamiento, aburrimiento o pereza."],["abundancia práctica, cuidado, hogar","Nutres tu hogar y tu bienestar con sentido práctico.","Descuido personal o desequilibrio entre trabajo y hogar."],["prosperidad, liderazgo, seguridad","Éxito material y liderazgo estable.","Materialismo o rigidez con el dinero."]]},
+en:{"bastos":[["inspiration, new project, spark","A new idea or passion is born with lots of energy: light it up.","Delays or lack of motivation to start."],["planning, decision, vision","You plan your next step with the world before you.","Fear of the unknown, or plans that don't take shape."],["expansion, perspective, waiting","Your efforts start to bear fruit: look further ahead.","Obstacles to growth or frustrated expectations."],["celebration, home, stability","A time to celebrate achievements and enjoy community.","Tension at home or a postponed celebration."],["conflict, competition, friction","Clashing ideas or competition: they can fuel you or wear you down.","Avoiding conflict, or finally resolving a tension."],["victory, recognition, confidence","Success and recognition for your effort.","Insecurity, lack of recognition or an inflated ego."],["defense, perseverance, stance","You defend your place and convictions firmly.","Exhaustion from always being on guard, or giving in under pressure."],["speed, movement, news","Things move fast: news or travel on the way.","Delays, haste or scattered energy."],["resilience, fatigue, final test","You're tired but close: hold on a little longer.","Exhaustion or an overly defensive attitude."],["burden, responsibility, overload","You're carrying too much: see what you can drop or delegate.","Releasing burdens, or collapsing from not letting go."],["enthusiasm, exploration, message","Curiosity and the urge to explore something new.","Ideas without direction, or impatience."],["action, adventure, drive","You throw yourself passionately toward what you want.","Impulsiveness, recklessness or frustration."],["confidence, charisma, determination","You shine with confidence, warmth and courage.","Insecurity, jealousy or drained energy."],["leadership, vision, entrepreneurship","You lead with vision and the ability to inspire.","Authoritarianism, impulsiveness or unrealistic expectations."]],"copas":[["new love, emotion, openness","Your heart opens: love, compassion or a new bond.","Blocked emotions or neglected self-love."],["union, connection, reciprocity","A balanced, mutual bond: attraction or alliance.","Imbalance or disconnection in a relationship."],["friendship, celebration, community","Joy shared with friends and community.","Excess, gossip or feeling left out."],["apathy, contemplation, dissatisfaction","Self-absorption: you don't see the opportunity being offered.","Waking up and opening again to what comes."],["loss, grief, regret","You mourn what was lost, yet cups still stand behind you.","Acceptance: you begin to heal."],["nostalgia, childhood, memories","Sweet memories, innocence or reunions from the past.","Living anchored in the past; it's time to move on."],["options, fantasy, illusion","Many options and dreams: tell the real from the illusory.","Clarity to choose; the confusion fades."],["departure, search, letting go","You walk away from what no longer fulfills you to seek more meaning.","Fear of leaving, or staying out of habit."],["satisfaction, wish fulfilled, gratitude","The wish card: fulfillment and gratitude.","Dissatisfaction, or seeking outside what lies within."],["fulfillment, family, harmony","Emotional happiness and harmony in your bonds.","Family tension or ideals that don't match reality."],["sensitivity, message, creative intuition","An emotional surprise or a creative intuition.","Emotional immaturity or creative block."],["romance, charm, proposal","You follow your heart: proposals or invitations.","Illusions, mood swings or empty promises."],["empathy, intuition, emotional care","Compassion, deep intuition and support.","Absorbing others' emotions or neglecting yourself."],["calm, emotional maturity, wisdom","You handle your emotions with maturity and serenity.","Emotional repression or manipulation."]],"espadas":[["clarity, truth, idea","A clear idea cuts through confusion; the truth is revealed.","Mental confusion or misuse of words."],["indecision, stalemate, truce","You avoid deciding; removing the blindfold is necessary.","New information that unblocks a decision, or overload."],["pain, heartbreak, wound","A painful truth or heartache; acknowledging it heals.","Recovery and release from pain."],["rest, recovery, pause","You need to rest and regain strength.","Exhaustion, or returning to activity."],["conflict, defeat, ego","Winning at any cost leaves wounds: choose your battles.","Reconciliation or letting go of resentment."],["transition, moving on, leaving","You leave rough waters behind for calmer ones.","Resistance to moving on, or unresolved issues."],["strategy, deception, stealth","Act cleverly; watch out for deception, your own or others'.","Confession, or truths coming to light."],["restriction, fear, feeling trapped","You feel trapped, but the ties are more mental than real.","Release and new perspectives."],["anxiety, worry, sleeplessness","Fears grow at night; not everything is as bad as it seems.","Hope: the anxiety begins to ease."],["ending, rock bottom, painful closure","You hit bottom, and from here the only way is up.","Slow recovery or resisting an inevitable end."],["curiosity, sharp mind, vigilance","Eager to learn and share new ideas.","Gossip, rash words or a scattered mind."],["speed, ambition, bluntness","You move fast with clear ideas and determination.","Haste or hurtful words."],["lucidity, independence, honesty","Clear judgment, firm boundaries and plain truth.","Coldness, bitterness or excessive harshness."],["authority, reason, ethics","Rational, fair decisions born from clarity.","Abuse of power or manipulation through reason."]],"oros":[["opportunity, prosperity, beginning","A concrete chance for prosperity: work, money or health.","Missed opportunity or poor planning."],["balance, adaptability, juggling","You balance several responsibilities with flexibility.","Disorder or too many open fronts."],["collaboration, craft, learning","Teamwork and recognition of your skills.","Lack of cooperation or careless work."],["security, control, saving","You protect what you have; take care not to cling too tightly.","Releasing control, or spending without measure."],["scarcity, hardship, exclusion","Hard times; help is closer than you think.","Recovery: you leave a bad streak behind."],["generosity, giving and receiving","Sharing resources and receiving support.","Debts, inequality or giving with strings attached."],["patience, investment, assessment","Your effort grows slowly: assess and be patient.","Impatience or effort without results."],["dedication, mastery, practice","You refine your craft with consistency.","Perfectionism or lack of focus."],["independence, achievement, enjoyment","You enjoy the fruits of your work with autonomy.","Financial dependence or overwork."],["legacy, wealth, stability","Lasting prosperity and solid foundations.","Instability or family conflicts over assets."],["study, ambition, new goals","Eager to learn and start something concrete.","Lack of progress or procrastination."],["consistency, responsibility, routine","You move forward step by step with steady work.","Stagnation, boredom or laziness."],["practical abundance, care, home","You nurture your home and wellbeing with practical sense.","Self-neglect or imbalance between work and home."],["prosperity, leadership, security","Material success and stable leadership.","Materialism or rigidity with money."]]},
+it:{"bastos":[["ispirazione, nuovo progetto, scintilla","Nasce un'idea o una passione piena di energia: accendila.","Ritardi o mancanza di motivazione per iniziare."],["pianificazione, decisione, visione","Pianifichi il prossimo passo con il mondo davanti a te.","Paura dell'ignoto o piani che non si concretizzano."],["espansione, prospettiva, attesa","I tuoi sforzi iniziano a dare frutti: guarda più lontano.","Ostacoli alla crescita o aspettative deluse."],["celebrazione, casa, stabilità","Momento di festeggiare i traguardi e godere della comunità.","Tensioni in casa o una festa rimandata."],["conflitto, competizione, attriti","Scontri di idee o competizione: possono stimolarti o logorarti.","Evitare i conflitti, o risolvere finalmente una tensione."],["vittoria, riconoscimento, fiducia","Successo e riconoscimento per il tuo impegno.","Insicurezza, mancanza di riconoscimento o ego gonfiato."],["difesa, perseveranza, posizione","Difendi il tuo posto e le tue convinzioni con fermezza.","Stanchezza di stare sempre sulla difensiva, o cedere alla pressione."],["rapidità, movimento, notizie","Le cose avanzano in fretta: notizie o viaggi in arrivo.","Ritardi, fretta o energia dispersa."],["resilienza, stanchezza, ultima prova","Sei stanca ma vicina: resisti ancora un po'.","Esaurimento o atteggiamento troppo difensivo."],["peso, responsabilità, sovraccarico","Porti troppo peso: vedi cosa puoi lasciare o delegare.","Liberarti dei pesi, o crollare per non lasciarli."],["entusiasmo, esplorazione, messaggio","Curiosità e voglia di esplorare qualcosa di nuovo.","Idee senza direzione o impazienza."],["azione, avventura, slancio","Ti lanci con passione verso ciò che desideri.","Impulsività, imprudenza o frustrazione."],["fiducia, carisma, determinazione","Brilli di sicurezza, calore e coraggio.","Insicurezza, gelosia o energia esaurita."],["leadership, visione, intraprendenza","Guidi con visione e capacità di ispirare.","Autoritarismo, impulsività o aspettative troppo alte."]],"copas":[["nuovo amore, emozione, apertura","Il tuo cuore si apre: amore, compassione o un nuovo legame.","Emozioni bloccate o amore per te stessa trascurato."],["unione, connessione, reciprocità","Un legame equilibrato e reciproco: attrazione o alleanza.","Squilibrio o distanza in una relazione."],["amicizia, celebrazione, comunità","Gioia condivisa con le amiche e la comunità.","Eccessi, pettegolezzi o sentirti esclusa."],["apatia, contemplazione, insoddisfazione","Chiusura in te stessa: non vedi l'opportunità che ti offrono.","Risveglio: ti apri di nuovo a ciò che arriva."],["perdita, lutto, rimpianto","Piangi ciò che hai perso, ma dietro di te restano coppe in piedi.","Accettazione: inizi a guarire."],["nostalgia, infanzia, ricordi","Ricordi dolci, innocenza o incontri dal passato.","Vivere ancorata al passato; è tempo di andare avanti."],["opzioni, fantasia, illusione","Molte opzioni e sogni: distingui il reale dall'illusorio.","Chiarezza per scegliere; la confusione si dissolve."],["partenza, ricerca, lasciar andare","Ti allontani da ciò che non ti appaga per cercare più senso.","Paura di partire, o restare per abitudine."],["soddisfazione, desiderio realizzato, gratitudine","La carta dei desideri: pienezza e gratitudine.","Insoddisfazione, o cercare fuori ciò che è dentro."],["pienezza, famiglia, armonia","Felicità emotiva e armonia nei tuoi legami.","Tensioni familiari o ideali lontani dalla realtà."],["sensibilità, messaggio, intuizione creativa","Una sorpresa emotiva o un'intuizione creativa.","Immaturità emotiva o blocco creativo."],["romanticismo, fascino, proposta","Segui il cuore: proposte o inviti.","Illusioni, sbalzi d'umore o promesse vuote."],["empatia, intuizione, cura","Compassione, intuizione profonda e accoglienza.","Assorbire le emozioni altrui o trascurarti."],["calma, maturità emotiva, saggezza","Gestisci le emozioni con maturità e serenità.","Repressione emotiva o manipolazione."]],"espadas":[["chiarezza, verità, idea","Un'idea chiara taglia la confusione; la verità si rivela.","Confusione mentale o cattivo uso delle parole."],["indecisione, stallo, tregua","Eviti di decidere; togliere la benda è necessario.","Nuove informazioni sbloccano una decisione, o sovraccarico."],["dolore, delusione d'amore, ferita","Una verità dolorosa o un dolore del cuore; riconoscerlo guarisce.","Guarigione e liberazione dal dolore."],["riposo, recupero, pausa","Hai bisogno di riposare e recuperare le forze.","Esaurimento, o ritorno all'attività."],["conflitto, sconfitta, ego","Vincere a ogni costo lascia ferite: scegli le tue battaglie.","Riconciliazione o lasciar andare il rancore."],["transizione, avanzare, allontanarsi","Lasci acque agitate verso qualcosa di più tranquillo.","Resistenza ad andare avanti o questioni irrisolte."],["strategia, inganno, astuzia","Agisci con astuzia; attenzione agli inganni, tuoi o altrui.","Confessione o verità che vengono a galla."],["restrizione, paura, sentirsi in trappola","Ti senti intrappolata, ma i legami sono più mentali che reali.","Liberazione e nuove prospettive."],["ansia, preoccupazione, insonnia","Le paure crescono di notte; non tutto è grave come sembra.","Speranza: l'ansia inizia a calare."],["fine, fondo, chiusura dolorosa","Tocchi il fondo, e da qui si può solo risalire.","Lenta ripresa o resistenza a una fine inevitabile."],["curiosità, mente acuta, vigilanza","Voglia di imparare e comunicare idee nuove.","Pettegolezzi, parole impulsive o mente dispersa."],["rapidità, ambizione, franchezza","Avanzi veloce con idee chiare e determinazione.","Precipitazione o parole che feriscono."],["lucidità, indipendenza, onestà","Giudizio chiaro, limiti fermi e verità senza giri di parole.","Freddezza, amarezza o durezza eccessiva."],["autorità, ragione, etica","Decisioni razionali e giuste nate dalla chiarezza.","Abuso di potere o manipolazione con la ragione."]],"oros":[["opportunità, prosperità, inizio","Un'opportunità concreta di prosperità: lavoro, denaro o salute.","Opportunità persa o cattiva pianificazione."],["equilibrio, adattamento, giocoleria","Bilanci varie responsabilità con flessibilità.","Disordine o troppi fronti aperti."],["collaborazione, mestiere, apprendimento","Lavoro di squadra e riconoscimento delle tue capacità.","Mancanza di cooperazione o lavoro trascurato."],["sicurezza, controllo, risparmio","Proteggi ciò che hai; attenta a non aggrapparti troppo.","Lasciare il controllo, o spendere senza misura."],["scarsità, difficoltà, esclusione","Tempi difficili; l'aiuto è più vicino di quanto credi.","Ripresa: esci da un periodo negativo."],["generosità, dare e ricevere","Condividere risorse e ricevere sostegno.","Debiti, disuguaglianza o dare con condizioni."],["pazienza, investimento, valutazione","Il tuo impegno cresce piano: valuta e abbi pazienza.","Impazienza o sforzo senza risultati."],["dedizione, maestria, pratica","Perfezioni il tuo mestiere con costanza.","Perfezionismo o mancanza di concentrazione."],["indipendenza, conquista, piacere","Godi i frutti del tuo lavoro in autonomia.","Dipendenza economica o troppo lavoro."],["eredità, ricchezza, stabilità","Prosperità duratura e basi solide.","Instabilità o conflitti familiari per beni."],["studio, ambizione, nuovi obiettivi","Voglia di imparare e iniziare qualcosa di concreto.","Mancanza di progressi o procrastinazione."],["costanza, responsabilità, routine","Avanzi passo dopo passo con lavoro costante.","Stallo, noia o pigrizia."],["abbondanza pratica, cura, casa","Nutri la tua casa e il tuo benessere con senso pratico.","Trascuratezza o squilibrio tra lavoro e casa."],["prosperità, leadership, sicurezza","Successo materiale e leadership stabile.","Materialismo o rigidità con il denaro."]]}};
+const RWS={"m0":["https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/RWS_Tarot_00_Fool.jpg/500px-RWS_Tarot_00_Fool.jpg","https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg"],"m1":["https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/RWS_Tarot_01_Magician.jpg/500px-RWS_Tarot_01_Magician.jpg","https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg"],"m2":["https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/RWS_Tarot_02_High_Priestess.jpg/500px-RWS_Tarot_02_High_Priestess.jpg","https://upload.wikimedia.org/wikipedia/commons/8/88/RWS_Tarot_02_High_Priestess.jpg"],"m3":["https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/RWS_Tarot_03_Empress.jpg/500px-RWS_Tarot_03_Empress.jpg","https://upload.wikimedia.org/wikipedia/commons/d/d2/RWS_Tarot_03_Empress.jpg"],"m4":["https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/RWS_Tarot_04_Emperor.jpg/500px-RWS_Tarot_04_Emperor.jpg","https://upload.wikimedia.org/wikipedia/commons/c/c3/RWS_Tarot_04_Emperor.jpg"],"m5":["https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/RWS_Tarot_05_Hierophant.jpg/500px-RWS_Tarot_05_Hierophant.jpg","https://upload.wikimedia.org/wikipedia/commons/8/8d/RWS_Tarot_05_Hierophant.jpg"],"m6":["https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/RWS_Tarot_06_Lovers.jpg/500px-RWS_Tarot_06_Lovers.jpg","https://upload.wikimedia.org/wikipedia/commons/d/db/RWS_Tarot_06_Lovers.jpg"],"m7":["https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/RWS_Tarot_07_Chariot.jpg/500px-RWS_Tarot_07_Chariot.jpg","https://upload.wikimedia.org/wikipedia/commons/9/9b/RWS_Tarot_07_Chariot.jpg"],"m8":["https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/RWS_Tarot_08_Strength.jpg/500px-RWS_Tarot_08_Strength.jpg","https://upload.wikimedia.org/wikipedia/commons/f/f5/RWS_Tarot_08_Strength.jpg"],"m9":["https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/RWS_Tarot_09_Hermit.jpg/500px-RWS_Tarot_09_Hermit.jpg","https://upload.wikimedia.org/wikipedia/commons/4/4d/RWS_Tarot_09_Hermit.jpg"],"m10":["https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg/500px-RWS_Tarot_10_Wheel_of_Fortune.jpg","https://upload.wikimedia.org/wikipedia/commons/3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg"],"m11":["https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/RWS_Tarot_11_Justice.jpg/500px-RWS_Tarot_11_Justice.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e0/RWS_Tarot_11_Justice.jpg"],"m12":["https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/RWS_Tarot_12_Hanged_Man.jpg/500px-RWS_Tarot_12_Hanged_Man.jpg","https://upload.wikimedia.org/wikipedia/commons/2/2b/RWS_Tarot_12_Hanged_Man.jpg"],"m13":["https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/RWS_Tarot_13_Death.jpg/500px-RWS_Tarot_13_Death.jpg","https://upload.wikimedia.org/wikipedia/commons/d/d7/RWS_Tarot_13_Death.jpg"],"m14":["https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/RWS_Tarot_14_Temperance.jpg/500px-RWS_Tarot_14_Temperance.jpg","https://upload.wikimedia.org/wikipedia/commons/f/f8/RWS_Tarot_14_Temperance.jpg"],"m15":["https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/RWS_Tarot_15_Devil.jpg/500px-RWS_Tarot_15_Devil.jpg","https://upload.wikimedia.org/wikipedia/commons/5/55/RWS_Tarot_15_Devil.jpg"],"m16":["https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/RWS_Tarot_16_Tower.jpg/500px-RWS_Tarot_16_Tower.jpg","https://upload.wikimedia.org/wikipedia/commons/5/53/RWS_Tarot_16_Tower.jpg"],"m17":["https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/RWS_Tarot_17_Star.jpg/500px-RWS_Tarot_17_Star.jpg","https://upload.wikimedia.org/wikipedia/commons/d/db/RWS_Tarot_17_Star.jpg"],"m18":["https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/RWS_Tarot_18_Moon.jpg/500px-RWS_Tarot_18_Moon.jpg","https://upload.wikimedia.org/wikipedia/commons/7/7f/RWS_Tarot_18_Moon.jpg"],"m19":["https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/RWS_Tarot_19_Sun.jpg/500px-RWS_Tarot_19_Sun.jpg","https://upload.wikimedia.org/wikipedia/commons/1/17/RWS_Tarot_19_Sun.jpg"],"m20":["https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/RWS_Tarot_20_Judgement.jpg/500px-RWS_Tarot_20_Judgement.jpg","https://upload.wikimedia.org/wikipedia/commons/d/dd/RWS_Tarot_20_Judgement.jpg"],"m21":["https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/RWS_Tarot_21_World.jpg/500px-RWS_Tarot_21_World.jpg","https://upload.wikimedia.org/wikipedia/commons/f/ff/RWS_Tarot_21_World.jpg"],"bastos1":["https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Wands01.jpg/500px-Wands01.jpg","https://upload.wikimedia.org/wikipedia/commons/1/11/Wands01.jpg"],"bastos2":["https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Wands02.jpg/500px-Wands02.jpg","https://upload.wikimedia.org/wikipedia/commons/0/0f/Wands02.jpg"],"bastos3":["https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Wands03.jpg/500px-Wands03.jpg","https://upload.wikimedia.org/wikipedia/commons/f/ff/Wands03.jpg"],"bastos4":["https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Wands04.jpg/500px-Wands04.jpg","https://upload.wikimedia.org/wikipedia/commons/a/a4/Wands04.jpg"],"bastos5":["https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Wands05.jpg/500px-Wands05.jpg","https://upload.wikimedia.org/wikipedia/commons/9/9d/Wands05.jpg"],"bastos6":["https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Wands06.jpg/500px-Wands06.jpg","https://upload.wikimedia.org/wikipedia/commons/3/3b/Wands06.jpg"],"bastos7":["https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Wands07.jpg/500px-Wands07.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e4/Wands07.jpg"],"bastos8":["https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Wands08.jpg/500px-Wands08.jpg","https://upload.wikimedia.org/wikipedia/commons/6/6b/Wands08.jpg"],"bastos9":["https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Wands09.jpg/500px-Wands09.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e7/Wands09.jpg"],"bastos10":["https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Wands10.jpg/500px-Wands10.jpg","https://upload.wikimedia.org/wikipedia/commons/0/0b/Wands10.jpg"],"bastos11":["https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Wands11.jpg/500px-Wands11.jpg","https://upload.wikimedia.org/wikipedia/commons/6/6a/Wands11.jpg"],"bastos12":["https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Wands12.jpg/500px-Wands12.jpg","https://upload.wikimedia.org/wikipedia/commons/1/16/Wands12.jpg"],"bastos13":["https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Wands13.jpg/500px-Wands13.jpg","https://upload.wikimedia.org/wikipedia/commons/0/0d/Wands13.jpg"],"bastos14":["https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Wands14.jpg/500px-Wands14.jpg","https://upload.wikimedia.org/wikipedia/commons/c/ce/Wands14.jpg"],"copas1":["https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Cups01.jpg/500px-Cups01.jpg","https://upload.wikimedia.org/wikipedia/commons/3/36/Cups01.jpg"],"copas2":["https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Cups02.jpg/500px-Cups02.jpg","https://upload.wikimedia.org/wikipedia/commons/f/f8/Cups02.jpg"],"copas3":["https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Cups03.jpg/500px-Cups03.jpg","https://upload.wikimedia.org/wikipedia/commons/7/7a/Cups03.jpg"],"copas4":["https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Cups04.jpg/500px-Cups04.jpg","https://upload.wikimedia.org/wikipedia/commons/3/35/Cups04.jpg"],"copas5":["https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Cups05.jpg/500px-Cups05.jpg","https://upload.wikimedia.org/wikipedia/commons/d/d7/Cups05.jpg"],"copas6":["https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Cups06.jpg/500px-Cups06.jpg","https://upload.wikimedia.org/wikipedia/commons/1/17/Cups06.jpg"],"copas7":["https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Cups07.jpg/500px-Cups07.jpg","https://upload.wikimedia.org/wikipedia/commons/a/ae/Cups07.jpg"],"copas8":["https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Cups08.jpg/500px-Cups08.jpg","https://upload.wikimedia.org/wikipedia/commons/6/60/Cups08.jpg"],"copas9":["https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Cups09.jpg/500px-Cups09.jpg","https://upload.wikimedia.org/wikipedia/commons/2/24/Cups09.jpg"],"copas10":["https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Cups10.jpg/500px-Cups10.jpg","https://upload.wikimedia.org/wikipedia/commons/8/84/Cups10.jpg"],"copas11":["https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Cups11.jpg/500px-Cups11.jpg","https://upload.wikimedia.org/wikipedia/commons/a/ad/Cups11.jpg"],"copas12":["https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Cups12.jpg/500px-Cups12.jpg","https://upload.wikimedia.org/wikipedia/commons/f/fa/Cups12.jpg"],"copas13":["https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Cups13.jpg/500px-Cups13.jpg","https://upload.wikimedia.org/wikipedia/commons/6/62/Cups13.jpg"],"copas14":["https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Cups14.jpg/500px-Cups14.jpg","https://upload.wikimedia.org/wikipedia/commons/0/04/Cups14.jpg"],"espadas1":["https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Swords01.jpg/500px-Swords01.jpg","https://upload.wikimedia.org/wikipedia/commons/1/1a/Swords01.jpg"],"espadas2":["https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Swords02.jpg/500px-Swords02.jpg","https://upload.wikimedia.org/wikipedia/commons/9/9e/Swords02.jpg"],"espadas3":["https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Swords03.jpg/500px-Swords03.jpg","https://upload.wikimedia.org/wikipedia/commons/0/02/Swords03.jpg"],"espadas4":["https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Swords04.jpg/500px-Swords04.jpg","https://upload.wikimedia.org/wikipedia/commons/b/bf/Swords04.jpg"],"espadas5":["https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Swords05.jpg/500px-Swords05.jpg","https://upload.wikimedia.org/wikipedia/commons/2/23/Swords05.jpg"],"espadas6":["https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Swords06.jpg/500px-Swords06.jpg","https://upload.wikimedia.org/wikipedia/commons/2/29/Swords06.jpg"],"espadas7":["https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Swords07.jpg/500px-Swords07.jpg","https://upload.wikimedia.org/wikipedia/commons/3/34/Swords07.jpg"],"espadas8":["https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Swords08.jpg/500px-Swords08.jpg","https://upload.wikimedia.org/wikipedia/commons/a/a7/Swords08.jpg"],"espadas9":["https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Swords09.jpg/500px-Swords09.jpg","https://upload.wikimedia.org/wikipedia/commons/2/2f/Swords09.jpg"],"espadas10":["https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Swords10.jpg/500px-Swords10.jpg","https://upload.wikimedia.org/wikipedia/commons/d/d4/Swords10.jpg"],"espadas11":["https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Swords11.jpg/500px-Swords11.jpg","https://upload.wikimedia.org/wikipedia/commons/4/4c/Swords11.jpg"],"espadas12":["https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Swords12.jpg/500px-Swords12.jpg","https://upload.wikimedia.org/wikipedia/commons/b/b0/Swords12.jpg"],"espadas13":["https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Swords13.jpg/500px-Swords13.jpg","https://upload.wikimedia.org/wikipedia/commons/d/d4/Swords13.jpg"],"espadas14":["https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Swords14.jpg/500px-Swords14.jpg","https://upload.wikimedia.org/wikipedia/commons/3/33/Swords14.jpg"],"oros1":["https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Pents01.jpg/500px-Pents01.jpg","https://upload.wikimedia.org/wikipedia/commons/f/fd/Pents01.jpg"],"oros2":["https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Pents02.jpg/500px-Pents02.jpg","https://upload.wikimedia.org/wikipedia/commons/9/9f/Pents02.jpg"],"oros3":["https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Pents03.jpg/500px-Pents03.jpg","https://upload.wikimedia.org/wikipedia/commons/4/42/Pents03.jpg"],"oros4":["https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pents04.jpg/500px-Pents04.jpg","https://upload.wikimedia.org/wikipedia/commons/3/35/Pents04.jpg"],"oros5":["https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Pents05.jpg/500px-Pents05.jpg","https://upload.wikimedia.org/wikipedia/commons/9/96/Pents05.jpg"],"oros6":["https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Pents06.jpg/500px-Pents06.jpg","https://upload.wikimedia.org/wikipedia/commons/a/a6/Pents06.jpg"],"oros7":["https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Pents07.jpg/500px-Pents07.jpg","https://upload.wikimedia.org/wikipedia/commons/6/6a/Pents07.jpg"],"oros8":["https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Pents08.jpg/500px-Pents08.jpg","https://upload.wikimedia.org/wikipedia/commons/4/49/Pents08.jpg"],"oros9":["https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Pents09.jpg/500px-Pents09.jpg","https://upload.wikimedia.org/wikipedia/commons/f/f0/Pents09.jpg"],"oros10":["https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Pents10.jpg/500px-Pents10.jpg","https://upload.wikimedia.org/wikipedia/commons/4/42/Pents10.jpg"],"oros11":["https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Pents11.jpg/500px-Pents11.jpg","https://upload.wikimedia.org/wikipedia/commons/e/ec/Pents11.jpg"],"oros12":["https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Pents12.jpg/500px-Pents12.jpg","https://upload.wikimedia.org/wikipedia/commons/d/d5/Pents12.jpg"],"oros13":["https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Pents13.jpg/500px-Pents13.jpg","https://upload.wikimedia.org/wikipedia/commons/8/88/Pents13.jpg"],"oros14":["https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Pents14.jpg/500px-Pents14.jpg","https://upload.wikimedia.org/wikipedia/commons/1/1c/Pents14.jpg"]};
+
+/* ===== Textos de la interfaz en 3 idiomas ===== */
+const IDIOMAS = {es:"Español", en:"English", it:"Italiano"};
+const LOCALE = {es:"es-CL", en:"en-US", it:"it-IT"};
+const ASTRO = { // nombre en español → en / it
+ "Aire":["Air","Aria"],"Mercurio":["Mercury","Mercurio"],"Luna":["Moon","Luna"],"Venus":["Venus","Venere"],"Aries":["Aries","Ariete"],
+ "Tauro":["Taurus","Toro"],"Géminis":["Gemini","Gemelli"],"Cáncer":["Cancer","Cancro"],"Leo":["Leo","Leone"],"Virgo":["Virgo","Vergine"],
+ "Júpiter":["Jupiter","Giove"],"Libra":["Libra","Bilancia"],"Agua":["Water","Acqua"],"Escorpio":["Scorpio","Scorpione"],
+ "Sagitario":["Sagittarius","Sagittario"],"Capricornio":["Capricorn","Capricorno"],"Marte":["Mars","Marte"],"Acuario":["Aquarius","Acquario"],
+ "Piscis":["Pisces","Pesci"],"Sol":["Sun","Sole"],"Fuego":["Fire","Fuoco"],"Saturno":["Saturn","Saturno"],"Tierra":["Earth","Terra"]};
+const PALOS_TXT = {
+ es:{bastos:["Bastos","Fuego","pasión, acción y creatividad"],copas:["Copas","Agua","emociones, vínculos e intuición"],espadas:["Espadas","Aire","mente, verdad y conflicto"],oros:["Oros","Tierra","dinero, trabajo y cuerpo"]},
+ en:{bastos:["Wands","Fire","passion, action and creativity"],copas:["Cups","Water","emotions, bonds and intuition"],espadas:["Swords","Air","mind, truth and conflict"],oros:["Pentacles","Earth","money, work and body"]},
+ it:{bastos:["Bastoni","Fuoco","passione, azione e creatività"],copas:["Coppe","Acqua","emozioni, legami e intuizione"],espadas:["Spade","Aria","mente, verità e conflitto"],oros:["Denari","Terra","denaro, lavoro e corpo"]}};
+const RANGOS = {
+ es:["As","Dos","Tres","Cuatro","Cinco","Seis","Siete","Ocho","Nueve","Diez","Sota","Caballero","Reina","Rey"],
+ en:["Ace","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Page","Knight","Queen","King"],
+ it:["Asso","Due","Tre","Quattro","Cinque","Sei","Sette","Otto","Nove","Dieci","Fante","Cavaliere","Regina","Re"]};
+const DE = {es:"de", en:"of", it:"di"};
+
+const LUNA_TXT = {
+ es:[["Luna nueva","Siembra intenciones: buen momento para empezar y escribir lo que deseas."],["Luna creciente","Las ideas toman forma: da los primeros pasos."],["Cuarto creciente","Aparecen desafíos: decide y actúa con firmeza."],["Gibosa creciente","Ajusta y perfecciona; ya casi está listo."],["Luna llena","Culminación y claridad: celebra, agradece y suelta lo que pesa."],["Gibosa menguante","Comparte lo aprendido y agradece."],["Cuarto menguante","Suelta, ordena y cierra pendientes."],["Luna menguante","Descansa y reflexiona antes del nuevo ciclo."]],
+ en:[["New Moon","Plant intentions: a good time to begin and write down what you wish for."],["Waxing Crescent","Ideas take shape: take the first steps."],["First Quarter","Challenges appear: decide and act firmly."],["Waxing Gibbous","Adjust and refine; it's almost ready."],["Full Moon","Culmination and clarity: celebrate, give thanks and release what weighs on you."],["Waning Gibbous","Share what you've learned and give thanks."],["Last Quarter","Let go, tidy up and close loose ends."],["Waning Crescent","Rest and reflect before the new cycle."]],
+ it:[["Luna nuova","Semina intenzioni: buon momento per iniziare e scrivere ciò che desideri."],["Luna crescente","Le idee prendono forma: fai i primi passi."],["Primo quarto","Arrivano le sfide: decidi e agisci con fermezza."],["Gibbosa crescente","Aggiusta e perfeziona; è quasi pronto."],["Luna piena","Culmine e chiarezza: celebra, ringrazia e lascia andare ciò che pesa."],["Gibbosa calante","Condividi ciò che hai imparato e ringrazia."],["Ultimo quarto","Lascia andare, metti ordine e chiudi i sospesi."],["Luna calante","Riposa e rifletti prima del nuovo ciclo."]]};
+
+const DADOS_TXT = {
+ glifosP:["☉","☽","☿","♀","♂","♃","♄","♅","♆","♇","☊","☋"],
+ glifosS:["♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓"],
+ es:{p:[["Sol","identidad, vitalidad"],["Luna","emociones, intuición"],["Mercurio","mente, comunicación"],["Venus","amor, placer, valores"],["Marte","acción, deseo, coraje"],["Júpiter","expansión, suerte"],["Saturno","límites, disciplina, tiempo"],["Urano","cambio repentino, libertad"],["Neptuno","sueños, espiritualidad"],["Plutón","transformación profunda"],["Nodo Norte","tu camino de crecimiento"],["Nodo Sur","lo que ya sabes; lo que toca soltar"]],
+  s:[["Aries","con valentía e iniciativa"],["Tauro","con calma y constancia"],["Géminis","con curiosidad y diálogo"],["Cáncer","con cuidado y emoción"],["Leo","con creatividad y corazón"],["Virgo","con orden y atención al detalle"],["Libra","con equilibrio y armonía"],["Escorpio","con intensidad y profundidad"],["Sagitario","con fe y aventura"],["Capricornio","con estructura y ambición"],["Acuario","con originalidad y libertad"],["Piscis","con sensibilidad e intuición"]],
+  c:["identidad e imagen","dinero y valores","comunicación y entorno cercano","hogar y familia","creatividad, amor y placer","rutina, trabajo y salud","pareja y socios","transformación y recursos compartidos","viajes, estudios y fe","carrera y propósito","amistades y proyectos de futuro","inconsciente, descanso y espiritualidad"]},
+ en:{p:[["Sun","identity, vitality"],["Moon","emotions, intuition"],["Mercury","mind, communication"],["Venus","love, pleasure, values"],["Mars","action, desire, courage"],["Jupiter","expansion, luck"],["Saturn","limits, discipline, time"],["Uranus","sudden change, freedom"],["Neptune","dreams, spirituality"],["Pluto","deep transformation"],["North Node","your path of growth"],["South Node","what you already know; what to release"]],
+  s:[["Aries","with courage and initiative"],["Taurus","with calm and steadiness"],["Gemini","with curiosity and dialogue"],["Cancer","with care and emotion"],["Leo","with creativity and heart"],["Virgo","with order and attention to detail"],["Libra","with balance and harmony"],["Scorpio","with intensity and depth"],["Sagittarius","with faith and adventure"],["Capricorn","with structure and ambition"],["Aquarius","with originality and freedom"],["Pisces","with sensitivity and intuition"]],
+  c:["identity and self-image","money and values","communication and close surroundings","home and family","creativity, love and pleasure","routine, work and health","partners and relationships","transformation and shared resources","travel, study and beliefs","career and purpose","friendships and future projects","the unconscious, rest and spirituality"]},
+ it:{p:[["Sole","identità, vitalità"],["Luna","emozioni, intuizione"],["Mercurio","mente, comunicazione"],["Venere","amore, piacere, valori"],["Marte","azione, desiderio, coraggio"],["Giove","espansione, fortuna"],["Saturno","limiti, disciplina, tempo"],["Urano","cambiamento improvviso, libertà"],["Nettuno","sogni, spiritualità"],["Plutone","trasformazione profonda"],["Nodo Nord","il tuo cammino di crescita"],["Nodo Sud","ciò che già sai; ciò da lasciare"]],
+  s:[["Ariete","con coraggio e iniziativa"],["Toro","con calma e costanza"],["Gemelli","con curiosità e dialogo"],["Cancro","con cura ed emozione"],["Leone","con creatività e cuore"],["Vergine","con ordine e attenzione ai dettagli"],["Bilancia","con equilibrio e armonia"],["Scorpione","con intensità e profondità"],["Sagittario","con fede e avventura"],["Capricorno","con struttura e ambizione"],["Acquario","con originalità e libertà"],["Pesci","con sensibilità e intuizione"]],
+  c:["identità e immagine","denaro e valori","comunicazione e ambiente vicino","casa e famiglia","creatività, amore e piacere","routine, lavoro e salute","coppia e soci","trasformazione e risorse condivise","viaggi, studi e fede","carriera e scopo","amicizie e progetti futuri","inconscio, riposo e spiritualità"]}};
+
+const T = {
+es:{hoy:"Hoy",mazo:"Mazo",dados:"Dados",diario:"Diario",ajustes:"Ajustes",idioma:"Idioma",cerrar:"Cerrar",
+ cartaDia:"Tu carta del día",pista:"Respira, piensa en tu día y toca la carta.",intencion:"Intención o pregunta (opcional)",intencionPh:"¿Qué necesito saber hoy?",revelar:"Revelar la carta del día",reverso:"Reverso de la carta",
+ derecha:"Derecha",invertida:"Invertida",tuIntencion:"Tu intención",queTeDice:"¿Qué te dice a ti?",interpPh:"Escribe lo que sientes, lo que ves en la carta y cómo se relaciona con tu día.",
+ guardarInterp:"Guardar interpretación",interpGuardada:"Interpretación guardada",estudiar:"Estudiar esta carta",
+ mazoTitulo:"El mazo",mazoSub:"Las 78 cartas Rider-Waite para estudiar a tu ritmo.",buscarPh:"Busca por nombre o palabra clave",todas:"Todas",mayores:"Arcanos mayores",mayoresCorto:"Mayores",
+ sinResultados:q=>`No hay cartas con “${q}”. Prueba con otra palabra.`,arcanoMayor:"Arcano mayor",misNotas:"Mis notas",notasPh:"Símbolos que te llaman la atención, cómo la sientes, ideas para tu propio diseño…",notaGuardada:"Nota guardada",
+ veces:n=>n===0?"Aún no te ha salido en una tirada.":n===1?"Te ha salido 1 vez.":`Te ha salido ${n} veces.`,
+ diarioSub:"Tus lecturas y los patrones que van apareciendo.",diarioVacio:"Todavía no hay lecturas. Saca tu primera carta del día.",irHoy:"Ir a la carta del día",
+ lecturas:n=>n===1?"lectura":"lecturas",invN:n=>`${n} invertida${n===1?"":"s"}`,masRepetida:n=>`la más repetida (${n} veces)`,masReciente:"tu carta más reciente",
+ energia:"Qué energía te ha acompañado",sinInterp:"Sin interpretación todavía.",significado:"Significado",miInterp:"Mi interpretación",borrarLectura:"Borrar lectura",
+ confirmBorrar:"¿Borrar esta lectura del diario? No se puede deshacer.",lecturaBorrada:"Lectura borrada",
+ usarInv:"Usar cartas invertidas",usarInvP:"La carta del día puede salir al revés, con su significado invertido.",
+ hemisferio:"Hemisferio sur",hemisferioP:"La luna se dibuja como se ve desde Chile y Argentina. Desactívalo si estás en el norte.",
+ mazoOffline:"Mazo sin internet",mazoOfflineP:"Guarda las 78 ilustraciones en el celular para estudiar sin conexión.",guardar:"Guardar",listo:"Listo",
+ guardando:(n,t)=>`Guardando ${n} de ${t}…`,guardadas:"Las 78 cartas ya están guardadas en este celular.",parcial:(n,t)=>`Se guardaron ${n} de ${t}. Revisa tu conexión y toca Guardar de nuevo.`,mazoGuardado:"Mazo guardado",
+ respaldo:"Respaldo",respaldoP:"Tus lecturas viven solo en este celular. Descarga un respaldo de vez en cuando.",descargar:"Descargar respaldo",restaurar:"Restaurar respaldo",
+ empezarCero:"Empezar de cero",empezarCeroP:"Borra todas tus lecturas y notas.",borrarTodo:"Borrar todo",confirmBorrarTodo:"¿Borrar todas tus lecturas y notas? Descarga un respaldo antes si quieres conservarlas.",
+ datosBorrados:"Datos borrados",respaldoDescargado:"Respaldo descargado",respaldoRestaurado:"Respaldo restaurado",respaldoInvalido:"Ese archivo no es un respaldo de Vibración 33",
+ confirmRestaurar:n=>`El respaldo tiene ${n} lecturas. ¿Reemplazar los datos actuales?`,noGuardar:"No se pudo guardar: el almacenamiento del celular está lleno",
+ creditos:"Ilustraciones: tarot Rider-Waite-Smith (1909), de Pamela Colman Smith. Dominio público, vía Wikimedia Commons.",
+ firma:"Creado con intención por",version:"versión",
+ lunaHoy:"Luna de hoy",iluminada:"iluminada",proximas:"Próximas fases",aprox:"Fechas aproximadas, calculadas en tu celular.",
+ dadosSub:"Lanza los dados y deja que el azar te hable.",astro:"Astrológicos",clasicos:"Clásicos",lanzar:"Lanzar dados",relanzar:"Lanzar de nuevo",
+ que:"Qué energía",como:"Cómo",donde:"Dónde",casa:"Casa",pregunta:"Pregunta (opcional)",preguntaPh:"¿Qué quiero entender?",
+ astroInfo:"El planeta dice qué energía se mueve, el signo cómo se expresa y la casa en qué área de tu vida.",
+ cuantos:"Cuántos dados",suma:"Suma",guardarDiario:"Guardar en el diario",guardadoDiario:"Guardado en el diario",tocaLanzar:"Toca el botón para lanzar."},
+en:{hoy:"Today",mazo:"Deck",dados:"Dice",diario:"Journal",ajustes:"Settings",idioma:"Language",cerrar:"Close",
+ cartaDia:"Your card of the day",pista:"Breathe, think about your day and tap the card.",intencion:"Intention or question (optional)",intencionPh:"What do I need to know today?",revelar:"Reveal the card of the day",reverso:"Card back",
+ derecha:"Upright",invertida:"Reversed",tuIntencion:"Your intention",queTeDice:"What does it say to you?",interpPh:"Write what you feel, what you see in the card and how it relates to your day.",
+ guardarInterp:"Save interpretation",interpGuardada:"Interpretation saved",estudiar:"Study this card",
+ mazoTitulo:"The deck",mazoSub:"All 78 Rider-Waite cards to study at your own pace.",buscarPh:"Search by name or keyword",todas:"All",mayores:"Major Arcana",mayoresCorto:"Major",
+ sinResultados:q=>`No cards match “${q}”. Try another word.`,arcanoMayor:"Major Arcana",misNotas:"My notes",notasPh:"Symbols that catch your eye, how it feels, ideas for your own design…",notaGuardada:"Note saved",
+ veces:n=>n===0?"It hasn't come up in a reading yet.":n===1?"It has come up once.":`It has come up ${n} times.`,
+ diarioSub:"Your readings and the patterns that emerge.",diarioVacio:"No readings yet. Draw your first card of the day.",irHoy:"Go to card of the day",
+ lecturas:n=>n===1?"reading":"readings",invN:n=>`${n} reversed`,masRepetida:n=>`most repeated (${n} times)`,masReciente:"your latest card",
+ energia:"Which energy has been with you",sinInterp:"No interpretation yet.",significado:"Meaning",miInterp:"My interpretation",borrarLectura:"Delete reading",
+ confirmBorrar:"Delete this reading from your journal? This can't be undone.",lecturaBorrada:"Reading deleted",
+ usarInv:"Use reversed cards",usarInvP:"Your card of the day can come out upside down, with its reversed meaning.",
+ hemisferio:"Southern hemisphere",hemisferioP:"The moon is drawn as seen from Chile and Argentina. Turn it off if you're in the north.",
+ mazoOffline:"Offline deck",mazoOfflineP:"Save all 78 illustrations on your phone to study without a connection.",guardar:"Save",listo:"Done",
+ guardando:(n,t)=>`Saving ${n} of ${t}…`,guardadas:"All 78 cards are saved on this phone.",parcial:(n,t)=>`${n} of ${t} saved. Check your connection and tap Save again.`,mazoGuardado:"Deck saved",
+ respaldo:"Backup",respaldoP:"Your readings live only on this phone. Download a backup now and then.",descargar:"Download backup",restaurar:"Restore backup",
+ empezarCero:"Start over",empezarCeroP:"Deletes all your readings and notes.",borrarTodo:"Delete all",confirmBorrarTodo:"Delete all your readings and notes? Download a backup first if you want to keep them.",
+ datosBorrados:"Data deleted",respaldoDescargado:"Backup downloaded",respaldoRestaurado:"Backup restored",respaldoInvalido:"That file isn't a Vibración 33 backup",
+ confirmRestaurar:n=>`The backup has ${n} readings. Replace your current data?`,noGuardar:"Couldn't save: your phone's storage is full",
+ creditos:"Illustrations: Rider-Waite-Smith tarot (1909) by Pamela Colman Smith. Public domain, via Wikimedia Commons.",
+ firma:"Made with intention by",version:"version",
+ lunaHoy:"Today's moon",iluminada:"illuminated",proximas:"Upcoming phases",aprox:"Approximate dates, calculated on your phone.",
+ dadosSub:"Roll the dice and let chance speak to you.",astro:"Astrological",clasicos:"Classic",lanzar:"Roll the dice",relanzar:"Roll again",
+ que:"What energy",como:"How",donde:"Where",casa:"House",pregunta:"Question (optional)",preguntaPh:"What do I want to understand?",
+ astroInfo:"The planet shows which energy is moving, the sign how it's expressed, and the house which area of your life.",
+ cuantos:"How many dice",suma:"Total",guardarDiario:"Save to journal",guardadoDiario:"Saved to journal",tocaLanzar:"Tap the button to roll."},
+it:{hoy:"Oggi",mazo:"Mazzo",dados:"Dadi",diario:"Diario",ajustes:"Impostazioni",idioma:"Lingua",cerrar:"Chiudi",
+ cartaDia:"La tua carta del giorno",pista:"Respira, pensa alla tua giornata e tocca la carta.",intencion:"Intenzione o domanda (facoltativa)",intencionPh:"Cosa ho bisogno di sapere oggi?",revelar:"Rivela la carta del giorno",reverso:"Retro della carta",
+ derecha:"Dritta",invertida:"Rovesciata",tuIntencion:"La tua intenzione",queTeDice:"Cosa ti dice?",interpPh:"Scrivi cosa senti, cosa vedi nella carta e come si collega alla tua giornata.",
+ guardarInterp:"Salva interpretazione",interpGuardada:"Interpretazione salvata",estudiar:"Studia questa carta",
+ mazoTitulo:"Il mazzo",mazoSub:"Le 78 carte Rider-Waite da studiare con calma.",buscarPh:"Cerca per nome o parola chiave",todas:"Tutte",mayores:"Arcani maggiori",mayoresCorto:"Maggiori",
+ sinResultados:q=>`Nessuna carta con “${q}”. Prova un'altra parola.`,arcanoMayor:"Arcano maggiore",misNotas:"Le mie note",notasPh:"Simboli che ti colpiscono, come la senti, idee per il tuo design…",notaGuardada:"Nota salvata",
+ veces:n=>n===0?"Non ti è ancora uscita in una lettura.":n===1?"Ti è uscita 1 volta.":`Ti è uscita ${n} volte.`,
+ diarioSub:"Le tue letture e gli schemi che emergono.",diarioVacio:"Ancora nessuna lettura. Pesca la tua prima carta del giorno.",irHoy:"Vai alla carta del giorno",
+ lecturas:n=>n===1?"lettura":"letture",invN:n=>`${n} rovesciat${n===1?"a":"e"}`,masRepetida:n=>`la più ripetuta (${n} volte)`,masReciente:"la tua carta più recente",
+ energia:"Quale energia ti ha accompagnata",sinInterp:"Ancora nessuna interpretazione.",significado:"Significato",miInterp:"La mia interpretazione",borrarLectura:"Elimina lettura",
+ confirmBorrar:"Eliminare questa lettura dal diario? Non si può annullare.",lecturaBorrada:"Lettura eliminata",
+ usarInv:"Usa carte rovesciate",usarInvP:"La carta del giorno può uscire capovolta, con il suo significato rovesciato.",
+ hemisferio:"Emisfero sud",hemisferioP:"La luna è disegnata come si vede dal Cile e dall'Argentina. Disattivalo se sei al nord.",
+ mazoOffline:"Mazzo offline",mazoOfflineP:"Salva le 78 illustrazioni sul telefono per studiare senza connessione.",guardar:"Salva",listo:"Fatto",
+ guardando:(n,t)=>`Salvataggio ${n} di ${t}…`,guardadas:"Tutte le 78 carte sono salvate su questo telefono.",parcial:(n,t)=>`Salvate ${n} di ${t}. Controlla la connessione e tocca Salva di nuovo.`,mazoGuardado:"Mazzo salvato",
+ respaldo:"Backup",respaldoP:"Le tue letture vivono solo su questo telefono. Scarica un backup ogni tanto.",descargar:"Scarica backup",restaurar:"Ripristina backup",
+ empezarCero:"Ricomincia da capo",empezarCeroP:"Elimina tutte le letture e le note.",borrarTodo:"Elimina tutto",confirmBorrarTodo:"Eliminare tutte le letture e le note? Scarica prima un backup se vuoi conservarle.",
+ datosBorrados:"Dati eliminati",respaldoDescargado:"Backup scaricato",respaldoRestaurado:"Backup ripristinato",respaldoInvalido:"Questo file non è un backup di Vibración 33",
+ confirmRestaurar:n=>`Il backup contiene ${n} letture. Sostituire i dati attuali?`,noGuardar:"Impossibile salvare: la memoria del telefono è piena",
+ creditos:"Illustrazioni: tarocchi Rider-Waite-Smith (1909) di Pamela Colman Smith. Pubblico dominio, tramite Wikimedia Commons.",
+ firma:"Creato con intenzione da",version:"versione",
+ lunaHoy:"La luna di oggi",iluminada:"illuminata",proximas:"Prossime fasi",aprox:"Date approssimative, calcolate sul tuo telefono.",
+ dadosSub:"Lancia i dadi e lascia parlare il caso.",astro:"Astrologici",clasicos:"Classici",lanzar:"Lancia i dadi",relanzar:"Lancia di nuovo",
+ que:"Quale energia",como:"Come",donde:"Dove",casa:"Casa",pregunta:"Domanda (facoltativa)",preguntaPh:"Cosa voglio capire?",
+ astroInfo:"Il pianeta indica quale energia si muove, il segno come si esprime e la casa in quale area della tua vita.",
+ cuantos:"Quanti dadi",suma:"Totale",guardarDiario:"Salva nel diario",guardadoDiario:"Salvato nel diario",tocaLanzar:"Tocca il pulsante per lanciare."}};
+
+/* ===== v1.3: decreto, racha, tiradas, estudio, números ===== */
+const NUM_TXT = {
+ es:{1:"inicio, liderazgo e independencia",2:"cooperación, sensibilidad y vínculos",3:"creatividad, expresión y alegría",4:"estructura, trabajo y estabilidad",5:"cambio, libertad y aventura",6:"amor, hogar y responsabilidad afectiva",7:"introspección, estudio y espiritualidad",8:"poder personal, abundancia y logro",9:"cierre de ciclos, compasión y sabiduría",11:"maestro de la intuición y la inspiración",22:"maestro constructor: materializar grandes sueños",33:"maestro sanador: compasión, enseñar y guiar desde lo vivido"},
+ en:{1:"beginnings, leadership and independence",2:"cooperation, sensitivity and bonds",3:"creativity, expression and joy",4:"structure, work and stability",5:"change, freedom and adventure",6:"love, home and emotional responsibility",7:"introspection, study and spirituality",8:"personal power, abundance and achievement",9:"closing cycles, compassion and wisdom",11:"master of intuition and inspiration",22:"master builder: making big dreams real",33:"master healer: compassion, teaching and guiding from experience"},
+ it:{1:"inizio, leadership e indipendenza",2:"cooperazione, sensibilità e legami",3:"creatività, espressione e gioia",4:"struttura, lavoro e stabilità",5:"cambiamento, libertà e avventura",6:"amore, casa e responsabilità affettiva",7:"introspezione, studio e spiritualità",8:"potere personale, abbondanza e realizzazione",9:"chiusura dei cicli, compassione e saggezza",11:"maestro dell'intuizione e dell'ispirazione",22:"maestro costruttore: realizzare grandi sogni",33:"maestro guaritore: compassione, insegnare e guidare dall'esperienza"}};
+Object.assign(T.es,{slogan:"Lo visualizo. Lo siento. Lo decreto.",decretoFrases:["Lo visualizo.","Lo siento.","Lo decreto."],ritualTitulo:"Tu decreto de hoy",
+ racha:"Racha",rachaTxt:n=>n===1?"1 día de racha":`${n} días seguidos`,rachaMeta:n=>n<33?`Faltan ${33-n} para el 33`:"Meta 33 cumplida ✦",rachaDia:n=>`Día ${n} de 33`,
+ celebraTitulo:"33 días decretando",celebraTxt:"Renaciste como el fénix: 33 días seguidos honrando tu decreto.",seguir:"Seguir",
+ avisoLuna:f=>`${f}: buen momento para tu Tirada del Decreto.`,irTirada:"Hacer la tirada",
+ tiradas:"Tiradas",estudio:"Estudio",tiradasSub:"Elige cómo quieres consultar hoy.",tDecreto:"Decreto",tCumple:"Cumpleaños",
+ decretoInfo:"Tres cartas, una por cada paso de tu decreto. Tócalas en orden.",
+ posDecreto:[["Lo visualizo","lo que quieres crear"],["Lo siento","la emoción que lo sostiene"],["Lo decreto","la acción que lo concreta"]],
+ reflexion:"Tu reflexión",reflexionPh:"¿Qué te muestran juntas estas tres cartas?",nuevaTirada:"Nueva tirada",tirDecreto:"Tirada del Decreto",
+ cumpleInfo:(f,d)=>`Tu tirada de cumpleaños se abre el ${f}. ${d===1?"Falta 1 día":`Faltan ${d} días`}.`,cumpleHoy:"¡Feliz cumpleaños! Hoy se abre la tirada de tu nuevo año.",
+ posCumple:[["Lo que cierro","lo que dejas atrás este año"],["Lo que llega","la energía de tu nuevo año"],["Mi guía","el consejo para tu camino"]],
+ cumplesAnteriores:"Tus cumpleaños anteriores",cumpleHecha:"Ya hiciste la tirada de este año.",cumpleAnio:y=>`Cumpleaños ${y}`,sinCumples:"Aquí se irán guardando tus tiradas de cumpleaños, año a año.",
+ estudioSub:"Aprende las 78 cartas a tu ritmo.",tTarjetas:"Tarjetas",tNumeros:"Mis números",sabes:n=>`Te sabes ${n} de 78`,
+ adivina:"¿Qué carta es y qué significa?",tocaVoltear:"Toca la carta para ver la respuesta.",laSabia:"La sabía",repasar:"Repasar",
+ estudioNota:"Los arcanos mayores del Rider-Waite traen su nombre impreso en inglés: intenta recordar su significado.",
+ numerosSub:"Tu numerología y la carta del tarot que vibra con cada número.",nCamino:"Camino de vida",nDia:"Día de nacimiento",nMaestro:"Tu número maestro",nAnio:y=>`Año personal ${y}`,
+ nAviso:"La numerología es una tradición simbólica: úsala como inspiración.",nacimiento:"Fecha de nacimiento",nacimientoP:"Se usa para tus números y tu tirada de cumpleaños."});
+Object.assign(T.en,{slogan:"I visualize it. I feel it. I decree it.",decretoFrases:["I visualize it.","I feel it.","I decree it."],ritualTitulo:"Your decree for today",
+ racha:"Streak",rachaTxt:n=>`${n} day${n===1?"":"s"} in a row`,rachaMeta:n=>n<33?`${33-n} to go until 33`:"Goal 33 reached ✦",rachaDia:n=>`Day ${n} of 33`,
+ celebraTitulo:"33 days of decreeing",celebraTxt:"Reborn like the phoenix: 33 days in a row honoring your decree.",seguir:"Continue",
+ avisoLuna:f=>`${f}: a good moment for your Decree Spread.`,irTirada:"Do the spread",
+ tiradas:"Spreads",estudio:"Study",tiradasSub:"Choose how you want to consult today.",tDecreto:"Decree",tCumple:"Birthday",
+ decretoInfo:"Three cards, one for each step of your decree. Tap them in order.",
+ posDecreto:[["I visualize it","what you want to create"],["I feel it","the emotion that sustains it"],["I decree it","the action that makes it real"]],
+ reflexion:"Your reflection",reflexionPh:"What do these three cards show you together?",nuevaTirada:"New spread",tirDecreto:"Decree Spread",
+ cumpleInfo:(f,d)=>`Your birthday spread opens on ${f}. ${d===1?"1 day":`${d} days`} to go.`,cumpleHoy:"Happy birthday! The spread for your new year opens today.",
+ posCumple:[["What I close","what you leave behind this year"],["What arrives","the energy of your new year"],["My guide","the advice for your path"]],
+ cumplesAnteriores:"Your past birthdays",cumpleHecha:"You've already done this year's spread.",cumpleAnio:y=>`Birthday ${y}`,sinCumples:"Your birthday spreads will be kept here, year after year.",
+ estudioSub:"Learn the 78 cards at your own pace.",tTarjetas:"Flashcards",tNumeros:"My numbers",sabes:n=>`You know ${n} of 78`,
+ adivina:"Which card is it and what does it mean?",tocaVoltear:"Tap the card to see the answer.",laSabia:"I knew it",repasar:"Review",
+ estudioNota:"Rider-Waite major arcana have their name printed in English: try to recall the meaning.",
+ numerosSub:"Your numerology and the tarot card that vibrates with each number.",nCamino:"Life path",nDia:"Birth day",nMaestro:"Your master number",nAnio:y=>`Personal year ${y}`,
+ nAviso:"Numerology is a symbolic tradition: use it as inspiration.",nacimiento:"Date of birth",nacimientoP:"Used for your numbers and your birthday spread."});
+Object.assign(T.it,{slogan:"Lo visualizzo. Lo sento. Lo decreto.",decretoFrases:["Lo visualizzo.","Lo sento.","Lo decreto."],ritualTitulo:"Il tuo decreto di oggi",
+ racha:"Serie",rachaTxt:n=>`${n} giorn${n===1?"o":"i"} di fila`,rachaMeta:n=>n<33?`Ne mancano ${33-n} per il 33`:"Meta 33 raggiunta ✦",rachaDia:n=>`Giorno ${n} di 33`,
+ celebraTitulo:"33 giorni di decreti",celebraTxt:"Rinata come la fenice: 33 giorni di fila onorando il tuo decreto.",seguir:"Continua",
+ avisoLuna:f=>`${f}: buon momento per la tua Stesa del Decreto.`,irTirada:"Fai la stesa",
+ tiradas:"Stese",estudio:"Studio",tiradasSub:"Scegli come vuoi consultare oggi.",tDecreto:"Decreto",tCumple:"Compleanno",
+ decretoInfo:"Tre carte, una per ogni passo del tuo decreto. Toccale in ordine.",
+ posDecreto:[["Lo visualizzo","ciò che vuoi creare"],["Lo sento","l'emozione che lo sostiene"],["Lo decreto","l'azione che lo realizza"]],
+ reflexion:"La tua riflessione",reflexionPh:"Cosa ti mostrano insieme queste tre carte?",nuevaTirada:"Nuova stesa",tirDecreto:"Stesa del Decreto",
+ cumpleInfo:(f,d)=>`La tua stesa di compleanno si apre il ${f}. ${d===1?"Manca 1 giorno":`Mancano ${d} giorni`}.`,cumpleHoy:"Buon compleanno! Oggi si apre la stesa del tuo nuovo anno.",
+ posCumple:[["Ciò che chiudo","ciò che lasci dietro quest'anno"],["Ciò che arriva","l'energia del tuo nuovo anno"],["La mia guida","il consiglio per il tuo cammino"]],
+ cumplesAnteriores:"I tuoi compleanni passati",cumpleHecha:"Hai già fatto la stesa di quest'anno.",cumpleAnio:y=>`Compleanno ${y}`,sinCumples:"Qui si conserveranno le tue stese di compleanno, anno dopo anno.",
+ estudioSub:"Impara le 78 carte con calma.",tTarjetas:"Flashcard",tNumeros:"I miei numeri",sabes:n=>`Ne conosci ${n} su 78`,
+ adivina:"Che carta è e cosa significa?",tocaVoltear:"Tocca la carta per vedere la risposta.",laSabia:"La sapevo",repasar:"Da ripassare",
+ estudioNota:"Gli arcani maggiori Rider-Waite hanno il nome stampato in inglese: prova a ricordarne il significato.",
+ numerosSub:"La tua numerologia e la carta dei tarocchi che vibra con ogni numero.",nCamino:"Cammino di vita",nDia:"Giorno di nascita",nMaestro:"Il tuo numero maestro",nAnio:y=>`Anno personale ${y}`,
+ nAviso:"La numerologia è una tradizione simbolica: usala come ispirazione.",nacimiento:"Data di nascita",nacimientoP:"Usata per i tuoi numeri e la stesa di compleanno."});
+
+/* ===== v1.4: luna, mi cielo, mazo físico, voz, compartir, instalar ===== */
+const SIGNO_CARTA = [4,5,6,7,8,9,11,13,14,15,17,18];
+Object.assign(T.es,{editar:"Editar",luna:"Luna",calendario:"Calendario",espejo:"Espejo lunar",miCielo:"Mi cielo",conMiMazo:"Con mi mazo",
+ lunaEn:s=>`Luna en ${s}`,cicloTitulo:"El ciclo de la luna",
+ espejoSub:"Qué cartas te acompañan en cada fase de la luna.",espejoVacio:"Cuando tengas lecturas, aquí verás tus patrones con la luna.",espejoN:n=>`${n} ${n===1?"carta":"cartas"}`,dominante:"Palo dominante",masFrecuente:"Carta más frecuente",
+ cieloSub:"Sol, ascendente y descendente, cada uno con su carta del tarot. Para ti y para quien quieras.",nuevoPerfil:"Agregar persona",nombre:"Nombre",
+ ascendente:"Ascendente",descendente:"Descendente",sol:"Sol",lunaNatal:"Luna (opcional)",noSe:"No lo sé",borrarPerfil:"Borrar perfil",yo:"Yo",
+ solP:"tu esencia e identidad",ascP:"cómo te muestras y cómo empiezas las cosas",descP:"tus vínculos y lo que buscas en el otro",lunaP:"tus emociones y lo que necesitas para sentirte en casa",
+ descAuto:"El descendente se completa solo: siempre es el signo opuesto al ascendente.",perfilesAviso:"Los datos quedan solo en este celular.",
+ cuspide:"Nació en un cambio de signo: confirma su Sol en una carta astral con la hora exacta.",confirmBorrarPerfil:"¿Borrar este perfil?",
+ compartir:"Compartir en Instagram",historia:"Historia",post:"Post",miCartaDia:"MI CARTA DEL DÍA",creandoImg:"Creando imagen…",imagenLista:"Imagen descargada",cieloDe:n=>`EL CIELO DE ${n}`,
+ conMazoSub:"Baraja tu mazo físico, saca tus cartas y regístralas aquí para ver tus patrones.",cuantasCartas:"Cuántas cartas",eligeCarta:"Elige la carta que salió",posUna:"Mi carta",tirMazo:"Lectura con mi mazo",
+ miVoz:"Mi decreto en mi voz",miVozP:"Grábate diciendo tu decreto y escúchalo en tu ritual.",grabar:"Grabar",detener:"Detener",escuchar:"Escuchar",borrarVoz:"Borrar",vozGuardada:"Voz guardada",sinMicro:"No se pudo usar el micrófono",escucharMiVoz:"Escuchar mi voz",
+ instalar:"Instalar Vibración 33",instalarP:"Instálala como app, con tu sello y sin el logo de Chrome.",abreEnChrome:"Para instalarla como app, ábrela en Chrome: toca ⋮ y elige «Abrir en Chrome»."});
+Object.assign(T.en,{editar:"Edit",luna:"Moon",calendario:"Calendar",espejo:"Moon mirror",miCielo:"My sky",conMiMazo:"With my deck",
+ lunaEn:s=>`Moon in ${s}`,cicloTitulo:"The moon cycle",
+ espejoSub:"Which cards accompany you in each moon phase.",espejoVacio:"Once you have readings, you'll see your moon patterns here.",espejoN:n=>`${n} card${n===1?"":"s"}`,dominante:"Dominant suit",masFrecuente:"Most frequent card",
+ cieloSub:"Sun, rising and descendant, each with its tarot card. For you and anyone you like.",nuevoPerfil:"Add person",nombre:"Name",
+ ascendente:"Rising",descendente:"Descendant",sol:"Sun",lunaNatal:"Moon (optional)",noSe:"I don't know",borrarPerfil:"Delete profile",yo:"Me",
+ solP:"your essence and identity",ascP:"how you show yourself and how you start things",descP:"your bonds and what you seek in others",lunaP:"your emotions and what you need to feel at home",
+ descAuto:"The descendant fills in by itself: it's always the sign opposite the rising.",perfilesAviso:"Data stays only on this phone.",
+ cuspide:"Born on a sign change: confirm the Sun in a birth chart with the exact time.",confirmBorrarPerfil:"Delete this profile?",
+ compartir:"Share on Instagram",historia:"Story",post:"Post",miCartaDia:"MY CARD OF THE DAY",creandoImg:"Creating image…",imagenLista:"Image downloaded",cieloDe:n=>`${n}'S SKY`,
+ conMazoSub:"Shuffle your physical deck, draw your cards and log them here to see your patterns.",cuantasCartas:"How many cards",eligeCarta:"Choose the card you drew",posUna:"My card",tirMazo:"Reading with my deck",
+ miVoz:"My decree in my voice",miVozP:"Record yourself saying your decree and hear it in your ritual.",grabar:"Record",detener:"Stop",escuchar:"Play",borrarVoz:"Delete",vozGuardada:"Voice saved",sinMicro:"Couldn't use the microphone",escucharMiVoz:"Hear my voice",
+ instalar:"Install Vibración 33",instalarP:"Install it as an app, with your seal and no Chrome logo.",abreEnChrome:"To install it as an app, open it in Chrome: tap ⋮ and choose “Open in Chrome”."});
+Object.assign(T.it,{editar:"Modifica",luna:"Luna",calendario:"Calendario",espejo:"Specchio lunare",miCielo:"Il mio cielo",conMiMazo:"Con il mio mazzo",
+ lunaEn:s=>`Luna in ${s}`,cicloTitulo:"Il ciclo della luna",
+ espejoSub:"Quali carte ti accompagnano in ogni fase lunare.",espejoVacio:"Quando avrai delle letture, qui vedrai i tuoi schemi con la luna.",espejoN:n=>`${n} cart${n===1?"a":"e"}`,dominante:"Seme dominante",masFrecuente:"Carta più frequente",
+ cieloSub:"Sole, ascendente e discendente, ognuno con la sua carta dei tarocchi. Per te e per chi vuoi.",nuevoPerfil:"Aggiungi persona",nombre:"Nome",
+ ascendente:"Ascendente",descendente:"Discendente",sol:"Sole",lunaNatal:"Luna (facoltativa)",noSe:"Non lo so",borrarPerfil:"Elimina profilo",yo:"Io",
+ solP:"la tua essenza e identità",ascP:"come ti mostri e come inizi le cose",descP:"i tuoi legami e ciò che cerchi nell'altro",lunaP:"le tue emozioni e ciò che ti serve per sentirti a casa",
+ descAuto:"Il discendente si completa da solo: è sempre il segno opposto all'ascendente.",perfilesAviso:"I dati restano solo su questo telefono.",
+ cuspide:"Nata/o in un cambio di segno: conferma il Sole in un tema natale con l'ora esatta.",confirmBorrarPerfil:"Eliminare questo profilo?",
+ compartir:"Condividi su Instagram",historia:"Storia",post:"Post",miCartaDia:"LA MIA CARTA DEL GIORNO",creandoImg:"Creo l'immagine…",imagenLista:"Immagine scaricata",cieloDe:n=>`IL CIELO DI ${n}`,
+ conMazoSub:"Mescola il tuo mazzo fisico, pesca le carte e registrale qui per vedere i tuoi schemi.",cuantasCartas:"Quante carte",eligeCarta:"Scegli la carta uscita",posUna:"La mia carta",tirMazo:"Lettura con il mio mazzo",
+ miVoz:"Il mio decreto con la mia voce",miVozP:"Registrati mentre dici il tuo decreto e ascoltalo nel rituale.",grabar:"Registra",detener:"Ferma",escuchar:"Ascolta",borrarVoz:"Elimina",vozGuardada:"Voce salvata",sinMicro:"Impossibile usare il microfono",escucharMiVoz:"Ascolta la mia voce",
+ instalar:"Installa Vibración 33",instalarP:"Installala come app, con il tuo sigillo e senza il logo di Chrome.",abreEnChrome:"Per installarla come app, aprila in Chrome: tocca ⋮ e scegli «Apri in Chrome»."});
+
+const APP = { nombre:"Vibración 33", version:"1.4.0" };
+const CLAVE = "vibracion33.datos";
+const CACHE_MAZO = "vibracion33-mazo";
+const $ = s => document.querySelector(s);
+
+/* ---------- Datos ---------- */
+function cargar(){
+  const base = {lecturas:[], notas:{}, estudio:{}, perfiles:[], voz:null, racha:{ultima:null,dias:0,max:0}, ajustes:{invertidas:true, idioma:"es", sur:true, nacimiento:"1992-11-03"}};
+  try{
+    const d = JSON.parse(localStorage.getItem(CLAVE) || localStorage.getItem("arcano13.datos"));
+    if(d && Array.isArray(d.lecturas)) return {...base, ...d, racha:{...base.racha, ...(d.racha||{})}, ajustes:{...base.ajustes, ...(d.ajustes||{})}};
+  }catch(e){}
+  return base;
+}
+let datos = cargar();
+let L = datos.ajustes.idioma || "es";
+const t = () => T[L];
+function guardar(){ try{ localStorage.setItem(CLAVE, JSON.stringify(datos)); return true; }catch(e){ avisar(t().noGuardar); return false; } }
+const esc = s => String(s??"").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const azar = n => { const a=new Uint32Array(1); crypto.getRandomValues(a); return a[0] % n; };
+const hoyISO = (d=new Date()) => d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const fechaDe = iso => { const [y,m,d]=iso.split("-").map(Number); return new Date(y,m-1,d); };
+const cap = s => s.charAt(0).toUpperCase()+s.slice(1);
+const fechaLarga = iso => cap(fechaDe(iso).toLocaleDateString(LOCALE[L],{weekday:"long",day:"numeric",month:"long"}));
+const fechaCorta = d => d.toLocaleDateString(LOCALE[L],{day:"numeric",month:"short"});
+const astroNom = k => L==="es" ? k : (ASTRO[k] ? ASTRO[k][L==="en"?0:1] : k);
+const ocurrencias = () => datos.lecturas.flatMap(l => l.tipo==="dados" ? [] : l.cartas ? l.cartas : [{id:l.cartaId, inv:l.invertida}]);
+const lecturaDelDia = () => datos.lecturas.find(l => (l.tipo||"carta")==="carta" && l.fecha===hoyISO());
+const ayerISO = () => { const d=new Date(); d.setDate(d.getDate()-1); return hoyISO(d); };
+const rachaActual = () => (datos.racha.ultima===hoyISO()||datos.racha.ultima===ayerISO()) ? datos.racha.dias : 0;
+function tresCartas(){ const ids=new Set(), out=[]; while(out.length<3){ const c=MAZO[azar(MAZO.length)]; if(ids.has(c.id)) continue; ids.add(c.id); out.push({id:c.id, inv: datos.ajustes.invertidas ? azar(2)===1 : false}); } return out; }
+
+/* ---------- Mazo ---------- */
+const ROMANOS = ["0","I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX","XXI"];
+const PALOS = ["bastos","copas","espadas","oros"];
+const MAZO = [
+  ...MAY_BASE.map(([glifo,astro],n) => ({id:"m"+n, tipo:"mayor", palo:null, num:n, glifo, astro, img:""})),
+  ...PALOS.flatMap(palo => Array.from({length:14},(_,i)=>({id:palo+(i+1), tipo:"menor", palo, num:i+1, img:""})))
+];
+MAZO.forEach(c => c.rws = RWS[c.id]);
+/* Para tu propio arte: MAZO.find(c => c.id === "m13").img = "13-muerte.webp"; */
+const carta = id => MAZO.find(c => c.id === id);
+function txt(c){
+  if(c.tipo==="mayor"){ const [nombre,clave,der,inv]=MAY_TXT[L][c.num]; return {nombre,clave,der,inv,etiqueta:ROMANOS[c.num],pie:astroNom(c.astro)}; }
+  const [clave,der,inv]=MEN_TXT[L][c.palo][c.num-1]; const p=PALOS_TXT[L][c.palo]; const r=RANGOS[L][c.num-1];
+  return {nombre:`${r} ${DE[L]} ${p[0]}`, clave, der, inv, etiqueta: c.num===1 ? r : c.num<=10 ? String(c.num) : r, pie:p[1]};
+}
+
+/* ---------- Dibujo de cartas ---------- */
+const COLOR_PALO = {bastos:"#F28A2E", copas:"#7FB6E6", espadas:"#D3DAEE", oros:"#F7C948"};
+const ICONO_PALO = {
+  bastos:'<path d="M50 6v88" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><path d="M50 30c-10-2-16-8-18-16 9 1 15 6 18 16zM50 52c11-2 17-8 19-17-10 1-16 7-19 17zM50 72c-9-1-15-7-17-15 9 1 14 6 17 15z" fill="currentColor"/>',
+  copas:'<path d="M26 14h48c0 26-10 40-24 42v20h15v10H35V76h15V56C36 54 26 40 26 14z" fill="currentColor"/>',
+  espadas:'<path d="M50 4l8 14v52H42V18z" fill="currentColor"/><rect x="28" y="68" width="44" height="7" rx="3" fill="currentColor"/><rect x="46" y="75" width="8" height="15" fill="currentColor"/><circle cx="50" cy="93" r="5" fill="currentColor"/>',
+  oros:'<circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" stroke-width="6"/><path d="M50 18l9 27h28L64 62l9 27-23-17-23 17 9-27-23-17h28z" fill="currentColor"/>'
+};
+function caraSVG(c, inv=false, lazy=false, oculta=false){
+  const src = c.img || (c.rws && c.rws[0]); const x = txt(c);
+  if(src) return `<img class="carta-img${inv?" inv":""}" src="${esc(src)}" alt="${esc(x.nombre)}${inv?", "+t().invertida.toLowerCase():""}" data-id="${c.id}" data-inv="${inv?1:""}" data-oculta="${oculta?1:""}" crossorigin="anonymous" decoding="async"${lazy?' loading="lazy"':""} onerror="fallaImg(this)">`;
+  return caraDibujada(c, inv, oculta);
+}
+function fallaImg(el){
+  const c = carta(el.dataset.id);
+  if(!el.dataset.reintento && c.rws && el.src !== c.rws[1]){ el.dataset.reintento="1"; el.removeAttribute("crossorigin"); el.src=c.rws[1]; return; }
+  el.outerHTML = caraDibujada(c, !!el.dataset.inv, !!el.dataset.oculta);
+}
+function caraDibujada(c, inv=false, oculta=false){
+  const x = txt(c);
+  const centro = c.tipo==="mayor"
+    ? `<text x="150" y="285" text-anchor="middle" font-size="130" fill="url(#gFuego)" font-family="Georgia,'Segoe UI Symbol','Apple Symbols',serif">${c.glifo}\uFE0E</text>`
+    : `<g transform="translate(90 170) scale(1.2)" style="color:${COLOR_PALO[c.palo]}">${ICONO_PALO[c.palo]}</g>`;
+  const tam = x.nombre.length>20 ? 20 : x.nombre.length>15 ? 24 : 30;
+  return `<svg class="carta-svg${inv?" inv":""}" viewBox="0 0 300 500" role="img" aria-label="${esc(x.nombre)}">
+    <rect width="300" height="500" rx="18" fill="url(#gFondo)"/>
+    <rect x="12" y="12" width="276" height="476" rx="11" fill="none" stroke="#F7C948" stroke-opacity=".55" stroke-width="1.5"/>
+    <text x="150" y="70" text-anchor="middle" font-size="34" fill="#F3E6D3" font-family="'Cormorant Garamond',Georgia,serif" font-weight="600" letter-spacing="2">${esc(x.etiqueta)}</text>
+    <circle cx="150" cy="240" r="96" fill="#F28A2E" fill-opacity=".06" stroke="#F7C948" stroke-opacity=".18"/>${centro}
+    ${oculta ? "" : `<text x="150" y="405" text-anchor="middle" font-size="${tam}" fill="#F3E6D3" font-family="'Cormorant Garamond',Georgia,serif" font-weight="600">${esc(x.nombre)}</text>
+    <text x="150" y="440" text-anchor="middle" font-size="17" fill="#9CCBF2" font-family="Jost,system-ui,sans-serif" letter-spacing="1">${esc(x.pie)}</text>`}</svg>`;
+}
+function reversoSVG(){
+  const est=[[178,262],[196,248],[188,282],[170,300],[160,330],[148,356],[128,376],[104,380],[88,366]];
+  return `<svg class="carta-svg reverso" viewBox="0 0 300 500" preserveAspectRatio="none" role="img" aria-label="${t().reverso}">
+    <rect width="300" height="500" rx="18" fill="url(#gFondo)"/>
+    <rect x="12" y="12" width="276" height="476" rx="11" fill="none" stroke="url(#gFuego)" stroke-width="2.5"/>
+    <rect x="22" y="22" width="256" height="456" rx="7" fill="none" stroke="#F7C948" stroke-opacity=".25"/>
+    <g fill="#F3E6D3" opacity=".35">${[[60,70],[240,90],[50,430],[250,420],[230,200],[70,220],[110,120],[200,460]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="1.6"/>`).join("")}</g>
+    <circle cx="150" cy="150" r="58" fill="url(#gOjo)"/><circle cx="150" cy="150" r="27" fill="#F6EEE2"/><circle cx="150" cy="150" r="17" fill="#6FB0E8"/><circle cx="150" cy="150" r="7" fill="#141838"/>
+    <path d="M178 262L170 300M196 248L170 300M188 282L170 300L160 330L148 356L128 376L104 380L88 366" stroke="#9CCBF2" stroke-width="1.6" stroke-dasharray="2 5" fill="none" opacity=".8"/>
+    <g fill="#CFE6FA">${est.map(([x,y],i)=>`<circle cx="${x}" cy="${y}" r="${i===3?5:3.6}"/>`).join("")}</g>
+    <path d="M150 440c-14-10-16-24-6-38 0 10 6 14 10 16 2-8 0-16-6-24 16 6 26 20 18 34-3 6-8 10-16 12z" fill="url(#gFuego)" opacity=".9"/></svg>`;
+}
+
+/* ---------- Luna (cálculo astronómico simplificado, precisión de horas) ---------- */
+const RAD=Math.PI/180, n360=x=>((x%360)+360)%360;
+function astros(d=new Date()){
+  const D=d.getTime()/864e5+2440587.5-2451545.0;
+  const L0=n360(280.460+0.9856474*D), g=n360(357.528+0.9856003*D)*RAD;
+  const sol=n360(L0+1.915*Math.sin(g)+0.020*Math.sin(2*g));
+  const Lm=n360(218.316+13.176396*D), M=n360(134.963+13.064993*D)*RAD, F=n360(93.272+13.229350*D)*RAD, E=n360(297.850+12.190749*D)*RAD;
+  const luna=n360(Lm+6.289*Math.sin(M)+1.274*Math.sin(2*E-M)+0.658*Math.sin(2*E)+0.214*Math.sin(2*M)-0.186*Math.sin(g)-0.114*Math.sin(2*F));
+  return {sol, luna, frac:n360(luna-sol)/360};
+}
+const fraccionLunar=(d=new Date())=>astros(d).frac;
+const signoDe = lon => Math.floor(n360(lon)/30)%12;
+function proximaFase(obj, desde=new Date()){
+  const dif=t=>n360((astros(new Date(t)).frac-obj)*360);
+  let t=desde.getTime()+36e5, prev=dif(t);
+  for(let i=0;i<280;i++){ const t2=t+3*36e5, d2=dif(t2);
+    if(d2<prev){ let a=t,b=t2; for(let k=0;k<24;k++){ const m=(a+b)/2; if(dif(m)<dif(a)) b=m; else a=m; } return new Date(b); }
+    t=t2; prev=d2; }
+  return null;
+}
+function faseIdx(f){ const lim=[.0339,.216,.284,.466,.534,.716,.784,.966]; if(f<lim[0]||f>=lim[7]) return 0; for(let i=1;i<8;i++) if(f<lim[i]) return i; return 0; }
+function lunaPath(f){ const k=Math.cos(2*Math.PI*f), rx=(Math.abs(k)*45).toFixed(2);
+  return f<.5 ? `M50 5A45 45 0 0 1 50 95A${rx} 45 0 0 ${k>0?0:1} 50 5Z` : `M50 5A45 45 0 0 0 50 95A${rx} 45 0 0 ${k>0?1:0} 50 5Z`; }
+function lunaSVG(f){
+  const espejo = datos.ajustes.sur ? ' transform="translate(100 0) scale(-1 1)"' : "";
+  return `<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="#262D63" stroke="#38418A"/><path d="${lunaPath(f)}" fill="#F3E6D3"${espejo}/></svg>`;
+}
+let cacheLuna=null;
+function lunaInfo(){
+  const ahora=new Date();
+  if(cacheLuna && ahora-cacheLuna.t<6e5) return cacheLuna;
+  const a=astros(ahora), f=a.frac, i=faseIdx(f), ilum=Math.round((1-Math.cos(2*Math.PI*f))/2*100);
+  const prox=[[0,0],[.25,2],[.5,4],[.75,6]].map(([obj,idx])=>({idx, fecha:proximaFase(obj,ahora)})).filter(p=>p.fecha).sort((x,y)=>x.fecha-y.fecha);
+  cacheLuna={t:ahora, f, i, ilum, signo:signoDe(a.luna), prox}; return cacheLuna;
+}
+const nombreSigno = i => `${DADOS_TXT.glifosS[i]}\uFE0E ${DADOS_TXT[L].s[i][0]}`;
+
+/* ---------- Interfaz general ---------- */
+function firma(){ return `<div class="firma"><small>${t().firma}</small><strong>Melitalove</strong><span>${APP.nombre} · ${t().version} ${APP.version}</span></div>`; }
+let vistaActual="vHoy";
+const sub={vLuna:"hoy", vEstudio:"mazo", vTiradas:"decreto"};
+function pestanas(vista, items){
+  return `<div class="pestanas" role="tablist">${items.map(([k,n])=>`<button class="chip" role="tab" data-sub="${k}" aria-pressed="${sub[vista]===k}">${n}</button>`).join("")}</div>`;
+}
+function enlazarPestanas(v, vista, pintar){ v.querySelectorAll("[data-sub]").forEach(b=>b.onclick=()=>{ sub[vista]=b.dataset.sub; pintar(); }); }
+function irA(id){
+  vistaActual=id;
+  document.querySelectorAll(".vista").forEach(v => v.classList.toggle("activa", v.id===id));
+  document.querySelectorAll("nav.abajo button").forEach(b => b.dataset.vista===id ? b.setAttribute("aria-current","page") : b.removeAttribute("aria-current"));
+  ({vHoy:pintarHoy, vLuna:pintarLuna, vEstudio:pintarEstudio, vTiradas:pintarTiradas, vDiario:pintarDiario})[id]();
+  window.scrollTo(0,0);
+}
+function pintarNav(){
+  document.querySelectorAll("nav.abajo button").forEach(b => b.querySelector("span").textContent = t()[b.dataset.t]);
+  $("#idiomaBtn").textContent = L.toUpperCase(); $("#idiomaBtn").setAttribute("aria-label", t().idioma);
+  $("#abrirAjustes").setAttribute("aria-label", t().ajustes);
+  $("#slogan").textContent = t().slogan;
+  document.documentElement.lang = L;
+}
+let tAviso;
+function avisar(s){ const a=$("#aviso"); a.textContent=s; a.classList.add("ver"); clearTimeout(tAviso); tAviso=setTimeout(()=>a.classList.remove("ver"),2400); }
+function cielo(){
+  const c=$("#cielo"); let h="";
+  for(let i=0;i<46;i++) h+=`<i class="${i%9===0?"g":""}" style="left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${(3+Math.random()*5).toFixed(1)}s;--r:${(-Math.random()*8).toFixed(1)}s"></i>`;
+  c.innerHTML = h + `<b style="left:85%;top:12%"></b>`;
+}
+
+/* ---------- Instalación ---------- */
+let promptInstalar=null;
+const esApp = () => matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+const enNavegadorInterno = () => /Instagram|FBAN|FBAV|FB_IAB|Line\/|TikTok|Snapchat|; wv\)/i.test(navigator.userAgent);
+addEventListener("beforeinstallprompt", e => { e.preventDefault(); promptInstalar=e; if(vistaActual==="vHoy") pintarHoy(); });
+addEventListener("appinstalled", () => { promptInstalar=null; if(vistaActual==="vHoy") pintarHoy(); });
+function instalarHTML(){
+  if(esApp()) return "";
+  if(enNavegadorInterno()) return `<div class="aviso-luna instalar"><p>${t().abreEnChrome}</p></div>`;
+  if(promptInstalar) return `<div class="aviso-luna instalar"><img src="icon-192.png" alt="" width="44" height="44"><p><b>${t().instalar}</b><br><small>${t().instalarP}</small></p><button class="btn" id="btnInstalar">↓</button></div>`;
+  return "";
+}
+function enlazarInstalar(){ const b=$("#btnInstalar"); if(b) b.onclick=async()=>{ promptInstalar.prompt(); await promptInstalar.userChoice.catch(()=>{}); promptInstalar=null; pintarHoy(); }; }
+
+/* ---------- Hoy ---------- */
+function pintarHoy(animar=false){
+  const v=$("#vHoy"), {f,i,ilum,signo}=lunaInfo();
+  const lec = lecturaDelDia();
+  const cab = `${instalarHTML()}<h2 class="titulo">${t().cartaDia}</h2><p class="sub">${fechaLarga(hoyISO())}</p>
+    ${rachaHTML()}
+    <button class="luna-btn" id="lunaBtn">${lunaSVG(f)}<div><small>${t().lunaHoy}</small><b>${LUNA_TXT[L][i][0]}</b><small>${ilum}% ${t().iluminada} · ${t().lunaEn(DADOS_TXT[L].s[signo][0])}</small></div><span class="flecha">›</span></button>
+    ${(i===0||i===4) ? `<div class="aviso-luna"><p>${t().avisoLuna(LUNA_TXT[L][i][0])}</p><button class="btn sec" id="irDecreto">${t().irTirada}</button></div>` : ""}`;
+  if(!lec){
+    v.innerHTML = cab + `<div class="escenario"><div class="giro" id="giro">
+        <div class="cara"><button class="reverso-btn" id="revelar" aria-label="${t().revelar}">${reversoSVG()}</button></div>
+        <div class="cara frente"></div></div></div>
+      <p class="pista">${t().pista}</p>
+      <div class="campo" style="margin-top:18px"><label for="intencion">${t().intencion}</label><input id="intencion" maxlength="140" placeholder="${t().intencionPh}"></div>` + firma();
+    $("#revelar").addEventListener("click", sacarCarta, {once:true});
+  } else {
+    const c=carta(lec.cartaId), x=txt(c);
+    v.innerHTML = cab + `<div class="escenario"><div class="giro ${animar?"":"revelada"}" id="giro">
+        <div class="cara">${reversoSVG()}</div><div class="cara frente">${caraSVG(c, lec.invertida)}</div><div class="chispas" id="chispas"></div></div></div>
+      <div class="lectura${animar?"":" sin-anim"}">
+        <h3>${esc(x.nombre)}</h3><p class="orient">${lec.invertida ? t().invertida : t().derecha}</p><p class="clave">${esc(x.clave)}</p>
+        ${lec.intencion ? `<p class="sub" style="text-align:center">${t().tuIntencion}: “${esc(lec.intencion)}”</p>` : ""}
+        <p class="significado">${esc(lec.invertida ? x.inv : x.der)}</p>
+        <button class="btn ig grande" id="compartirHoy"><span aria-hidden="true">✦</span> ${t().compartir}</button>
+        <div class="campo" style="margin-top:20px"><label for="interp">${t().queTeDice}</label><textarea id="interp" placeholder="${t().interpPh}">${esc(lec.interpretacion)}</textarea></div>
+        <div class="fila-btn"><button class="btn" id="guardarInterp">${t().guardarInterp}</button><button class="btn sec" id="verCarta">${t().estudiar}</button></div>
+      </div>` + firma();
+    if(animar){
+      const g=$("#giro");
+      requestAnimationFrame(()=>requestAnimationFrame(()=>g.classList.add("revelada","encendida")));
+      setTimeout(()=>{ const ch=$("#chispas"); if(ch) ch.innerHTML = Array.from({length:16},(_,k)=>{const a=k/16*Math.PI*2, r=110+Math.random()*60;
+        return `<i style="--x:calc(-50% + ${Math.cos(a)*r}px);--y:calc(-50% + ${Math.sin(a)*r}px);animation-delay:${Math.random()*.2}s"></i>`;}).join(""); }, 450);
+      navigator.vibrate?.(25);
+    }
+    $("#guardarInterp").onclick=()=>{ lec.interpretacion=$("#interp").value.trim(); if(guardar()) avisar(t().interpGuardada); };
+    $("#verCarta").onclick=()=>abrirCarta(c.id);
+    $("#compartirHoy").onclick=()=>elegirFormato(f=>imgCarta(f, lec));
+  }
+  $("#lunaBtn").onclick=()=>{ sub.vLuna="hoy"; irA("vLuna"); };
+  const id=$("#irDecreto"); if(id) id.onclick=()=>{ sub.vTiradas="decreto"; irA("vTiradas"); };
+  enlazarInstalar();
+}
+function rachaHTML(){
+  const n=rachaActual(), p=Math.min(n,33)/33*100;
+  return `<div class="racha"><div class="racha-top"><span class="racha-fuego" aria-hidden="true">${n>0?"🔥":"✧"}</span><div><b>${t().rachaTxt(n)}</b><small>${t().rachaMeta(n)}</small></div><em>${Math.min(n,33)}/33</em></div>
+    <i class="racha-barra"><em style="width:${p}%"></em></i></div>`;
+}
+function sacarCarta(){
+  const c=MAZO[azar(MAZO.length)];
+  datos.lecturas.push({id:Date.now().toString(36), tipo:"carta", fecha:hoyISO(), cartaId:c.id,
+    invertida: datos.ajustes.invertidas ? azar(2)===1 : false, intencion:($("#intencion")?.value||"").trim(),
+    interpretacion:"", luna:fraccionLunar(), creada:new Date().toISOString()});
+  guardar(); pintarHoy(true);
+}
+
+/* ---------- Luna ---------- */
+let calMes = (()=>{ const d=new Date(); return new Date(d.getFullYear(), d.getMonth(), 1); })();
+function pintarLuna(){
+  const v=$("#vLuna");
+  v.innerHTML = `<h2 class="titulo">${t().luna}</h2>` + pestanas("vLuna", [["hoy",t().hoy],["calendario",t().calendario],["espejo",t().espejo]]) + `<div id="lunaCont"></div>` + firma();
+  enlazarPestanas(v, "vLuna", pintarLuna);
+  ({hoy:lunaHoy, calendario:lunaCalendario, espejo:lunaEspejo})[sub.vLuna]();
+}
+function lunaHoy(){
+  const {f,i,ilum,signo,prox}=lunaInfo(), [nom,sig]=LUNA_TXT[L][i];
+  const R=128, C=160, fracs=[0,.125,.25,.375,.5,.625,.75,.875];
+  const anillo = fracs.map((fr,k)=>{ const a=(-90+k*45)*RAD, x=C+R*Math.cos(a), y=C+R*Math.sin(a), on=k===i;
+    return `<g class="fase${on?" on":""}"><circle cx="${x}" cy="${y}" r="${on?26:20}" fill="none" stroke="${on?"#F7C948":"none"}" stroke-width="2.5"/>
+      <svg x="${x-(on?22:16)}" y="${y-(on?22:16)}" width="${on?44:32}" height="${on?44:32}" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#262D63" stroke="#38418A"/><path d="${lunaPath(fr||0.001)}" fill="#F3E6D3"${datos.ajustes.sur?' transform="translate(100 0) scale(-1 1)"':""}/></svg></g>`; }).join("");
+  $("#lunaCont").innerHTML = `<div class="anillo"><svg viewBox="0 0 320 320" role="img" aria-label="${t().cicloTitulo}">
+      <circle cx="${C}" cy="${C}" r="${R}" fill="none" stroke="#38418A" stroke-dasharray="2 6"/>${anillo}
+      <g class="luna-centro"><svg x="${C-70}" y="${C-70}" width="140" height="140" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#262D63" stroke="#38418A"/><path d="${lunaPath(f)}" fill="#F3E6D3"${datos.ajustes.sur?' transform="translate(100 0) scale(-1 1)"':""}/></svg></g></svg></div>
+    <h3 class="luna-nombre">${nom}</h3>
+    <p class="meta">${ilum}% ${t().iluminada}</p>
+    <p class="signo-luna">${t().lunaEn(nombreSigno(signo))}</p>
+    <p class="significado" style="margin-top:16px">${sig}</p>
+    <div class="seccion"><h4>${t().proximas}</h4><ul class="fases">${prox.map(p=>`<li>${lunaSVG([0,0,.25,0,.5,0,.75][p.idx]||0.001)}<span>${LUNA_TXT[L][p.idx][0]}</span><time>${fechaCorta(p.fecha)}</time></li>`).join("")}</ul>
+    <p class="meta" style="text-align:left;margin-top:10px">${t().aprox}</p></div>`;
+}
+function lunaCalendario(){
+  const y=calMes.getFullYear(), m=calMes.getMonth(), dias=new Date(y,m+1,0).getDate(), hoy=hoyISO();
+  const inicio=(new Date(y,m,1).getDay()+6)%7;
+  const sem=[...Array(7)].map((_,k)=>new Date(2024,0,1+k).toLocaleDateString(LOCALE[L],{weekday:"narrow"}));
+  let celdas=Array.from({length:inicio},()=>`<div></div>`).join("");
+  for(let d=1; d<=dias; d++){
+    const f0=fraccionLunar(new Date(y,m,d,0)), f1=fraccionLunar(new Date(y,m,d+1,0)), f=fraccionLunar(new Date(y,m,d,12));
+    const ev=[[0,0],[.25,2],[.5,4],[.75,6]].find(([T])=>n360((f0-T)*360)>n360((f1-T)*360));
+    const iso=hoyISO(new Date(y,m,d));
+    celdas+=`<div class="dia${iso===hoy?" hoy":""}${ev?" evento":""}" title="${ev?LUNA_TXT[L][ev[1]][0]:""}">${lunaSVG(f)}<span>${d}</span>${ev?`<small>${LUNA_TXT[L][ev[1]][0].replace(/^Luna |^Moon /,"")}</small>`:""}</div>`;
+  }
+  $("#lunaCont").innerHTML=`<div class="mes-cab"><button class="icon-btn" id="mesAnt" aria-label="‹">‹</button><b>${cap(calMes.toLocaleDateString(LOCALE[L],{month:"long",year:"numeric"}))}</b><button class="icon-btn" id="mesSig" aria-label="›">›</button></div>
+    <div class="calendario">${sem.map(s=>`<div class="sem">${s}</div>`).join("")}${celdas}</div>`;
+  $("#mesAnt").onclick=()=>{ calMes=new Date(y,m-1,1); lunaCalendario(); };
+  $("#mesSig").onclick=()=>{ calMes=new Date(y,m+1,1); lunaCalendario(); };
+}
+function lunaEspejo(){
+  const grupos=Array.from({length:8},()=>[]);
+  datos.lecturas.forEach(l=>{ if(l.tipo==="dados"||l.luna==null) return; const k=faseIdx(l.luna);
+    (l.cartas?l.cartas:[{id:l.cartaId,inv:l.invertida}]).forEach(o=>grupos[k].push(o)); });
+  const total=grupos.reduce((a,g)=>a+g.length,0);
+  const c=$("#lunaCont");
+  if(!total){ c.innerHTML=`<p class="nota-info">${t().espejoSub}</p><p class="vacio">${t().espejoVacio}</p>`; return; }
+  c.innerHTML=`<p class="nota-info">${t().espejoSub}</p>` + grupos.map((g,k)=>{
+    const fr=[0,.125,.25,.375,.5,.625,.75,.875][k]||0.001;
+    if(!g.length) return `<div class="espejo vacio-fase">${lunaSVG(fr)}<div><b>${LUNA_TXT[L][k][0]}</b><small>${t().espejoN(0)}</small></div></div>`;
+    const pc={}, cc={}; g.forEach(o=>{ const ca=carta(o.id); const p=ca.palo||"mayor"; pc[p]=(pc[p]||0)+1; cc[o.id]=(cc[o.id]||0)+1; });
+    const [pTop]=Object.entries(pc).sort((a,b)=>b[1]-a[1])[0], [cTop]=Object.entries(cc).sort((a,b)=>b[1]-a[1])[0];
+    const pNom = pTop==="mayor" ? t().mayores : PALOS_TXT[L][pTop][0];
+    return `<div class="espejo">${lunaSVG(fr)}<div><b>${LUNA_TXT[L][k][0]}</b><small>${t().espejoN(g.length)} · ${t().dominante}: ${pNom}</small>
+      <button class="enlace" data-id="${cTop}">${t().masFrecuente}: ${esc(txt(carta(cTop)).nombre)}</button></div></div>`;
+  }).join("");
+  c.querySelectorAll(".enlace").forEach(b=>b.onclick=()=>abrirCarta(b.dataset.id));
+}
+
+/* ---------- Hoja ---------- */
+const hoja=$("#hoja"), hojaCont=$("#hojaCont");
+hoja.addEventListener("click", e=>{ if(e.target===hoja) cerrarHoja(); });
+function abrirHoja(html){
+  hojaCont.innerHTML=`<div class="asa"></div><div class="hoja-top"><button class="icon-btn" data-cerrar aria-label="${t().cerrar}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>`+html;
+  hojaCont.querySelector("[data-cerrar]").onclick=cerrarHoja; hojaCont.scrollTop=0;
+  if(!hoja.open) hoja.showModal(); else { hojaCont.style.animation="none"; hojaCont.offsetHeight; hojaCont.style.animation=""; }
+}
+function cerrarHoja(){ if(hoja.open) hoja.close(); if(vistaActual==="vDiario") pintarDiario(); }
+function abrirCarta(id){
+  const c=carta(id), x=txt(c), n=ocurrencias().filter(o=>o.id===id).length;
+  const pal=c.palo?PALOS_TXT[L][c.palo]:null;
+  abrirHoja(`<div class="carta-grande" id="cgrande">${caraSVG(c)}</div>
+    <div class="alterna" role="group"><button class="chip" data-o="d" aria-pressed="true">${t().derecha}</button><button class="chip" data-o="i" aria-pressed="false">${t().invertida}</button></div>
+    <h3>${esc(x.nombre)}</h3>
+    <p class="meta">${c.tipo==="mayor" ? `${t().arcanoMayor} ${x.etiqueta} · ${esc(x.pie)}` : `${pal[0]} · ${pal[1]}: ${pal[2]}`}</p>
+    <p class="clave" style="margin-bottom:0">${esc(x.clave)}</p>
+    <div class="seccion"><h4>${t().derecha}</h4><p>${esc(x.der)}</p></div>
+    <div class="seccion inv"><h4>${t().invertida}</h4><p>${esc(x.inv)}</p></div>
+    <div class="seccion"><h4>${t().misNotas}</h4><div class="campo" style="margin:0"><textarea id="nota" aria-label="${t().misNotas}" placeholder="${t().notasPh}">${esc(datos.notas[id]||"")}</textarea></div><p class="guardado" id="estadoNota"></p></div>
+    <p class="meta" style="margin-top:14px">${t().veces(n)}</p>`);
+  hojaCont.querySelectorAll("[data-o]").forEach(b=>b.onclick=()=>{
+    hojaCont.querySelectorAll("[data-o]").forEach(y=>y.setAttribute("aria-pressed", y===b));
+    hojaCont.querySelector("#cgrande > *").classList.toggle("inv", b.dataset.o==="i");
+  });
+  let tm; const ta=hojaCont.querySelector("#nota");
+  ta.addEventListener("input",()=>{ clearTimeout(tm); tm=setTimeout(()=>{ const val=ta.value.trim(); if(val) datos.notas[id]=val; else delete datos.notas[id];
+    if(guardar()) hojaCont.querySelector("#estadoNota").textContent=t().notaGuardada; },600); });
+}
+
+/* ---------- Dados ---------- */
+const PIPS={1:[[50,50]],2:[[28,28],[72,72]],3:[[28,28],[50,50],[72,72]],4:[[28,28],[72,28],[28,72],[72,72]],5:[[28,28],[72,28],[50,50],[28,72],[72,72]],6:[[28,26],[72,26],[28,50],[72,50],[28,74],[72,74]]};
+function dadoClasico(n){ return `<svg viewBox="0 0 100 100" aria-label="${n}"><rect x="6" y="6" width="88" height="88" rx="20" fill="#F3E6D3"/><rect x="6" y="6" width="88" height="88" rx="20" fill="none" stroke="#F7C948" stroke-width="3"/>${PIPS[n].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="8.5" fill="${n===1?"#E23A2A":"#1E2452"}"/>`).join("")}</svg>`; }
+function dadoAstro(tipo,i){
+  const col={p:"url(#gFuego)",s:"#7FB6E6",c:"#F7C948"}[tipo];
+  const g = tipo==="p" ? DADOS_TXT.glifosP[i]+"\uFE0E" : tipo==="s" ? DADOS_TXT.glifosS[i]+"\uFE0E" : String(i+1);
+  const fs = tipo==="c" ? 40 : 44;
+  return `<svg viewBox="0 0 100 100" aria-label="${esc(tipo==="c"?t().casa+" "+(i+1):DADOS_TXT[L][tipo][i][0])}">
+    <path d="M50 4L94 36 77 90H23L6 36Z" fill="#1E2452" stroke="${col}" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M50 18L80 40 68 78H32L20 40Z" fill="none" stroke="${col}" stroke-opacity=".3"/>
+    <text x="50" y="${tipo==="c"?64:66}" text-anchor="middle" font-size="${fs}" fill="${tipo==="p"?"#F7C948":col}" font-family="'Cormorant Garamond',Georgia,'Segoe UI Symbol',serif" font-weight="600">${g}</text></svg>`;
+}
+function pintarDados(){
+  const v=$("#tirCont");
+  const mesa = !tirada ? (modoDados==="astro" ? [dadoAstro("p",0),dadoAstro("s",7),dadoAstro("c",2)] : Array.from({length:cantidad},(_,k)=>dadoClasico([3,5,6][k])))
+    : (tirada.modo==="astro" ? [dadoAstro("p",tirada.valores[0]),dadoAstro("s",tirada.valores[1]),dadoAstro("c",tirada.valores[2])] : tirada.valores.map(dadoClasico));
+  v.innerHTML=`<p class="nota-info">${t().dadosSub}</p>
+    <div class="modos" role="group"><button class="chip" data-m="astro" aria-pressed="${modoDados==="astro"}">${t().astro}</button><button class="chip" data-m="clasico" aria-pressed="${modoDados==="clasico"}">${t().clasicos}</button></div>
+    ${modoDados==="clasico" ? `<div class="modos" role="group" aria-label="${t().cuantos}">${[1,2,3].map(n=>`<button class="chip" data-n="${n}" aria-pressed="${cantidad===n}">${n}</button>`).join("")}</div>` : `<p class="nota-info">${t().astroInfo}</p>`}
+    <div class="mesa" id="mesa">${mesa.map(d=>`<div class="dado">${d}</div>`).join("")}</div>
+    ${modoDados==="astro" ? `<div class="leyenda"><span>${t().que}</span><span>${t().como}</span><span>${t().donde}</span></div>` : ""}
+    <div id="resultado">${resultadoHTML()}</div>
+    <div class="campo"><label for="preguntaDados">${t().pregunta}</label><input id="preguntaDados" maxlength="140" placeholder="${t().preguntaPh}" value="${esc(tirada?.pregunta||"")}"></div>
+    <div class="fila-btn" style="flex-direction:column"><button class="btn grande" id="lanzar">${tirada?t().relanzar:t().lanzar}</button>
+    ${tirada ? `<button class="btn sec grande" id="guardarDados" ${tirada.guardada?"disabled":""}>${tirada.guardada?t().guardadoDiario:t().guardarDiario}</button>` : ""}</div>`;
+  v.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{ if(modoDados!==b.dataset.m){ modoDados=b.dataset.m; tirada=null; pintarDados(); }});
+  v.querySelectorAll("[data-n]").forEach(b=>b.onclick=()=>{ cantidad=+b.dataset.n; tirada=null; pintarDados(); });
+  $("#lanzar").onclick=lanzar;
+  const gd=$("#guardarDados"); if(gd) gd.onclick=()=>{
+    tirada.pregunta=$("#preguntaDados").value.trim();
+    datos.lecturas.push({id:Date.now().toString(36), tipo:"dados", modo:tirada.modo, valores:tirada.valores, pregunta:tirada.pregunta, fecha:hoyISO(), luna:fraccionLunar(), creada:new Date().toISOString()});
+    if(guardar()){ tirada.guardada=true; gd.disabled=true; gd.textContent=t().guardadoDiario; avisar(t().guardadoDiario); }
+  };
+}
+function resultadoHTML(tr=tirada){
+  if(!tr) return "";
+  if(tr.modo==="clasico") return `<p class="suma">${tr.valores.reduce((a,b)=>a+b,0)}<small>${tr.valores.length>1?t().suma+": "+tr.valores.join(" + "):""}</small></p>`;
+  const [p,s,c]=tr.valores, D=DADOS_TXT[L];
+  return `<dl class="resultado">
+    <div class="fila"><dt>${t().que}</dt><dd>${D.p[p][0]}<small>${D.p[p][1]}</small></dd></div>
+    <div class="fila"><dt>${t().como}</dt><dd>${D.s[s][0]}<small>${D.s[s][1]}</small></dd></div>
+    <div class="fila"><dt>${t().donde}</dt><dd>${t().casa} ${c+1}<small>${D.c[c]}</small></dd></div></dl>`;
+}
+function lanzar(){
+  const pregunta=$("#preguntaDados").value.trim();
+  const valores = modoDados==="astro" ? [azar(12),azar(12),azar(12)] : Array.from({length:cantidad},()=>azar(6)+1);
+  tirada={modo:modoDados, valores, pregunta, guardada:false};
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const mesa=$("#mesa"); $("#lanzar").disabled=true; $("#resultado").innerHTML="";
+  navigator.vibrate?.([15,40,15]);
+  if(reduce){ pintarDados(); return; }
+  mesa.classList.add("rodando");
+  const dados=[...mesa.children]; let k=0;
+  const giro=setInterval(()=>{ dados.forEach((d,j)=>{ d.innerHTML = modoDados==="astro" ? dadoAstro("psc"[j],azar(12)) : dadoClasico(azar(6)+1); }); if(++k>8){ clearInterval(giro); pintarDados(); } },95);
+}
+
+/* ---------- Estudio ---------- */
+let filtro="todas", filtroEst="todas", tarjeta=null, volteada=false;
+function pintarEstudio(){
+  const v=$("#vEstudio");
+  v.innerHTML=`<h2 class="titulo">${t().estudio}</h2>` + pestanas("vEstudio",[["mazo",t().mazo],["tarjetas",t().tTarjetas],["numeros",t().tNumeros],["cielo",t().miCielo]]) + `<div id="estCont"></div>` + firma();
+  enlazarPestanas(v,"vEstudio",pintarEstudio);
+  ({mazo:pintarMazo, tarjetas:pintarTarjetas, numeros:pintarNumeros, cielo:pintarCielo})[sub.vEstudio]();
+}
+const normal = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+function pintarMazo(){
+  $("#estCont").innerHTML=`<p class="nota-info">${t().mazoSub}</p><div class="filtros" id="filtros" role="group"></div>
+    <input class="buscar" id="buscar" type="search" placeholder="${t().buscarPh}" aria-label="${t().buscarPh}"><div class="rejilla" id="rejilla"></div>`;
+  $("#buscar").addEventListener("input", pintarRejilla); pintarFiltros(); pintarRejilla();
+}
+function pintarFiltros(){
+  const F=[["todas",t().todas],["mayor",t().mayores],...PALOS.map(p=>[p,PALOS_TXT[L][p][0]])], f=$("#filtros");
+  f.innerHTML=F.map(([k,s])=>`<button class="chip" data-f="${k}" aria-pressed="${k===filtro}">${s}</button>`).join("");
+  f.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{filtro=b.dataset.f; pintarFiltros(); pintarRejilla();});
+}
+function pintarRejilla(){
+  const qv=$("#buscar").value.trim(), q=normal(qv);
+  const lista=MAZO.filter(c=>(filtro==="todas"||(filtro==="mayor"?c.tipo==="mayor":c.palo===filtro)) && (!q||normal(Object.values(txt(c)).join(" ")).includes(q)));
+  const r=$("#rejilla");
+  r.innerHTML = lista.length ? lista.map(c=>`<button class="mini" data-id="${c.id}">${caraSVG(c,false,true)}<span>${esc(txt(c).nombre)}</span></button>`).join("")
+    : `<p class="vacio" style="grid-column:1/-1">${t().sinResultados(esc(qv))}</p>`;
+  r.querySelectorAll(".mini").forEach(b=>b.onclick=()=>abrirCarta(b.dataset.id));
+}
+const sabidas = () => MAZO.filter(c=>(datos.estudio[c.id]||0)>=2).length;
+function siguienteTarjeta(){
+  const pool=MAZO.filter(c=>filtroEst==="todas"||(filtroEst==="mayor"?c.tipo==="mayor":c.palo===filtroEst)).filter(c=>c.id!==tarjeta);
+  const pesos=pool.map(c=>4-(datos.estudio[c.id]||0)); let r=Math.random()*pesos.reduce((a,b)=>a+b,0);
+  for(let i=0;i<pool.length;i++){ r-=pesos[i]; if(r<=0) return pool[i].id; } return pool[0].id;
+}
+function pintarTarjetas(){
+  const c=$("#estCont"); if(!tarjeta) tarjeta=siguienteTarjeta();
+  const n=sabidas(), card=carta(tarjeta), x=txt(card);
+  const F=[["todas",t().todas],["mayor",t().mayoresCorto],...PALOS.map(p=>[p,PALOS_TXT[L][p][0]])];
+  c.innerHTML=`<div class="progreso"><b>${t().sabes(n)}</b><i class="racha-barra"><em style="width:${n/78*100}%"></em></i></div>
+    <div class="filtros" role="group">${F.map(([k,s])=>`<button class="chip" data-fe="${k}" aria-pressed="${k===filtroEst}">${s}</button>`).join("")}</div>
+    <p class="pista" style="margin:6px 0 0">${t().adivina}</p>
+    <div class="escenario estudio"><div class="giro ${volteada?"revelada":""}" id="tarj">
+      <div class="cara"><button class="reverso-btn" id="voltear" aria-label="${t().tocaVoltear}">${caraSVG(card,false,false,true)}</button></div>
+      <div class="cara frente"><div class="respuesta"><h3>${esc(x.nombre)}</h3><p class="clave">${esc(x.clave)}</p><p>${esc(x.der)}</p><p class="inv-txt">${t().invertida}: ${esc(x.inv)}</p></div></div></div></div>
+    ${volteada ? `<div class="fila-btn duo"><button class="btn sec" id="repasar">${t().repasar}</button><button class="btn" id="sabia">${t().laSabia}</button></div>`
+      : `<p class="nota-info" style="text-align:center">${t().tocaVoltear}</p>`}
+    <p class="nota-info" style="font-size:13px">${t().estudioNota}</p>`;
+  c.querySelectorAll("[data-fe]").forEach(b=>b.onclick=()=>{ filtroEst=b.dataset.fe; tarjeta=siguienteTarjeta(); volteada=false; pintarTarjetas(); });
+  $("#voltear").onclick=()=>{ volteada=true; $("#tarj").classList.add("revelada"); setTimeout(pintarTarjetas,650); };
+  const marca=delta=>{ const k=datos.estudio[tarjeta]||0; datos.estudio[tarjeta]= delta>0 ? Math.min(3,k+1) : 0; guardar(); tarjeta=siguienteTarjeta(); volteada=false; pintarTarjetas(); };
+  const s=$("#sabia"); if(s){ s.onclick=()=>marca(1); $("#repasar").onclick=()=>marca(-1); }
+}
+const reducir = n => { while(n>9 && ![11,22,33].includes(n)) n=String(n).split("").reduce((a,b)=>a+ +b,0); return n; };
+const sumaDig = s => String(s).replace(/\D/g,"").split("").reduce((a,b)=>a+ +b,0);
+const cartaNum = n => n===22 ? 0 : n===33 ? 6 : n;
+function pintarNumeros(){
+  const {y,m,d}=nacimiento(), anio=new Date().getFullYear();
+  const items=[[t().nCamino, reducir(sumaDig(`${y}${m}${d}`))],[t().nDia, reducir(d)],[t().nMaestro,33],[t().nAnio(anio), reducir(sumaDig(`${d}${m}${anio}`))]];
+  const c=$("#estCont");
+  c.innerHTML=`<p class="nota-info">${t().numerosSub}</p>` + items.map(([lab,n])=>{ const cc=carta("m"+cartaNum(n)), x=txt(cc);
+    return `<div class="numero"><div class="num-cifra">${n}</div><div class="num-txt"><small>${lab}</small><p>${NUM_TXT[L][n]}</p>
+      <button class="num-carta" data-id="${cc.id}"><span class="num-mini">${caraSVG(cc,false,true)}</span><span>${x.etiqueta} · ${esc(x.nombre)}</span></button></div></div>`; }).join("") +
+    `<p class="nota-info" style="font-size:13px;margin-top:14px">${t().nAviso}</p>`;
+  c.querySelectorAll(".num-carta").forEach(b=>b.onclick=()=>abrirCarta(b.dataset.id));
+}
+
+/* ---------- Mi cielo ---------- */
+function solDe(fecha){ const [y,m,d]=fecha.split("-").map(Number); const lon=astros(new Date(Date.UTC(y,m-1,d,15))).sol; return {signo:signoDe(lon), cuspide:(lon%30)<1.2||(lon%30)>28.8}; }
+function asegurarYo(){ if(!datos.perfiles.length){ datos.perfiles.push({id:"yo", nombre:"", nacimiento:datos.ajustes.nacimiento, asc:null, luna:null}); guardar(); } }
+const nombrePerfil = p => p.nombre || t().yo;
+function posicionesCielo(p){
+  const s=solDe(p.nacimiento), out=[{rol:t().sol, desc:t().solP, signo:s.signo}];
+  if(p.asc!=null){ out.push({rol:t().ascendente, desc:t().ascP, signo:p.asc}); out.push({rol:t().descendente, desc:t().descP, signo:(p.asc+6)%12}); }
+  if(p.luna!=null) out.push({rol:t().luna, desc:t().lunaP, signo:p.luna});
+  return {pos:out, cuspide:s.cuspide};
+}
+function pintarCielo(){
+  asegurarYo();
+  const c=$("#estCont");
+  c.innerHTML=`<p class="nota-info">${t().cieloSub}</p>` + datos.perfiles.map(p=>{ const {pos,cuspide}=posicionesCielo(p);
+    return `<article class="perfil"><header><h3>${esc(nombrePerfil(p))}</h3><small>${fechaDe(p.nacimiento).toLocaleDateString(LOCALE[L],{day:"numeric",month:"long",year:"numeric"})}</small></header>
+      ${pos.map(o=>{ const cc=carta("m"+SIGNO_CARTA[o.signo]), x=txt(cc);
+        return `<div class="astro-fila"><span class="astro-glifo">${DADOS_TXT.glifosS[o.signo]}\uFE0E</span><div><small>${o.rol}</small><b>${DADOS_TXT[L].s[o.signo][0]}</b><p>${o.desc} · ${DADOS_TXT[L].s[o.signo][1]}</p></div>
+          <button class="astro-carta" data-id="${cc.id}" aria-label="${esc(x.nombre)}">${caraSVG(cc,false,true)}<span>${x.etiqueta}</span></button></div>`; }).join("")}
+      ${cuspide?`<p class="nota-info" style="font-size:13px;margin:8px 0 0">${t().cuspide}</p>`:""}
+      <div class="fila-btn" style="margin-top:12px"><button class="btn sec" data-ed="${p.id}">${t().editar}</button><button class="btn ig" data-sh="${p.id}">✦ ${t().compartir}</button></div></article>`; }).join("") +
+    `<button class="btn grande" id="nuevoPerfil" style="margin-top:8px">+ ${t().nuevoPerfil}</button><p class="nota-info" style="font-size:13px;margin-top:10px">${t().descAuto} ${t().perfilesAviso}</p>`;
+  c.querySelectorAll(".astro-carta").forEach(b=>b.onclick=()=>abrirCarta(b.dataset.id));
+  c.querySelectorAll("[data-ed]").forEach(b=>b.onclick=()=>editarPerfil(b.dataset.ed));
+  c.querySelectorAll("[data-sh]").forEach(b=>b.onclick=()=>elegirFormato(f=>imgCielo(f, datos.perfiles.find(p=>p.id===b.dataset.sh)), true));
+  $("#nuevoPerfil").onclick=()=>editarPerfil(null);
+}
+function editarPerfil(id){
+  const p = id ? datos.perfiles.find(x=>x.id===id) : {id:Date.now().toString(36), nombre:"", nacimiento:"1990-01-01", asc:null, luna:null};
+  const opc = sel => `<option value="">${t().noSe}</option>` + DADOS_TXT[L].s.map((s,i)=>`<option value="${i}" ${sel===i?"selected":""}>${DADOS_TXT.glifosS[i]}\uFE0E ${s[0]}</option>`).join("");
+  abrirHoja(`<h3 style="margin-bottom:14px">${id?esc(nombrePerfil(p)):t().nuevoPerfil}</h3>
+    <div class="campo"><label for="pNom">${t().nombre}</label><input id="pNom" maxlength="40" value="${esc(p.nombre)}" placeholder="${p.id==="yo"?t().yo:""}"></div>
+    <div class="campo"><label for="pNac">${t().nacimiento}</label><input id="pNac" type="date" class="fecha" style="width:100%" value="${p.nacimiento}"></div>
+    <div class="campo"><label for="pAsc">${t().ascendente}</label><select id="pAsc" class="selector">${opc(p.asc)}</select></div>
+    <p class="nota-info" style="font-size:13px;margin:-8px 0 16px">${t().descAuto}</p>
+    <div class="campo"><label for="pLuna">${t().lunaNatal}</label><select id="pLuna" class="selector">${opc(p.luna)}</select></div>
+    <div class="fila-btn"><button class="btn" id="pGuardar">${t().guardar}</button>${id&&id!=="yo"?`<button class="btn peligro" id="pBorrar">${t().borrarPerfil}</button>`:""}</div>`);
+  hojaCont.querySelector("#pGuardar").onclick=()=>{
+    const nac=hojaCont.querySelector("#pNac").value; if(!nac) return;
+    const v=s=>s===""?null:+s;
+    Object.assign(p,{nombre:hojaCont.querySelector("#pNom").value.trim(), nacimiento:nac, asc:v(hojaCont.querySelector("#pAsc").value), luna:v(hojaCont.querySelector("#pLuna").value)});
+    if(!id) datos.perfiles.push(p);
+    if(p.id==="yo") datos.ajustes.nacimiento=nac;
+    guardar(); cerrarHoja(); pintarEstudio();
+  };
+  const b=hojaCont.querySelector("#pBorrar"); if(b) b.onclick=()=>{ if(!confirm(t().confirmBorrarPerfil)) return; datos.perfiles=datos.perfiles.filter(x=>x.id!==id); guardar(); cerrarHoja(); pintarEstudio(); };
+}
+
+/* ---------- Tiradas ---------- */
+let modoDados="astro", cantidad=2, tirada=null;
+const est3 = {decreto:null, cumple:null};
+const posDe = (tipo,n=3) => tipo==="cumple" ? t().posCumple : (tipo==="mazo" && n===1) ? [[t().posUna,""]] : t().posDecreto;
+function nacimiento(){ const [y,m,d]=(datos.ajustes.nacimiento||"1992-11-03").split("-").map(Number); return {y,m,d}; }
+function esCumple(){ const {m,d}=nacimiento(), h=new Date(); return h.getMonth()+1===m && h.getDate()===d; }
+function diasACumple(){ const {m,d}=nacimiento(), h=new Date(); h.setHours(0,0,0,0); let c=new Date(h.getFullYear(),m-1,d); if(c<h) c=new Date(h.getFullYear()+1,m-1,d); return {dias:Math.round((c-h)/864e5), fecha:c}; }
+function pintarTiradas(){
+  const v=$("#vTiradas");
+  v.innerHTML=`<h2 class="titulo">${t().tiradas}</h2>` + pestanas("vTiradas",[["decreto",t().tDecreto],["cumple",t().tCumple+(esCumple()?" ✦":"")],["dados",t().dados],["mazo",t().conMiMazo]]) + `<div id="tirCont"></div>` + firma();
+  enlazarPestanas(v,"vTiradas",pintarTiradas);
+  ({decreto:()=>pintarTres("decreto"), cumple:pintarCumple, dados:pintarDados, mazo:pintarConMazo})[sub.vTiradas]();
+}
+let cm={n:1, cartas:[{id:"",inv:false}], reflexion:"", guardada:false};
+function pintarConMazo(){
+  const c=$("#tirCont"), pos=posDe("mazo",cm.n);
+  const opciones = sel => `<option value="">—</option>` + [["mayor",t().mayores],...PALOS.map(p=>[p,PALOS_TXT[L][p][0]])].map(([k,n])=>
+    `<optgroup label="${n}">${MAZO.filter(x=>k==="mayor"?x.tipo==="mayor":x.palo===k).map(x=>`<option value="${x.id}" ${sel===x.id?"selected":""}>${esc(txt(x).nombre)}</option>`).join("")}</optgroup>`).join("");
+  c.innerHTML=`<p class="nota-info">${t().conMazoSub}</p>
+    <div class="modos" role="group" aria-label="${t().cuantasCartas}">${[1,3].map(n=>`<button class="chip" data-cn="${n}" aria-pressed="${cm.n===n}">${n}</button>`).join("")}</div>
+    ${cm.cartas.map((o,i)=>`<div class="elige"><div class="elige-img">${o.id?caraSVG(carta(o.id),o.inv,true):`<div class="hueco">?</div>`}</div><div class="elige-campos">
+      <label for="cs${i}"><b>${pos[i][0]}</b>${pos[i][1]?` · <small>${pos[i][1]}</small>`:""}</label>
+      <select id="cs${i}" class="selector" data-ci="${i}" aria-label="${t().eligeCarta}">${opciones(o.id)}</select>
+      <label class="check"><input type="checkbox" data-cinv="${i}" ${o.inv?"checked":""}> ${t().invertida}</label>
+      ${o.id?`<p class="mini-sig">${esc(o.inv?txt(carta(o.id)).inv:txt(carta(o.id)).der)}</p>`:""}</div></div>`).join("")}
+    <div class="campo"><label for="cmRef">${t().reflexion}</label><textarea id="cmRef" placeholder="${t().reflexionPh}">${esc(cm.reflexion)}</textarea></div>
+    <button class="btn grande" id="cmGuardar" ${cm.cartas.some(o=>!o.id)||cm.guardada?"disabled":""}>${cm.guardada?t().guardadoDiario:t().guardarDiario}</button>`;
+  c.querySelectorAll("[data-cn]").forEach(b=>b.onclick=()=>{ cm={n:+b.dataset.cn, cartas:Array.from({length:+b.dataset.cn},()=>({id:"",inv:false})), reflexion:"", guardada:false}; pintarConMazo(); });
+  c.querySelectorAll("[data-ci]").forEach(s=>s.onchange=()=>{ cm.cartas[+s.dataset.ci].id=s.value; cm.guardada=false; pintarConMazo(); });
+  c.querySelectorAll("[data-cinv]").forEach(s=>s.onchange=()=>{ cm.cartas[+s.dataset.cinv].inv=s.checked; pintarConMazo(); });
+  $("#cmRef").oninput=e=>cm.reflexion=e.target.value;
+  $("#cmGuardar").onclick=()=>{ datos.lecturas.push({id:Date.now().toString(36), tipo:"mazo", cartas:cm.cartas.map(o=>({...o})), reflexion:cm.reflexion.trim(), fecha:hoyISO(), luna:fraccionLunar(), creada:new Date().toISOString()});
+    if(guardar()){ cm.guardada=true; avisar(t().guardadoDiario); pintarConMazo(); } };
+}
+
+/* ---------- Tiradas de 3 cartas (Decreto y Cumpleaños) ---------- */
+function pintarCumple(){
+  const c=$("#tirCont"), anio=new Date().getFullYear();
+  const pasados=datos.lecturas.filter(l=>l.tipo==="cumple").sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  const hecha=pasados.find(l=>l.anio===anio);
+  let top;
+  if(esCumple() && !hecha){ c.innerHTML=`<p class="pista" style="margin:4px 0 14px">${t().cumpleHoy}</p><div id="tresCont"></div>`; pintarTres("cumple", $("#tresCont")); }
+  else {
+    const {dias,fecha}=diasACumple();
+    top = esCumple() ? `<p class="pista">${t().cumpleHecha}</p>` : `<div class="cuenta"><b>${dias}</b><p>${t().cumpleInfo(fecha.toLocaleDateString(LOCALE[L],{day:"numeric",month:"long"}),dias)}</p></div>`;
+    c.innerHTML = top + `<h3 class="subtitulo">${t().cumplesAnteriores}</h3>` + (pasados.length ? pasados.map(entradaHTML).join("") : `<p class="nota-info">${t().sinCumples}</p>`);
+    c.querySelectorAll(".entrada").forEach(b=>b.onclick=()=>abrirLectura(b.dataset.id));
+  }
+}
+function pintarTres(tipo, cont=$("#tirCont")){
+  if(!est3[tipo]) est3[tipo]={cartas:tresCartas(), rev:0, guardada:false, reflexion:""};
+  const e=est3[tipo], pos=posDe(tipo);
+  cont.innerHTML = (tipo==="decreto" ? `<p class="nota-info">${t().decretoInfo}</p>` : "") +
+    `<div class="tres">${e.cartas.map((o,i)=>`<div class="slot"><div class="escen"><div class="giro ${i<e.rev?"revelada":""}" data-g="${i}">
+      <div class="cara"><button class="reverso-btn" data-r="${i}" aria-label="${pos[i][0]}" ${i!==e.rev?"tabindex='-1'":""}>${reversoSVG()}</button></div>
+      <div class="cara frente">${caraSVG(carta(o.id),o.inv)}</div></div></div><b>${pos[i][0]}</b><small>${pos[i][1]}</small></div>`).join("")}</div>
+    <div id="tresDetalle"></div>`;
+  cont.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.r; if(i!==e.rev) return;
+    const g=cont.querySelector(`[data-g="${i}"]`); g.classList.add("revelada","encendida"); e.rev++; navigator.vibrate?.(20);
+    if(e.rev===3) setTimeout(()=>detalleTres(tipo,cont), 900);
+  });
+  if(e.rev===3) detalleTres(tipo,cont);
+}
+function detalleTres(tipo, cont){
+  const e=est3[tipo], pos=posDe(tipo), d=cont.querySelector("#tresDetalle");
+  d.innerHTML = `<div class="resultado">${e.cartas.map((o,i)=>{const x=txt(carta(o.id)); return `<div class="fila"><dt>${pos[i][0]}</dt><dd>${esc(x.nombre)}${o.inv?` · ${t().invertida.toLowerCase()}`:""}<small>${esc(o.inv?x.inv:x.der)}</small></dd></div>`;}).join("")}</div>
+    <div class="campo"><label for="reflex">${t().reflexion}</label><textarea id="reflex" placeholder="${t().reflexionPh}">${esc(e.reflexion)}</textarea></div>
+    <div class="fila-btn" style="flex-direction:column"><button class="btn grande" id="gTres" ${e.guardada?"disabled":""}>${e.guardada?t().guardadoDiario:t().guardarDiario}</button>
+    ${tipo==="decreto"?`<button class="btn sec grande" id="nTres">${t().nuevaTirada}</button>`:""}</div>`;
+  d.classList.add("aparece");
+  d.querySelector("#reflex").oninput=ev=>e.reflexion=ev.target.value;
+  d.querySelector("#gTres").onclick=()=>{
+    const l={id:Date.now().toString(36), tipo, cartas:e.cartas, reflexion:e.reflexion.trim(), fecha:hoyISO(), luna:fraccionLunar(), creada:new Date().toISOString()};
+    if(tipo==="cumple") l.anio=new Date().getFullYear();
+    datos.lecturas.push(l);
+    if(guardar()){ e.guardada=true; avisar(t().guardadoDiario); if(tipo==="cumple"){ est3.cumple=null; pintarTiradas(); } else { const b=d.querySelector("#gTres"); b.disabled=true; b.textContent=t().guardadoDiario; } }
+  };
+  const n=d.querySelector("#nTres"); if(n) n.onclick=()=>{ est3[tipo]=null; pintarTres(tipo,cont); window.scrollTo({top:0,behavior:"smooth"}); };
+}
+
+/* ---------- Ritual del decreto y racha ---------- */
+function mostrarRitual(){
+  if(datos.racha.ultima===hoyISO() || $("#ritual")) return;
+  const prox = rachaActual()+1;
+  const r=document.createElement("div"); r.id="ritual"; r.className="ritual"; r.setAttribute("role","dialog"); r.setAttribute("aria-label",t().ritualTitulo);
+  const [a,b,c]=t().decretoFrases;
+  r.innerHTML=`<img src="icon-192.png" alt="" class="ritual-sello"><small>${t().ritualTitulo}</small>
+    <p class="frase f1">${a}</p><p class="frase f2">${b}</p>${datos.voz?`<button class="btn sec voz-btn" id="vozRitual">🔊 ${t().escucharMiVoz}</button>`:""}<button class="btn ritual-btn" id="decreto">${c}</button><small class="ritual-dia">${t().rachaDia(Math.min(prox,33))}</small>`;
+  document.body.appendChild(r);
+  const vr=$("#vozRitual"); if(vr) vr.onclick=()=>new Audio(datos.voz).play().catch(()=>{});
+  $("#decreto").onclick=()=>{
+    const R=datos.racha; R.dias = R.ultima===ayerISO() ? R.dias+1 : 1; R.ultima=hoyISO(); R.max=Math.max(R.max||0,R.dias); guardar();
+    navigator.vibrate?.([20,60,30]);
+    r.classList.add("sale"); setTimeout(()=>{ r.remove(); if(R.dias===33) celebrar(); if(vistaActual==="vHoy") pintarHoy(); }, 700);
+  };
+}
+function celebrar(){
+  const r=document.createElement("div"); r.className="ritual celebra";
+  r.innerHTML=`<img src="icon-512.png" alt="" class="ritual-sello grande"><p class="frase f1">${t().celebraTitulo}</p><p class="celebra-txt">${t().celebraTxt}</p><button class="btn ritual-btn" style="animation-delay:1.4s">${t().seguir}</button>`;
+  document.body.appendChild(r); r.querySelector("button").onclick=()=>{ r.classList.add("sale"); setTimeout(()=>r.remove(),700); };
+}
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible") mostrarRitual(); });
+
+const tituloLect = l => l.tipo==="cumple" ? t().cumpleAnio(l.anio) : l.tipo==="mazo" ? t().tirMazo : t().tirDecreto;
+/* ---------- Diario ---------- */
+const lunaMini = f => f==null ? "" : lunaSVG(f);
+function entradaHTML(l){
+  const fecha=`<time datetime="${l.fecha}">${lunaMini(l.luna)}${fechaLarga(l.fecha)}</time>`;
+  if(l.tipo==="dados"){
+    const D=DADOS_TXT[L], tit = l.modo==="astro" ? `${D.p[l.valores[0]][0]} · ${D.s[l.valores[1]][0]} · ${t().casa} ${l.valores[2]+1}` : `${l.valores.join(" + ")}${l.valores.length>1?" = "+l.valores.reduce((a,b)=>a+b,0):""}`;
+    const ic = l.modo==="astro" ? dadoAstro("p",l.valores[0]) : dadoClasico(l.valores[0]);
+    return `<button class="entrada" data-id="${l.id}"><div class="mini-dado">${ic}</div><div>${fecha}<h4>${esc(tit)}</h4><p>${esc(l.pregunta||t().dados)}</p></div></button>`;
+  }
+  if(l.cartas){
+    const tit = tituloLect(l);
+    return `<button class="entrada" data-id="${l.id}"><div class="abanico">${l.cartas.map(o=>caraSVG(carta(o.id),o.inv,true)).join("")}</div><div>${fecha}<h4>${tit}</h4><p>${esc(l.reflexion || l.cartas.map(o=>txt(carta(o.id)).nombre).join(" · "))}</p></div></button>`;
+  }
+  const c=carta(l.cartaId), x=txt(c);
+  return `<button class="entrada" data-id="${l.id}"><div>${caraSVG(c,l.invertida,true)}</div><div>${fecha}<h4>${esc(x.nombre)}${l.invertida?` (${t().invertida.toLowerCase()})`:""}</h4><p>${esc(l.interpretacion||l.intencion||t().sinInterp)}</p></div></button>`;
+}
+function pintarDiario(){
+  const v=$("#vDiario");
+  const todas=[...datos.lecturas].sort((a,b)=>b.fecha.localeCompare(a.fecha)||b.creada.localeCompare(a.creada));
+  if(!todas.length){
+    v.innerHTML=`<h2 class="titulo">${t().diario}</h2><p class="sub">${t().diarioSub}</p><p class="vacio">${t().diarioVacio}</p>
+      <div style="text-align:center"><button class="btn" id="irHoy">${t().irHoy}</button></div>`+firma();
+    $("#irHoy").onclick=()=>irA("vHoy"); return;
+  }
+  const O=ocurrencias(); let resumen="";
+  if(O.length){
+    const cuenta={}; O.forEach(o=>cuenta[o.id]=(cuenta[o.id]||0)+1);
+    const [topId,topN]=Object.entries(cuenta).sort((a,b)=>b[1]-a[1])[0];
+    const grupos=[[t().mayoresCorto,"mayor","#F7C948"],...PALOS.map(p=>[PALOS_TXT[L][p][0],p,COLOR_PALO[p]])]
+      .map(([n,k,col])=>({n,col,c:O.filter(o=>{const c=carta(o.id);return k==="mayor"?c.tipo==="mayor":c.palo===k;}).length}));
+    const max=Math.max(...grupos.map(g=>g.c),1), inv=O.filter(o=>o.inv).length, nl=todas.filter(l=>l.tipo!=="dados").length;
+    resumen=`<div class="resumen"><div class="dato"><b>${nl}</b><small>${t().lecturas(nl)} · ${t().invN(inv)}</small></div>
+      <div class="dato"><b style="font-size:21px">${esc(txt(carta(topId)).nombre)}</b><small>${topN>1?t().masRepetida(topN):t().masReciente}</small></div></div>
+      <div class="barras"><p>${t().energia}</p>${grupos.map((g,k)=>`<div class="barra"><span>${g.n}</span><i><em style="width:${g.c/max*100}%;background:${g.col};animation-delay:${k*.08}s"></em></i><output>${g.c}</output></div>`).join("")}</div>`;
+  }
+  v.innerHTML=`<h2 class="titulo">${t().diario}</h2><p class="sub">${t().diarioSub}</p>${resumen}${todas.map(entradaHTML).join("")}` + firma();
+  v.querySelectorAll(".entrada").forEach(b=>b.onclick=()=>abrirLectura(b.dataset.id));
+}
+function abrirLectura(id){
+  const l=datos.lecturas.find(x=>x.id===id);
+  const borrar=`<button class="btn peligro" id="bLect">${t().borrarLectura}</button>`;
+  if(l.tipo==="dados"){
+    abrirHoja(`<div class="mesa">${(l.modo==="astro"?[dadoAstro("p",l.valores[0]),dadoAstro("s",l.valores[1]),dadoAstro("c",l.valores[2])]:l.valores.map(dadoClasico)).map(d=>`<div class="dado">${d}</div>`).join("")}</div>
+      <p class="meta">${fechaLarga(l.fecha)}</p>${l.pregunta?`<p class="clave" style="margin:8px 0 14px">“${esc(l.pregunta)}”</p>`:""}${resultadoHTML(l)}<div class="fila-btn">${borrar}</div>`);
+  } else if(l.cartas){
+    const pos=posDe(l.tipo,l.cartas.length);
+    abrirHoja(`<h3>${tituloLect(l)}</h3><p class="meta">${fechaLarga(l.fecha)}</p>
+      <div class="tres" style="margin-top:16px">${l.cartas.map((o,i)=>`<button class="slot ver" data-id="${o.id}">${caraSVG(carta(o.id),o.inv)}<b>${pos[i][0]}</b></button>`).join("")}</div>
+      <div class="resultado">${l.cartas.map((o,i)=>{const x=txt(carta(o.id)); return `<div class="fila"><dt>${pos[i][0]}</dt><dd>${esc(x.nombre)}${o.inv?` · ${t().invertida.toLowerCase()}`:""}<small>${esc(o.inv?x.inv:x.der)}</small></dd></div>`;}).join("")}</div>
+      <div class="campo"><label for="editRef">${t().reflexion}</label><textarea id="editRef">${esc(l.reflexion)}</textarea></div>
+      <div class="fila-btn"><button class="btn" id="gRef">${t().guardar}</button>${borrar}</div>`);
+    hojaCont.querySelectorAll(".slot.ver").forEach(b=>b.onclick=()=>abrirCarta(b.dataset.id));
+    hojaCont.querySelector("#gRef").onclick=()=>{ l.reflexion=hojaCont.querySelector("#editRef").value.trim(); if(guardar()) avisar(t().interpGuardada); };
+  } else {
+    const c=carta(l.cartaId), x=txt(c);
+    abrirHoja(`<div class="carta-grande">${caraSVG(c,l.invertida)}</div><h3>${esc(x.nombre)}</h3>
+      <p class="meta">${fechaLarga(l.fecha)} · ${l.invertida?t().invertida:t().derecha}</p>
+      ${l.intencion?`<p class="clave" style="margin:10px 0 0">“${esc(l.intencion)}”</p>`:""}
+      <div class="seccion ${l.invertida?"inv":""}"><h4>${t().significado}</h4><p>${esc(l.invertida?x.inv:x.der)}</p></div>
+      <div class="seccion"><h4>${t().miInterp}</h4><div class="campo" style="margin:0 0 14px"><textarea id="editInterp" aria-label="${t().miInterp}">${esc(l.interpretacion)}</textarea></div>
+      <div class="fila-btn"><button class="btn" id="gLect">${t().guardarInterp}</button><button class="btn sec" id="estCarta">${t().estudiar}</button>${borrar}</div></div>`);
+    hojaCont.querySelector("#gLect").onclick=()=>{ l.interpretacion=hojaCont.querySelector("#editInterp").value.trim(); if(guardar()) avisar(t().interpGuardada); };
+    hojaCont.querySelector("#estCarta").onclick=()=>abrirCarta(c.id);
+  }
+  hojaCont.querySelector("#bLect").onclick=()=>{ if(!confirm(t().confirmBorrar)) return;
+    datos.lecturas=datos.lecturas.filter(x=>x.id!==id); guardar(); cerrarHoja(); avisar(t().lecturaBorrada); if(vistaActual==="vTiradas") pintarTiradas(); };
+}
+
+/* ---------- Compartir en Instagram (imagen generada en el celular) ---------- */
+function elegirFormato(crear, soloHistoria=false){
+  abrirHoja(`<h3 style="margin-bottom:6px">${t().compartir}</h3><p class="meta">@melita_love · Áureo</p>
+    <div class="formatos">${[["historia",t().historia,"9:16"],...(soloHistoria?[]:[["post",t().post,"1:1"]])].map(([k,n,r])=>`<button class="formato" data-fmt="${k}"><span class="fmt-${k}"></span><b>${n}</b><small>${r}</small></button>`).join("")}</div>`);
+  hojaCont.querySelectorAll("[data-fmt]").forEach(b=>b.onclick=async()=>{ b.disabled=true; b.querySelector("b").textContent=t().creandoImg; try{ await crear(b.dataset.fmt); }catch(e){ console.error(e); } cerrarHoja(); });
+}
+const cargarImg=(src,cors=true)=>new Promise((ok,no)=>{ const i=new Image(); if(cors) i.crossOrigin="anonymous"; i.onload=()=>ok(i); i.onerror=no; i.src=src; });
+function rr(ctx,x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+function lienzo(W,H){
+  const cv=document.createElement("canvas"); cv.width=W; cv.height=H; const ctx=cv.getContext("2d");
+  const g=ctx.createRadialGradient(W/2,H*.38,0,W/2,H*.38,Math.max(W,H)*.75); g.addColorStop(0,"#2A3170"); g.addColorStop(.7,"#14183A"); g.addColorStop(1,"#0F1230");
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  for(let i=0;i<80;i++){ ctx.globalAlpha=.15+Math.random()*.6; ctx.fillStyle=i%9?"#F3E6D3":"#F9E7B0"; ctx.beginPath(); ctx.arc(Math.random()*W,Math.random()*H,Math.random()*2+1,0,7); ctx.fill(); }
+  ctx.globalAlpha=1; return {cv,ctx};
+}
+function fuente(ctx,{size=40,serif=true,weight=600,italic=false}){ ctx.font=`${italic?"italic ":""}${weight} ${size}px ${serif?'"Cormorant Garamond", Georgia, serif':'"Jost", system-ui, sans-serif'}`; }
+function texto(ctx,s,x,y,o={}){ fuente(ctx,o); ctx.fillStyle=o.color||"#F3E6D3"; ctx.textAlign=o.align||"center"; if("letterSpacing" in ctx) ctx.letterSpacing=(o.spacing||0)+"px"; ctx.fillText(s,x,y); if("letterSpacing" in ctx) ctx.letterSpacing="0px"; }
+function parrafo(ctx,s,x,y,maxW,lh,o={}){ fuente(ctx,o); const pal=String(s).split(" "); let linea="", lineas=[];
+  pal.forEach(p=>{ const prueba=linea?linea+" "+p:p; if(ctx.measureText(prueba).width>maxW && linea){ lineas.push(linea); linea=p; } else linea=prueba; }); if(linea) lineas.push(linea);
+  lineas.forEach((l,i)=>texto(ctx,l,x,y+i*lh,o)); return y+lineas.length*lh; }
+function fuego(ctx,x0,x1){ const g=ctx.createLinearGradient(x0,0,x1,0); g.addColorStop(0,"#F9D45C"); g.addColorStop(.5,"#F28A2E"); g.addColorStop(1,"#E23A2A"); return g; }
+async function marca(ctx,cx,y,size){
+  const sello=await cargarImg("icon-512.png",false).catch(()=>null);
+  fuente(ctx,{size}); if("letterSpacing" in ctx) ctx.letterSpacing=(size*.08)+"px";
+  const w1=ctx.measureText("VIBRACIÓN ").width, w2=ctx.measureText("33").width; if("letterSpacing" in ctx) ctx.letterSpacing="0px";
+  const ic=size*2.1, total=ic+size*.45+w1+w2, x=cx-total/2;
+  if(sello){ ctx.save(); rr(ctx,x,y-ic*.72,ic,ic,ic*.22); ctx.clip(); ctx.drawImage(sello,x,y-ic*.72,ic,ic); ctx.restore(); }
+  texto(ctx,"VIBRACIÓN ",x+ic+size*.45,y,{size,align:"left",spacing:size*.08});
+  texto(ctx,"33",x+ic+size*.45+w1,y-size*.16,{size:size*1.32,align:"left",color:fuego(ctx,x+ic+w1,x+ic+w1+w2+size)});
+}
+async function cartaEnLienzo(ctx,c,inv,x,y,w){
+  const h=w*1920/1110, r=w*.05;
+  ctx.save(); ctx.shadowColor="rgba(242,138,46,.55)"; ctx.shadowBlur=w*.18; rr(ctx,x,y,w,h,r); ctx.fillStyle="#1E2452"; ctx.fill(); ctx.restore();
+  ctx.save(); rr(ctx,x,y,w,h,r); ctx.clip();
+  try{ const img=await cargarImg(c.img||c.rws[0]);
+    if(inv){ ctx.translate(x+w/2,y+h/2); ctx.rotate(Math.PI); ctx.drawImage(img,-w/2,-h/2,w,h); } else ctx.drawImage(img,x,y,w,h);
+  }catch(e){
+    const g=ctx.createLinearGradient(0,y,0,y+h); g.addColorStop(0,"#262D63"); g.addColorStop(1,"#141838"); ctx.fillStyle=g; ctx.fillRect(x,y,w,h);
+    const x0=txt(c); if(inv){ ctx.translate(x+w/2,y+h/2); ctx.rotate(Math.PI); ctx.translate(-(x+w/2),-(y+h/2)); }
+    texto(ctx,x0.etiqueta,x+w/2,y+h*.14,{size:w*.12});
+    texto(ctx,c.tipo==="mayor"?c.glifo+"\uFE0E":{bastos:"⚚",copas:"♁",espadas:"⚔",oros:"✪"}[c.palo],x+w/2,y+h*.56,{size:w*.42,serif:false,weight:400,color:fuego(ctx,x,x+w)});
+    parrafo(ctx,x0.nombre,x+w/2,y+h*.82,w*.85,w*.11,{size:w*.095});
+  }
+  ctx.restore();
+  ctx.save(); rr(ctx,x,y,w,h,r); ctx.strokeStyle="rgba(247,201,72,.55)"; ctx.lineWidth=3; ctx.stroke(); ctx.restore();
+  return h;
+}
+function lunaEnLienzo(ctx,f,x,y,s){
+  ctx.save(); ctx.translate(x,y); ctx.scale(s/100,s/100);
+  ctx.fillStyle="#262D63"; ctx.beginPath(); ctx.arc(50,50,45,0,7); ctx.fill(); ctx.strokeStyle="#38418A"; ctx.stroke();
+  if(datos.ajustes.sur){ ctx.translate(100,0); ctx.scale(-1,1); }
+  ctx.fillStyle="#F3E6D3"; ctx.fill(new Path2D(lunaPath(f))); ctx.restore();
+}
+function pie(ctx,W,y){ texto(ctx,"@melita_love",W/2,y,{size:34,serif:false,weight:400,color:"#C9BFD9"}); texto(ctx,"Áureo · melitalove.com",W/2,y+48,{size:30,serif:false,weight:400,color:"#F7C948"}); }
+async function fuentesListas(){ await Promise.all(['600 40px "Cormorant Garamond"','italic 500 40px "Cormorant Garamond"','400 30px "Jost"'].map(f=>document.fonts.load(f))).catch(()=>{}); }
+async function entregar(cv,nombre){
+  const blob=await new Promise(ok=>cv.toBlob(ok,"image/png")); const file=new File([blob],nombre,{type:"image/png"});
+  if(navigator.canShare && navigator.canShare({files:[file]})){ try{ await navigator.share({files:[file], title:"Vibración 33"}); return; }catch(e){ if(e.name==="AbortError") return; } }
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=nombre; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),2000); avisar(t().imagenLista);
+}
+async function imgCarta(fmt, lec){
+  await fuentesListas();
+  const c=carta(lec.cartaId), x=txt(c), {i,signo}=lunaInfo(), f=lec.luna ?? fraccionLunar();
+  const fecha=fechaLarga(lec.fecha), msg=lec.invertida?x.inv:x.der;
+  const lunaTxt=`${LUNA_TXT[L][faseIdx(f)][0]} · ${t().lunaEn(DADOS_TXT[L].s[signo][0])}`;
+  if(fmt==="historia"){
+    const W=1080,H=1920,{cv,ctx}=lienzo(W,H);
+    await marca(ctx,W/2,170,44);
+    texto(ctx,t().slogan,W/2,250,{size:36,italic:true,weight:500,color:"#C9BFD9"});
+    texto(ctx,t().miCartaDia,W/2,350,{size:28,serif:false,weight:500,color:"#F7C948",spacing:6});
+    texto(ctx,fecha,W/2,400,{size:28,serif:false,weight:400,color:"#C9BFD9"});
+    const h=await cartaEnLienzo(ctx,c,lec.invertida,(W-430)/2,450,430);
+    let y=450+h+105; texto(ctx,x.nombre,W/2,y,{size:x.nombre.length>18?74:92});
+    texto(ctx,(lec.invertida?t().invertida+" · ":"")+x.clave,W/2,y+62,{size:38,italic:true,weight:500,color:"#C9BFD9"});
+    y=parrafo(ctx,msg,W/2,y+140,860,56,{size:42,weight:500});
+    fuente(ctx,{size:28,serif:false,weight:400}); const pw=ctx.measureText(lunaTxt).width+110, py=Math.max(y+10,1660);
+    ctx.save(); rr(ctx,(W-pw)/2,py,pw,70,35); ctx.strokeStyle="rgba(247,201,72,.5)"; ctx.lineWidth=2; ctx.stroke(); ctx.restore();
+    lunaEnLienzo(ctx,f,(W-pw)/2+22,py+12,46); texto(ctx,lunaTxt,(W-pw)/2+80,py+45,{size:28,serif:false,weight:400,align:"left"});
+    pie(ctx,W,1830); return entregar(cv,`vibracion33-${lec.fecha}.png`);
+  }
+  const W=1080,H=1080,{cv,ctx}=lienzo(W,H);
+  await cartaEnLienzo(ctx,c,lec.invertida,80,(H-657)/2,380);
+  await marca(ctx,760,190,28);
+  texto(ctx,`${t().miCartaDia} · ${fechaCorta(fechaDe(lec.fecha)).toUpperCase()}`,540,320,{size:22,serif:false,weight:500,color:"#F7C948",spacing:4,align:"left"});
+  let y=parrafo(ctx,x.nombre,540,410,470,84,{size:80,align:"left"});
+  y=parrafo(ctx,msg,540,y+20,470,46,{size:36,weight:500,align:"left"});
+  texto(ctx,t().slogan,540,Math.min(y+60,900),{size:28,italic:true,weight:500,color:"#C9BFD9",align:"left"});
+  texto(ctx,"@melita_love · Áureo",540,980,{size:26,serif:false,weight:400,color:"#C9BFD9",align:"left"});
+  return entregar(cv,`vibracion33-${lec.fecha}-post.png`);
+}
+async function imgCielo(fmt, p){
+  await fuentesListas();
+  const W=1080,H=1920,{cv,ctx}=lienzo(W,H), {pos}=posicionesCielo(p), nombre=nombrePerfil(p);
+  await marca(ctx,W/2,170,44);
+  texto(ctx,t().slogan,W/2,250,{size:36,italic:true,weight:500,color:"#C9BFD9"});
+  texto(ctx,p.id==="yo"&&!p.nombre?t().miCielo.toUpperCase():t().cieloDe(nombre.toUpperCase()),W/2,370,{size:58,spacing:4});
+  const tres=pos.slice(0,3), w=270, gap=(W-tres.length*w)/(tres.length+1);
+  let yMax=0;
+  for(let k=0;k<tres.length;k++){ const o=tres[k], x=gap+k*(w+gap), cc=carta("m"+SIGNO_CARTA[o.signo]);
+    const h=await cartaEnLienzo(ctx,cc,false,x,460,w);
+    texto(ctx,o.rol.toUpperCase(),x+w/2,460+h+60,{size:24,serif:false,weight:500,color:"#F7C948",spacing:4});
+    texto(ctx,`${DADOS_TXT.glifosS[o.signo]}\uFE0E ${DADOS_TXT[L].s[o.signo][0]}`,x+w/2,460+h+112,{size:46});
+    texto(ctx,txt(cc).nombre,x+w/2,460+h+156,{size:30,italic:true,weight:500,color:"#C9BFD9"}); yMax=460+h+156; }
+  let y=yMax+100;
+  pos.forEach(o=>{ y=parrafo(ctx,`${o.rol}: ${o.desc}, ${DADOS_TXT[L].s[o.signo][1]}.`,W/2,y,880,48,{size:34,weight:500})+14; });
+  pie(ctx,W,1830); return entregar(cv,`vibracion33-cielo-${(nombre||"yo").toLowerCase().replace(/\W+/g,"-")}.png`);
+}
+
+/* ---------- Mi decreto en mi voz ---------- */
+let grabadora=null;
+function vozHTML(){ return datos.voz
+  ? `<div class="fila-btn"><button class="btn sec" id="vozPlay">▶ ${t().escuchar}</button><button class="btn sec" id="vozGrabar">● ${t().grabar}</button><button class="btn peligro" id="vozBorrar">${t().borrarVoz}</button></div>`
+  : `<button class="btn" id="vozGrabar">● ${t().grabar}</button>`; }
+function enlazarVoz(){
+  const p=$("#vozPlay"); if(p) p.onclick=()=>new Audio(datos.voz).play().catch(()=>{});
+  const d=$("#vozBorrar"); if(d) d.onclick=()=>{ datos.voz=null; guardar(); $("#vozZona").innerHTML=vozHTML(); enlazarVoz(); };
+  const g=$("#vozGrabar"); if(g) g.onclick=async()=>{
+    if(grabadora){ grabadora.stop(); return; }
+    try{ const st=await navigator.mediaDevices.getUserMedia({audio:true}); const partes=[];
+      grabadora=new MediaRecorder(st); grabadora.ondataavailable=e=>partes.push(e.data);
+      grabadora.onstop=()=>{ st.getTracks().forEach(x=>x.stop()); const fr=new FileReader();
+        fr.onload=()=>{ datos.voz=fr.result; grabadora=null; if(guardar()) avisar(t().vozGuardada); $("#vozZona").innerHTML=vozHTML(); enlazarVoz(); };
+        fr.readAsDataURL(new Blob(partes,{type:grabadora.mimeType||"audio/webm"})); };
+      grabadora.start(); g.textContent="■ "+t().detener; g.classList.add("grabando");
+      setTimeout(()=>{ if(grabadora && grabadora.state==="recording") grabadora.stop(); },15000);
+    }catch(e){ grabadora=null; avisar(t().sinMicro); } };
+}
+
+/* ---------- Idioma y ajustes ---------- */
+function cambiarIdioma(nuevo){ L=nuevo; datos.ajustes.idioma=nuevo; guardar(); pintarNav(); irA(vistaActual); }
+$("#idiomaBtn").onclick=()=>{
+  abrirHoja(`<h3>${t().idioma}</h3><div class="idiomas">${Object.entries(IDIOMAS).map(([k,n])=>`<button data-l="${k}" aria-pressed="${k===L}"><span>${n}</span><span>${k.toUpperCase()}</span></button>`).join("")}</div>`);
+  hojaCont.querySelectorAll("[data-l]").forEach(b=>b.onclick=()=>{ cambiarIdioma(b.dataset.l); cerrarHoja(); });
+};
+$("#abrirAjustes").onclick=()=>{
+  const A=datos.ajustes;
+  abrirHoja(`<h3 style="margin-bottom:8px">${t().ajustes}</h3>
+    <div class="ajuste"><div><b>${t().idioma}</b></div><div class="modos" style="margin:0">${Object.keys(IDIOMAS).map(k=>`<button class="chip" data-l="${k}" aria-pressed="${k===L}">${k.toUpperCase()}</button>`).join("")}</div></div>
+    <div class="ajuste"><div><b>${t().nacimiento}</b><p>${t().nacimientoP}</p></div><input type="date" id="optNac" class="fecha" value="${A.nacimiento}"></div>
+    <div class="ajuste"><div><b>${t().usarInv}</b><p>${t().usarInvP}</p></div><input type="checkbox" class="interruptor" id="optInv" ${A.invertidas?"checked":""} aria-label="${t().usarInv}"></div>
+    <div class="ajuste"><div><b>${t().hemisferio}</b><p>${t().hemisferioP}</p></div><input type="checkbox" class="interruptor" id="optSur" ${A.sur?"checked":""} aria-label="${t().hemisferio}"></div>
+    <div class="ajuste"><div><b>${t().mazoOffline}</b><p id="estadoMazo">${t().mazoOfflineP}</p></div><button class="btn sec" id="guardarMazo">${t().guardar}</button></div>
+    <div class="ajuste" style="display:block"><b>${t().miVoz}</b><p>${t().miVozP}</p><div id="vozZona" style="margin-top:10px">${vozHTML()}</div></div>
+    <div class="ajuste" style="border:0;padding-bottom:4px"><div><b>${t().respaldo}</b><p>${t().respaldoP}</p></div></div>
+    <div class="fila-btn" style="margin:12px 0 8px"><button class="btn" id="exportar">${t().descargar}</button><button class="btn sec" id="importar">${t().restaurar}</button><input type="file" id="archivo" accept="application/json,.json" hidden></div>
+    <div class="ajuste" style="border-bottom:0;border-top:1px solid var(--linea);margin-top:12px"><div><b>${t().empezarCero}</b><p>${t().empezarCeroP}</p></div><button class="btn peligro" id="borrarTodo">${t().borrarTodo}</button></div>
+    ${firma()}<p class="meta" style="font-size:12px;margin-top:14px">${t().creditos}</p>`);
+  hojaCont.querySelectorAll("[data-l]").forEach(b=>b.onclick=()=>{ cambiarIdioma(b.dataset.l); $("#abrirAjustes").click(); });
+  hojaCont.querySelector("#optNac").onchange=e=>{ if(e.target.value){ A.nacimiento=e.target.value; const yo=datos.perfiles.find(p=>p.id==="yo"); if(yo) yo.nacimiento=e.target.value; guardar(); } };
+  hojaCont.querySelector("#optInv").onchange=e=>{ A.invertidas=e.target.checked; guardar(); };
+  hojaCont.querySelector("#optSur").onchange=e=>{ A.sur=e.target.checked; guardar(); };
+  contarMazo(); hojaCont.querySelector("#guardarMazo").onclick=guardarMazo; enlazarVoz();
+  hojaCont.querySelector("#exportar").onclick=()=>{
+    const blob=new Blob([JSON.stringify({app:APP.nombre,version:APP.version,exportado:new Date().toISOString(),...datos},null,2)],{type:"application/json"});
+    const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=`vibracion33-respaldo-${hoyISO()}.json`;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); avisar(t().respaldoDescargado);
+  };
+  const arch=hojaCont.querySelector("#archivo");
+  hojaCont.querySelector("#importar").onclick=()=>arch.click();
+  arch.onchange=async()=>{ try{ const d=JSON.parse(await arch.files[0].text()); if(!Array.isArray(d.lecturas)) throw 0;
+      if(!confirm(t().confirmRestaurar(d.lecturas.length))) return;
+      datos={...datos, lecturas:d.lecturas, notas:d.notas||{}, estudio:d.estudio||datos.estudio, racha:d.racha||datos.racha, perfiles:d.perfiles||datos.perfiles, voz:d.voz||datos.voz, ajustes:{...datos.ajustes, ...(d.ajustes||{})}}; L=datos.ajustes.idioma||L; guardar();
+      cerrarHoja(); pintarNav(); irA("vHoy"); avisar(t().respaldoRestaurado);
+    }catch(e){ avisar(t().respaldoInvalido); } };
+  hojaCont.querySelector("#borrarTodo").onclick=()=>{ if(!confirm(t().confirmBorrarTodo)) return;
+    datos={...datos, lecturas:[], notas:{}}; guardar(); cerrarHoja(); irA("vHoy"); avisar(t().datosBorrados); };
+};
+async function contarMazo(){
+  const el=$("#estadoMazo"); if(!el||!("caches" in window)) return;
+  try{ const n=(await (await caches.open(CACHE_MAZO)).keys()).length;
+    if(n>=MAZO.length){ el.textContent=t().guardadas; const b=$("#guardarMazo"); if(b){ b.textContent=t().listo; b.disabled=true; } }
+    else if(n>0) el.textContent=t().parcial(n,MAZO.length);
+  }catch(e){}
+}
+async function guardarMazo(){
+  const b=$("#guardarMazo"), el=$("#estadoMazo");
+  if(!("caches" in window)) return;
+  b.disabled=true; let ok=0, n=0; const cache=await caches.open(CACHE_MAZO);
+  const urls=MAZO.map(c=>c.img||(c.rws&&c.rws[0])).filter(Boolean);
+  for(const u of urls){ n++; el.textContent=t().guardando(n,urls.length);
+    try{ if(await cache.match(u)){ ok++; continue; } const r=await fetch(u,{mode:"cors"}); if(r.ok){ await cache.put(u,r); ok++; } }catch(e){} }
+  if(ok===urls.length){ el.textContent=t().guardadas; b.textContent=t().listo; avisar(t().mazoGuardado); }
+  else { el.textContent=t().parcial(ok,urls.length); b.disabled=false; }
+}
+
+/* ---------- Inicio ---------- */
+document.querySelectorAll("nav.abajo button").forEach(b=>b.addEventListener("click",()=>irA(b.dataset.vista)));
+cielo(); pintarNav(); irA("vHoy"); mostrarRitual();
+if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
+
+</script>
+</body>
+</html>
